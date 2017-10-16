@@ -1,0 +1,125 @@
+.day-container + .day-container {
+  margin-top: 6rem;
+}
+.program-table .header-room {
+  text-align: center;
+}
+.program-table .slot-times-header {
+  width: 4rem;
+}
+.program-table .slot-times-container {
+  display: inline-block;
+  height: 100%;
+}
+.program-table .slot-times {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column wrap;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 75%;
+}
+.program-table .event-cell {
+  padding: 0;
+}
+.program-table .event {
+  text-align: center;
+  cursor: pointer;
+  padding: 8px;
+  height: 100%;
+}
+.program-table tbody > tr > td.event {
+  vertical-align: middle;
+}
+.program-table .event-title {
+  font-size: 75%;
+  font-weight: bold;
+}
+.program-table .event-persons {
+  font-size: 70%;
+  font-style: italic;
+}
+.program-table .event-type-conference {
+  background-color: #39af3a;
+}
+.program-table .event-type-atelier {
+  background-color: #6db3cc;
+}
+.program-table .event-type-keynote {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column wrap;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.program-table .event-room {
+  font-size: 90%;
+}
+.program-table .keynote-slot {
+  background-color: #e7e7e7;
+  padding: 0;
+  border: none;
+}
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+#event-details-modal .event-title {
+  margin-bottom: 22px;
+}
+#event-details-modal .event-info {
+  font-size: 90%;
+}
+#event-details-modal .event-registration {
+  margin: 0.5rem 0;
+}
+#event-details-modal .event-abstract {
+  white-space: pre-wrap;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #e5e5e5;
+}
+#event-details-modal .event-description {
+  white-space: pre-wrap;
+}
