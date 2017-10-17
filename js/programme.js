@@ -55,6 +55,8 @@
       case 'atelier': typeClass += 'atelier'; break
       case 'keynote': typeClass += 'keynote'; room = '<div class="event-room">' + event.room + '</div>'; break
     }
+    var trackClass = 'event-track' + event.trackIdx % 11;
+
     return '<td ' +
       'id="' + event.slug + '" ' +
       'rowspan="' + rowSpan + '" ' +
@@ -65,6 +67,7 @@
       '>' +
       '<div class="event-title">'+ event.title +'</div>' +
       '<div class="event-persons">' + event.persons.join(', ') + '</div>' +
+      '<div class="event-track ' + trackClass + '" >' + event.track + '</div>' +
       room +
     '</td>'
   }
@@ -95,6 +98,7 @@
 
     var days = new Map()
     var rooms = new Set()
+    var tracks = new Set();
     var events = []
 
     var dayElems = Array.prototype.slice.call(programXML.getElementsByTagName('day'))
@@ -123,6 +127,9 @@
             dayInfo.end = start+duration
           }
 
+          var track = getChildText(eventElem, 'track');
+          tracks.add(track);
+
           var event = {
             day: dayIndex,
             date: dayDate,
@@ -133,7 +140,7 @@
             slug: getChildText(eventElem, 'slug'),
             title: getChildText(eventElem, 'title'),
             subtitle: getChildText(eventElem, 'subtitle'),
-            track: getChildText(eventElem, 'track'),
+            track: track,
             type: getChildText(eventElem, 'type'),
             language: getChildText(eventElem, 'language'),
             description: getChildText(eventElem, 'description'),
@@ -174,6 +181,11 @@
     rooms.forEach(function(r) { roomsArray.push(r) })
     var roomsHeader = roomsArray.reduce(function(acc, room) { acc += '<th class="header-room">' + room +'</th>'; return acc }, '')
 
+    var tracksArray = []; // we need an Array so the tracks are ordered
+    tracks.forEach(function(t) { tracksArray.push(t) });
+    events.forEach(function(event) {
+      event.trackIdx = tracksArray.indexOf(event.track);
+    });
 
     days.forEach(function(dayInfo, dayIndex) {
       var rows = ''
