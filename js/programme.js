@@ -355,6 +355,11 @@
       modal.unbind('hide.bs.modal');
     }
 
+    modal.on('hide.bs.modal', function(event) {
+      // Remove the hash/slug form the URL
+      history.pushState('', document.title, window.location.pathname);
+    })
+
     modal.modal('show')
   }
 
