@@ -312,7 +312,17 @@
 
     modal.find('.event-title').text(event.title)
     modal.find('.event-persons').text(event.persons.join(', '))
-    modal.find('.event-track').text(event.track)
+    var trackElem = modal.find('.event-track');
+    if (trackElem) {
+      if (event.track) {
+        trackElem.text(event.track);
+        var trackClass = 'event-track' + event.trackIdx % 11;
+        trackElem.removeClass().addClass('event-track').addClass(trackClass);
+      } else {
+        trackElem.text('');
+        trackElem.removeClass().addClass('event-track');
+      }
+    }
     modal.find('.event-time').text(convertDateStrToHumanDateStr(event.date) + ' ' + timeIntToStr(event.start) + ' – ' + timeIntToStr(event.start + event.duration))
     modal.find('.event-room').text(event.room)
     var type = ''
@@ -354,6 +364,11 @@
       modal.find('.event-video').text('');
       modal.unbind('hide.bs.modal');
     }
+
+    modal.on('hide.bs.modal', function(event) {
+      // Remove the hash/slug form the URL
+      history.pushState('', document.title, window.location.pathname);
+    })
 
     modal.modal('show')
   }
