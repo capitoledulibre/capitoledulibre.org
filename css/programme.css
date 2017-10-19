@@ -58,11 +58,14 @@ body {
   font-size: 70%;
   font-style: italic;
 }
-.program-table .event-type-conference {
+.event-type-conference {
   background-color: #ddfbe6;
 }
-.program-table .event-type-atelier {
+.event-type-atelier {
   background-color: #e4b7cc;
+}
+.event-type-keynote {
+  background-color: #bac2da;
 }
 .program-table .event-type-keynote {
   display: -webkit-box;
@@ -86,7 +89,6 @@ body {
   font-size: 90%;
 }
 .program-table .keynote-slot {
-  background-color: #bac2da;
   padding: 0;
   border: none;
 }
@@ -155,4 +157,13 @@ body {
 }
 #event-details-modal .event-description {
   white-space: pre-wrap;
+}
+
+.legend {
+  font-size: 120%;
+  margin-top: 2rem;
+}
+.legend span {
+  padding: 0 1rem;
+  margin: 0 0.5rem;
 }
