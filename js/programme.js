@@ -30,7 +30,7 @@
 
   function convertDateStrToHumanDateStr(dateStr) {
     moment.locale('fr')
-    var humanDate = moment(dateStr, 'YYYY-MM-DD').format('dddd DD MMMM')
+    var humanDate = moment(dateStr, 'YYYY-MM-DD').format('dddd DD MMM')
     return humanDate.substring(0, 1).toUpperCase() + humanDate.substr(1)
   }
 
@@ -68,6 +68,7 @@
       '<div class="event-title">'+ event.title +'</div>' +
       '<div class="event-persons">' + event.persons.join(', ') + '</div>' +
       '<div class="event-track ' + trackClass + '" >' + event.track + '</div>' +
+      (event.isSigned ? '<div class="event-isSigned" data-toggle="tooltip" data-placement="bottom" title="Interprété en langue des signes"><i class="fa fa-sign-language" aria-label="Interprété en langue des signes"></i></div>' : '') +
       room +
     '</td>'
   }
@@ -89,6 +90,7 @@
       '<div class="event-title">'+ event.title +'</div>' +
       '<div class="event-persons">' + event.persons.join(', ') + '</div>' +
       room +
+      (event.isSigned ? '<div class="event-isSigned" data-toggle="tooltip" data-placement="bottom" title="Interprété en langue des signes"><i class="fa fa-sign-language" aria-label="Interprété en langue des signes"></i></div>' : '') +
     '</div>'
   }
 
@@ -130,6 +132,8 @@
           var track = getChildText(eventElem, 'track');
           tracks.add(track);
 
+          var isSigned = !!eventElem.querySelector('tags tag[slug="lsf"]');
+
           var event = {
             day: dayIndex,
             date: dayDate,
@@ -144,6 +148,7 @@
             type: getChildText(eventElem, 'type'),
             language: getChildText(eventElem, 'language'),
             description: getChildText(eventElem, 'description'),
+            isSigned: isSigned,
           }
           event.persons = Array.prototype.slice.call(eventElem.getElementsByTagName('person')).map(function(personElem) {
             return personElem.textContent
@@ -346,6 +351,12 @@
       modal.find('.event-registration').text('')
     }
     modal.find('.event-description').text(event.description)
+
+    if (event.isSigned) {
+      modal.find('.event-isSigned').show();
+    } else {
+      modal.find('.event-isSigned').hide();
+    }
 
     // Add Video if link exists
     if (event.videoLink) {
