@@ -58,6 +58,9 @@ body {
   font-size: 70%;
   font-style: italic;
 }
+.program-table .event-isSigned {
+  text-align: right;
+}
 .event-type-conference {
   background-color: #ddfbe6;
 }
