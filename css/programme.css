@@ -68,7 +68,7 @@ body {
   background-color: #e4b7cc;
 }
 .event-type-keynote {
-  background-color: #bac2da;
+  background-color: rgba(186, 194, 218, 0.6);
 }
 .program-table .event-type-keynote {
   display: -webkit-box;
