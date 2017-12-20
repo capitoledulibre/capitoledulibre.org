@@ -361,7 +361,7 @@
     // Add Video if link exists
     if (event.videoLink) {
       modal.find('.event-video').html(
-        '<video width="360" height="200" controls="controls">' +
+        '<video style="width: 100%" controls="controls">' +
         '<source src="' +
         event.videoLink +
         '" type="video/mp4"/>' +
@@ -369,7 +369,7 @@
       );
       modal.on('hide.bs.modal', function(event) {
         var v = modal.find("video").get(0);
-        v.pause();
+        if (v) v.pause();
       })
     } else {
       modal.find('.event-video').text('');
