@@ -1,5 +1,5 @@
 
-Landing page Capitole du Libre 2018
+Landing page Capitole du Libre 2019
 ===================================
 
 .. image:: /images/logo-capitoledulibre.png
