@@ -2,7 +2,7 @@
 Landing page Capitole du Libre 2019
 ===================================
 
-.. image:: /images/logo-capitoledulibre.png
+.. image:: /img/logo-capitoledulibre.png
     :align: center
     :alt: Capitole du Libre
 
