@@ -6,8 +6,8 @@
   var TIME_SLICE = 5 // minutes
   var SLOT_DURATION = 30 // minutes
   var config = {
-    programmeUrl: "https://participez-2018.capitoledulibre.org/schedule/xml/",
-    ponyConfUrl: "https://participez-2018.capitoledulibre.org",
+    programmeUrl: "https://participez-2019.capitoledulibre.org/schedule/xml/",
+    ponyConfUrl: "https://participez-2019.capitoledulibre.org",
   }
 
   function getChildText(parent, elemTagName) {
