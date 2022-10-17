@@ -9,11 +9,3 @@
 .logo-100px {
   width: 100px;
 }
-
-/* Map section
- * ----------- */
-iframe#carte {
-  width: 70%;
-  height: 300px;
-  border: 1px solid lightgrey;
-}

@@ -10,6 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "bootstrap": "^3.3.6",
     "jquery": "^3.6.1",
+    "lucide": "^0.91.0",
     "next": "latest",
     "react": "17.0.2",
     "react-dom": "17.0.2"
