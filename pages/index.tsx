@@ -1,4 +1,4 @@
-// import "jquery";
+
 // import "bootstrap";
 
 import Head from 'next/head'
@@ -8,10 +8,11 @@ import About from '../components/About';
 import EventDetails from '../components/EventDetails';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
+import Portfolio from "../components/portfolio/Portfolio";
 
 export default function Home() {
   return (
-    <div className="container">
+    <>
       <Head>
         <meta charSet="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,9 +28,6 @@ export default function Home() {
         <link href="/vendor/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
         <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
         <link href='//fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css' />
-
-        {/* Plugin CSS */}
-        <link href="/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" />
 
         {/* Theme CSS */}
         {/* <link href="/css/creative.css" rel="stylesheet" /> */}
@@ -47,193 +45,7 @@ export default function Home() {
 
         <EventDetails />
 
-        <section className="no-padding" id="portfolio">
-          <div className="container-fluid">
-            <div className="row no-gutter popup-gallery">
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/1.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/1.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Keynotes
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2016
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/2.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/2.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Ateliers
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2016
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/3.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/3.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Atelier installation Linux
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2017
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/4.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/4.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Conférences Framasoft
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2017
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/5.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/5.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Mozilla au village associatif
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2017
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/6.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/6.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Keynote du samedi soir avec FDN, la Quadrature et Framasoft
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2016
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/7.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/7.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Amphithéâtre plein pour la keynote du samedi soir!
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2016
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/8.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/8.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Conférences
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2016
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/9.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/9.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Keynote du samedi soir autour du logiciel libre
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2017
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/10.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/10.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Stands du village associatif
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2017
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/11.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/11.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        Conférences (Docker!)
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2016
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              <div className="col-lg-4 col-sm-6">
-                <a href="img/portfolio/fullsize/12.jpg" className="portfolio-box">
-                  <img src="img/portfolio/thumbnails/12.jpg" className="img-responsive" alt="" />
-                  <div className="portfolio-box-caption">
-                    <div className="portfolio-box-caption-content">
-                      <div className="project-category text-faded">
-                        L'équipe d'organisation et les bénévoles
-                      </div>
-                      <div className="project-name">
-                        Capitole du Libre 2017
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </section>
+        <Portfolio />
 
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
@@ -611,7 +423,6 @@ export default function Home() {
         {/* Plugin JavaScript */}
         <script src="/vendor/jquery.easing/jquery.easing.1.3.min.js"></script>
         <script src="/vendor/scrollreveal/scrollreveal.min.js"></script>
-        <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
         {/* Video Player Dialog */}
         <div className="modal fade video-dialog" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -658,6 +469,6 @@ export default function Home() {
         <script src="/js/creative.min.js"></script>
 
       </main>
-    </div>
+    </>
   )
 }
