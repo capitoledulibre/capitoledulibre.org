@@ -6,7 +6,7 @@ import Link from 'next/link'
 import React from "react";
 import About from '../components/About';
 import EventDetails from '../components/EventDetails';
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 import NavBar from '../components/NavBar';
 import Portfolio from "../components/portfolio/Portfolio";
 
