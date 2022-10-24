@@ -8,7 +8,9 @@ const NavBar = () => (
         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
           <span className="sr-only">Toggle navigation</span> Menu <i className="fas fa-bars"></i>
         </button>
-        <a className="navbar-brand page-scroll" href="#page-top">Capitole du Libre 2022</a>
+        <Link href="/#page-top">
+          <a className="navbar-brand page-scroll">Capitole du Libre 2022</a>
+        </Link>
       </div>
 
       {/* Collect the nav links, forms, and other content for toggling */}
@@ -24,7 +26,9 @@ const NavBar = () => (
             <a className="page-scroll" href="/#cfp">Appel à participation</a>
           </li>
           <li>
-            <a className="page-scroll" href="/programme/#schedule">Programme</a>
+            <Link href="/programme" >
+              <a className="page-scroll">Programme</a>
+            </Link>
           </li>
           <li>
             <a className="page-scroll" href="/#portfolio">Quelques images</a>
@@ -36,7 +40,9 @@ const NavBar = () => (
             <a className="page-scroll" href="/#contact">Nous contacter</a>
           </li>
           <li>
-            <Link className="page-scroll" href="/code-of-conduct">Code de Conduite</Link>
+            <Link href="/code-of-conduct">
+              <a className="page-scroll">Code de Conduite</a>
+            </Link>
           </li>
           <li>
             <a className="page-scroll" href="/#come">Venir</a>
