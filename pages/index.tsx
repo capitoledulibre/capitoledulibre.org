@@ -1,9 +1,6 @@
-
-// import "bootstrap";
-
 import Head from 'next/head'
-import Link from 'next/link'
 import React from "react";
+
 import About from '../components/About';
 import EventDetails from '../components/EventDetails';
 import Header from '../components/header/Header';
@@ -15,7 +12,7 @@ export default function Home() {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
         <meta name="author" content="" />
@@ -28,16 +25,11 @@ export default function Home() {
         <link href="/vendor/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
         <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
         <link href='//fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css' />
-
-        {/* Theme CSS */}
-        {/* <link href="/css/creative.css" rel="stylesheet" /> */}
-        {/* Custom CSS */}
-        {/* <link href="/css/capitoledulibre.css" rel="stylesheet" /> */}
       </Head>
 
       <main id="page-top">
 
-        <NavBar />
+        <NavBar transparentOnTop={true} />
 
         <Header />
 
@@ -413,60 +405,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* jQuery */}
-        {/* <script src="/vendor/jquery/jquery.min.js"></script> */}
-
-        {/* Bootstrap Core JavaScript */}
-        {/* <script src="/vendor/bootstrap/js/bootstrap.min.js"></script> */}
-
-        {/* Plugin JavaScript */}
-        <script src="/vendor/jquery.easing/jquery.easing.1.3.min.js"></script>
-        <script src="/vendor/scrollreveal/scrollreveal.min.js"></script>
-
-        {/* Video Player Dialog */}
-        <div className="modal fade video-dialog" tabIndex={-1} role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div id="videoDialogPlayer" className="vidflex"></div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* <script>
-          (function () {
-  var el = document.createElement('script');
-          el.src = "//www.youtube.com/iframe_api";
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(el, s);
-
-          var videoDialogPlayer;
-
-          window.onYouTubeIframeAPIReady = function () {
-            videoDialogPlayer = new YT.Player('videoDialogPlayer', {
-              height: '390',
-              width: '640',
-              videoId: 'b2Pgk1nzq9w'
-            });
-  }
-
-          $(function () {
-            $('.video-dialog').on('shown.bs.modal', function () {
-              videoDialogPlayer.playVideo();
-            }).on('hide.bs.modal', function () {
-              videoDialogPlayer.stopVideo();
-            });
-  });
-}());
-        </script> */}
-
-        {/* Theme JavaScript */}
-        <script src="/js/creative.min.js"></script>
 
       </main>
     </>

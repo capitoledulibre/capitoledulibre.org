@@ -7,11 +7,13 @@ const Programme = () => {
             <script type="text/javascript" src="https://cfp.capitoledulibre.org/cdl-2022/schedule/widget/v2.en.js"></script>
         </Head>
         <NavBar />
+        {/* @ts-ignore */}
         <pretalx-schedule
             event-url="https://cfp.capitoledulibre.org/cdl-2022/"
             locale="fr"
             format="grid"
-            style={{"--pretalx-clr-primary": "#D03D00"}} />
+            style={{"--pretalx-clr-primary": "#D03D00"}}
+        />
         <noscript>
             <div className="pretalx-widget">
                 <div className="pretalx-widget-info-message">
