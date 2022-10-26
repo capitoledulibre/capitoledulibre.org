@@ -6,6 +6,7 @@ import EventDetails from '../components/EventDetails';
 import Header from '../components/header/Header';
 import NavBar from '../components/NavBar';
 import Portfolio from "../components/portfolio/Portfolio";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -54,7 +55,7 @@ export default function Home() {
             <div className="call-to-action">
               <h2>Découvrez le programme de l'édition 2022</h2>
               <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
-              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2022</a>
+              <Link href="/programme"><a className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2022</a></Link>
             </div>
           </div>
         </aside>
