@@ -11,40 +11,45 @@ export default function VillageAssociatif() {
 
                         <h1>Village associatif au Capitole du Libre</h1>
 
-                        <p>En 2019, nous avons accueilli sur le village associatif:</p>
+                        <p>En 2022, seront présents sur le village associatif:</p>
                         <ul>
-                            <li>Afrikalan: des pinguoins sur les bancs des écoles Maliennes</li>
-                            <li>Ancestris</li>
-                            <li>API : Action of Public Interest</li>
+                            <li>/e/OS</li>
+                            <li>0 AD - Venez renconter l'équipe derrière 0 A.D., un RTS dans le monde antique !</li>
                             <li>April</li>
-                            <li>Association La Mouette - Bureautique Libre</li>
-                            <li>Debian-facile</li>
+                            <li>Box86 / Box64 - Linux x86/x86_64 Emulation with a Twist</li>
+                            <li>CHATONS "PIC"</li>
+                            <li>CHATONS "Le Filament"</li>
                             <li>Debian France</li>
-                            <li>/e/ "Your Data is Your Data". L'alternative à Google et Apple qui protège votre vie privée numérique</li>
-                            <li>FlossManuals + AFGRAL</li>
+                            <li>Exarius</li>
+                            <li>FDN + Parinux</li>
+                            <li>Fedora-Fr</li>
                             <li>Framasoft</li>
+                            <li>Godot</li>
                             <li>Haiku</li>
-                            <li>I.A Vision artificielle pour nano ordinateurs</li>
+                            <li>HorsCiné - des films libres en libre accès</li>
+                            <li>Infini en voyage</li>
+                            <li>IndieHosters</li>
+                            <li>JabberFR</li>
                             <li>Khaganat</li>
-                            <li>La Quadrature du Net</li>
-                            <li>L'enjeu du numérique au regard de l'écologie</li>
-                            <li>Mageia</li>
-                            <li>Métacartes : "Numérique Ethique" et "Faire Ensemble"</li>
-                            <li>Monnaie libre</li>
-                            <li>Montpel'libre : Les logiciels logiquement libres</li>
-                            <li>Mozilla</li>
+                            <li>La Contre-Voie</li>
+                            <li>La Mouette/LibreOffice</li>
+                            <li>Libre en Communs</li>
+                            <li>Monnaie libre Duniter Ğ1</li>
+                            <li>Montpel'libre</li>
                             <li>NethServer</li>
                             <li>Nos oignons</li>
-                            <li>OtterWays</li>
-                            <li>./play.it</li>
+                            <li>Open Food Facts</li>
+                            <li>OpenStreetmap</li>
+                            <li>OSGeo-fr</li>
                             <li>Purism</li>
-                            <li>Stand association 42l</li>
-                            <li>Stand des CHATONS</li>
+                            <li>Regroupement des stands des structures du collectif CHATONS</li>
+                            <li>Robotique Do It Yourself - user de la liberté de Coder et Partager</li>
+                            <li>Rust: initiation et entraide</li>
+                            <li>Skeptikon : esprit critique et méthodologie scientifique</li>
+                            <li>Stellarium</li>
                             <li>Tetaneutral.net</li>
-                            <li>Toulibre</li>
                             <li>Tracim</li>
-                            <li>XMPP</li>
-                            <li>XWiki</li>
+                            <li>XWiki - CryptPad</li>
                         </ul>
                     </div>
                 </div>

@@ -14,8 +14,6 @@ export default function KeySigningParty() {
 
                         <p>Cette année encore la Key signing party pour clef gpg/pgp se déroulera comme suit : venez à la KSP avec une empreinte imprimée de votre clef.</p>
 
-                        {/* <p>La ksp aura lieu le <strong>dimanche 19 novembre 2017 à 12:30</strong>; Rendez-vous dans l’amphithéâtre B00.</p> */}
-
                         <h2>Inscription</h2>
                         <p>Après avoir créé une clef comme indiqué <a href="https://keyring.debian.org/creating-key.html">sur le site de debian</a>, il suffit d’imprimer l'empreinte de la clef comme ceci:</p>
 

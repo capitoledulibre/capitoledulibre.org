@@ -37,13 +37,24 @@ export default function Home() {
         <EventDetails />
 
         <Portfolio />
-
+        {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
               <h2>L'appel à participation est ouvert jusqu'au 26 septembre 23h59</h2>
               <p>Vous pouvez proposer des conférences (de 20min ou de 50min), ateliers (de 2h) et stands (tout le week-end) jusqu'au 26 septembre 23h59. Nous encourageons tout le monde à participer, que vous soyez un speaker averti ou débutant. Une seul contrainte: la conférence doit être liée au logiciel libre ou au libre de manière générale.</p>
               <a href="https://cfp.capitoledulibre.org/cdl-2022/cfp" className="btn btn-default btn-xl sr-button">Formulaire de proposition</a>
+            </div>
+          </div>
+        </aside>
+        */}
+
+        <aside className="bg-primary">
+          <div className="container text-center" id="cfp">
+            <div className="call-to-action">
+              <h2>Découvrez le programme de l'édition 2022</h2>
+              <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
+              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2022</a>
             </div>
           </div>
         </aside>
@@ -60,16 +71,20 @@ export default function Home() {
         <section id="partners">
           <div className="container">
 
-            <h2>Nos partenaires en 2019</h2>
+            <h2>Nos partenaires en 2022</h2>
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
                 <h3>Sponsors Platine</h3>
-                <a href="http://www.c-s.fr/" target="_blank">
+                <a href="https://www.csgroup.eu/fr" target="_blank">
                   <img src="img/logo_cs_fond_transparent.png" alt="CS" className="logo-200px" title="CS" />
                 </a>
                 &nbsp;
-                <a href="https://www.sigfox.com" target="_blank">
-                  <img src="img/Sigfox_BB_Logo_RGB.png" alt="Sigfox" className="logo-200px" title="Sigfox" />
+                <a href="https://www.sogeti.com/" target="_blank">
+                  <img src="img/logo-sogeti.svg" alt="Sogeti" className="logo-150px" title="Sogeti" />
+                </a>                
+                &nbsp;
+                <a href="https://www.solibre.fr/" target="_blank">
+                  <img src="img/logo-solibre.jpg" alt="Solibre" className="logo-150px" title="Solibre" />
                 </a>
               </div>
             </div>
@@ -77,26 +92,43 @@ export default function Home() {
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
                 <h3>Sponsors Or</h3>
-                <a href="https://easymile.com/" target="_blank">
-                  <img src="img/logo_easymile.png" alt="Easymile" className="logo-150px" title="Smile" />
+                <a href="http://bootlin.com" target="_blank">
+                    <img src="img/bootlin-logo-240.png" alt="Bootlin" className="logo-100px" title="Bootlin" />
+                  </a>
+                  &nbsp;
+                  <a href="https://www.collabora.com" target="_blank">
+                  <img src="img/CollaboraLogo2017.png" alt="Collabora" className="logo-150px" title="Collabora" />
+                </a>
+                &nbsp;        
+                <a href="http://evolix.com/" target="_blank">
+                    <img src="img/logo_evolix_3.0.png" alt="Evolix" className="logo-100px" title="Evolix" />
                 </a>
                 &nbsp;
-                <a href="https://www.jolibrain.com" target="_blank">
-                  <img src="img/logo_jolibrain.png" alt="Jolibrain" className="logo-150px" title="Smile" />
+                <a href="https://www.linagora.com" target="_blank">
+                  <img src="img/logo-linagora.png" alt="Linagora" className="logo-150px" title="Linagora" />
                 </a>
                 &nbsp;
                 <a href="https://www.logilab.fr/" target="_blank">
                   <img src="img/logo-logilab.svg" alt="Logilab" className="logo-150px" title="Logilab" />
                 </a>
                 &nbsp;
-                <a href="http://makina-corpus.com/" target="_blank">
+                <a href="https://makina-corpus.com/" target="_blank">
                   <img src="img/makina-corpus.png" alt="Makina Corpus" className="logo-100px" title="Makina Corpus" />
                 </a>
                 &nbsp;
-                <a href="https://puri.sm" target="_blank">
-                  <img src="img/purism.svg" alt="Purism" className="logo-100px" title="Purism" />
+                <a href="https://www.obeosoft.com/fr/" target="_blank">
+                  <img src="img/logo-obeo.png" alt="Obeo" className="logo-100px" title="Obeo" />
                 </a>
                 &nbsp;
+                <a href="https://www.onlyoffice.com/" target="_blank">
+                  <img src="img/logo-onlyoffice.svg" alt="OnlyOffice" className="logo-100px" title="OnlyOffice" />
+                </a>
+                &nbsp; 
+                <a href="https://www.open-dsi.fr/" target="_blank">
+                  <img src="img/logo-opendsi.png" alt="OpenDSI" className="logo-100px" title="OpenDSI" />
+                </a>
+                &nbsp;                                                           
+
                 <a href="https://smile.eu/fr" target="_blank">
                   <img src="img/SMILE_icone-full-orange -baseline.png" alt="Smile" className="logo-150px" title="Smile" />
                 </a>
@@ -110,12 +142,8 @@ export default function Home() {
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
                 <h3>Sponsors Argent</h3>
-                <a href="https://www.collabora.com" target="_blank">
-                  <img src="img/CollaboraLogo2017.png" alt="Collabora" className="logo-150px" title="Collabora" />
-                </a>
-                &nbsp;
-                <a href="http://www.objectif-libre.com" target="_blank">
-                  <img src="img/objectif-libre-au-service-de-votre-cloud-long-fblanc.svg" alt="Objectif Libre" className="logo-100px" title="Objectif Libre" />
+                <a href="https://www.data-bene.io" target="_blank">
+                  <img src="img/logo-databene.png" alt="DataBene" className="logo-100px" title="DataBene" />
                 </a>
                 &nbsp;
               </div>
@@ -133,18 +161,10 @@ export default function Home() {
                     <img src="img/bluemind.jpg" alt="Bluemind" className="logo-100px" title="Bluemind" />
                   </a>
                   &nbsp;
-                  <a href="http://bootlin.com" target="_blank">
-                    <img src="img/bootlin-logo-240.png" alt="Bootlin" className="logo-100px" title="Bootlin" />
-                  </a>
-                  &nbsp;
-                  <a href="http://evolix.com/" target="_blank">
-                    <img src="img/logo_evolix_3.0.png" alt="Evolix" className="logo-100px" title="Evolix" />
-                  </a>
-                  &nbsp;
-                  <a href="https://oslandia.com" target="_blank">
-                    <img src="img/logo-oslandia.jpeg" alt="Oslandia" className="logo-100px" title="Oslandia" />
-                  </a>
-                  &nbsp;
+                  <a href="https://puri.sm" target="_blank">
+                  <img src="img/purism.svg" alt="Purism" className="logo-100px" title="Purism" />
+                </a>
+                &nbsp;
                 </p>
               </div>
             </div>
@@ -172,10 +192,6 @@ export default function Home() {
                 &nbsp;
                 <a href="https://www.laregion.fr" target="_blank">
                   <img src="img/1200px-Logo_Occitanie_2017.svg.png" alt="La Region Occitanie" className="logo-100px" title="La Region Occitanie" />
-                </a>
-                &nbsp;
-                <a href="http://www.solibre.fr" target="_blank">
-                  <img src="img/logo-solibre.jpg" alt="Solibre" className="logo-150px" title="Solibre" />
                 </a>
               </div>
               <div className="col-lg-4">
@@ -336,13 +352,11 @@ export default function Home() {
                   souhaitez rejoindre des ami⋅e⋅s ou vous extraire du centre ville.
                   <ul className="list-unstyled">
                     <li><a href="https://www.airbnb.fr/s/Rue-Camichel--Toulouse?checkin=16%2F11%2F2019&checkout=18%2F11%2F2019">Rechercher un AirBNB</a></li>
-                    <li><a href="http://www.kyriad-toulouse-centre.fr/en">Hotel Kyriad</a>, situé de l'autre côté du canal par rapport au campus de l'ENSEEIHT</li>
+                    <li><a href="https://all.accor.com/hotel/B3A1/index.fr.shtml">Hotel Ibis Style</a>, situé de l'autre côté du canal par rapport au campus de l'ENSEEIHT</li>
                     <li><a href="http://www.athome-ah.com/">At Home Appart Hotel</a>, situé à quelques centaines de mètres le long du Canal du Midi</li>
-                    <li><a href="http://www.mercure.com/fr/hotel-1260-hotel-mercure-toulouse-centre-wilson-capitole/index.shtml">Mercure Toulouse Centre Wilson Capitole</a>, proche de l'ENSEEIHT, en centre ville et proche des transports en commun</li>
-                    <li><a href="http://www.mercure.com/fr/hotel-0370-hotel-mercure-toulouse-centre-saint-georges/index.shtml">Mercure Toulouse Centre Saint Georges</a>, prôche de l'ENSEEIHT et situé en centre ville</li>
+                    <li><a href="https://all.accor.com/hotel/1260/index.fr.shtml">Mercure Toulouse Centre Wilson Capitole</a>, proche de l'ENSEEIHT, en centre ville et proche des transports en commun</li>
+                    <li><a href="https://all.accor.com/hotel/0370/index.fr.shtml">Mercure Toulouse Centre Saint Georges</a>, prôche de l'ENSEEIHT et situé en centre ville</li>
                   </ul>
-                </p>
-                <p><b>At Home Appart Hotel propose un tarif préférentiel</b> pour votre séjour à Toulouse pour le Capitole du Libre. Indiquez leur simplement que vous venez pour l'événement Capitole du Libre qui se tient à l'ENSEEIHT.
                 </p>
               </div>
             </div>

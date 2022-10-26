@@ -60,9 +60,10 @@ const NavBar = ({transparentOnTop}: Props) => {
             <li>
               <a className="page-scroll" href="/#event">L'événement</a>
             </li>
+            {/*
             <li>
               <a className="page-scroll" href="/#cfp">Appel à participation</a>
-            </li>
+  </li> */}
             <li>
               <Link href="/programme" >
                 <a className="page-scroll">Programme</a>
