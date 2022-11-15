@@ -289,7 +289,7 @@ export default function Home() {
                 <div className="col-lg-12 text-center">
                   <h2 className="section-heading">Depuis Toulouse&nbsp;?</h2>
                   <hr className="primary" />
-                  <p>Le Capitole du Libre sera hébergé à l'<a href="http://www.enseeiht.fr">INP-ENSEEIHT</a>, 2 rue Charles Camichel, 31000 Toulouse.</p>
+                  <p>Le Capitole du Libre sera hébergé à l'<a href="http://www.enseeiht.fr">INP-N7</a>, 26 rue Riquet, 31000 Toulouse.</p>
                   <p><b>Coordonnées GPS :</b>43.60215 - 1.45524</p>
                   <iframe id="carte" src="https://umap.openstreetmap.fr/fr/map/cdl_2017_campus_173723?scaleControl=true&miniMap=false&scrollWheelZoom=true&zoomControl=true&allowEdit=false&moreControl=false&datalayersControl=false&onLoadPanel=undefined&captionBar=false&datalayers=198023#17/43.60215/1.45524"></iframe>
                   <p><a href="http://umap.openstreetmap.fr/en/map/cdl_2017_campus_173723#17/43.60215/1.45524">Voir en plein écran</a></p>
