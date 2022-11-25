@@ -34,6 +34,7 @@ export default function VillageAssociatif() {
                             <li>La Contre-Voie</li>
                             <li>La Mouette/LibreOffice</li>
                             <li>Libre en Communs</li>
+                            <li>Mageia</li>
                             <li>Monnaie libre Duniter Ğ1</li>
                             <li>Montpel'libre</li>
                             <li>NethServer</li>
