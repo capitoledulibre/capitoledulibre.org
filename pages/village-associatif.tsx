@@ -11,7 +11,7 @@ export default function VillageAssociatif() {
 
                         <h1>Village associatif au Capitole du Libre</h1>
 
-                        <p>En 2022, seront présents sur le village associatif:</p>
+                        <p>En 2022, étaient présents sur le village associatif:</p>
                         <ul>
                             <li>/e/OS</li>
                             <li>0 AD - Venez renconter l'équipe derrière 0 A.D., un RTS dans le monde antique !</li>
@@ -34,6 +34,7 @@ export default function VillageAssociatif() {
                             <li>La Contre-Voie</li>
                             <li>La Mouette/LibreOffice</li>
                             <li>Libre en Communs</li>
+                            <li>Mageia</li>
                             <li>Monnaie libre Duniter Ğ1</li>
                             <li>Montpel'libre</li>
                             <li>NethServer</li>
