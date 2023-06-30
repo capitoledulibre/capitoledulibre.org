@@ -38,7 +38,6 @@ export default function VillageAssociatif() {
                             <li>Monnaie libre Duniter Ğ1</li>
                             <li>Montpel'libre</li>
                             <li>NethServer</li>
-                            <li>Nos oignons</li>
                             <li>Open Food Facts</li>
                             <li>OpenStreetmap</li>
                             <li>OSGeo-fr</li>
