@@ -18,7 +18,7 @@ export default function Home() {
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Capitole du Libre 2022</title>
+        <title>Capitole du Libre 2023</title>
 
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
@@ -38,18 +38,18 @@ export default function Home() {
         <EventDetails />
 
         <Portfolio />
-        {/*
+
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
-              <h2>L'appel à participation est ouvert jusqu'au 26 septembre 23h59</h2>
-              <p>Vous pouvez proposer des conférences (de 20min ou de 50min), ateliers (de 2h) et stands (tout le week-end) jusqu'au 26 septembre 23h59. Nous encourageons tout le monde à participer, que vous soyez un speaker averti ou débutant. Une seul contrainte: la conférence doit être liée au logiciel libre ou au libre de manière générale.</p>
-              <a href="https://cfp.capitoledulibre.org/cdl-2022/cfp" className="btn btn-default btn-xl sr-button">Formulaire de proposition</a>
+              <h2>L'appel à participation est ouvert jusqu'au 31 août 23h59</h2>
+              <p>Vous pouvez proposer des conférences (de 20min ou de 50min), ateliers (de 2h) et stands (tout le week-end) jusqu'au 31 août 23h59. Nous encourageons tout le monde à participer, que vous soyez un speaker averti ou débutant. Une seul contrainte: la conférence doit être liée au logiciel libre ou au libre de manière générale.</p>
+              <a href="https://cfp.capitoledulibre.org/cdl-2023/cfp" className="btn btn-default btn-xl sr-button">Formulaire de proposition</a>
             </div>
           </div>
         </aside>
-        */}
 
+        {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
@@ -59,12 +59,13 @@ export default function Home() {
             </div>
           </div>
         </aside>
+        */}
 
         <aside className="bg-dark">
           <div className="container text-center" id="sponsor">
             <div className="call-to-action">
               <h2>Soutenez le Capitole du Libre en devenant sponsor!</h2>
-              <a href="/Capitole-du-Libre-2022-Plaquette-Sponsors.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de sponsoring</a>
+              <a href="/Capitole-du-Libre-2023-Plaquette-Sponsors.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de sponsoring</a>
             </div>
           </div>
         </aside>
