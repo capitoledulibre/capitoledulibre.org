@@ -84,7 +84,7 @@ const Header = () => (
           <p><a href="https://www.youtube.com/watch?v=b2Pgk1nzq9w" data-toggle="modal" data-target=".video-dialog" className="btn btn-primary btn-xl page-scroll">Découvrez le Capitole du Libre en vidéo</a></p>
           <p><a href="https://cfp.capitoledulibre.org/cdl-2023/cfp" className="btn btn-primary btn-xl page-scroll">Proposez une conférence, un atelier, un stand jusqu'au 31 août 23h59</a></p>
           {/*<p><Link href="/programme" ><a className="btn btn-primary btn-xl page-scroll"> Consultez le programme de l'édition 2023</a></Link></p>*/}
-          <p><a href="/public#sponsor" className="btn btn-primary btn-xl page-scroll">Devenez partenaire</a></p>
+          <p><a href="/#sponsor" className="btn btn-primary btn-xl page-scroll">Devenez partenaire</a></p>
         </div>
       </div>
     </header>

@@ -42,7 +42,7 @@ export default function Home() {
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
-              <h2>L'appel à participation est ouvert jusqu'au 26 septembre 23h59</h2>
+              <h2>L'appel à participation est ouvert jusqu'au 31 août 23h59</h2>
               <p>Vous pouvez proposer des conférences (de 20min ou de 50min), ateliers (de 2h) et stands (tout le week-end) jusqu'au 31 août 23h59. Nous encourageons tout le monde à participer, que vous soyez un speaker averti ou débutant. Une seul contrainte: la conférence doit être liée au logiciel libre ou au libre de manière générale.</p>
               <a href="https://cfp.capitoledulibre.org/cdl-2023/cfp" className="btn btn-default btn-xl sr-button">Formulaire de proposition</a>
             </div>
