@@ -43,7 +43,6 @@ Production
 To build the HTML static production version:
 
 | npm run build
-| npm run export
 
 Then serve with an HTTP server the content of out/
 

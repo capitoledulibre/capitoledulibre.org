@@ -22,9 +22,6 @@ export default function Home() {
 
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
-        {/* Custom Fonts */}
-        <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css' />
-        <link href='//fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css' />
       </Head>
 
       <main id="page-top">
@@ -266,19 +263,18 @@ export default function Home() {
                 <div className="service-box">
                   <i className="fa fa-4x fa-plane text-primary sr-icons"></i>
                   <h3>En avion</h3>
-                  <p className="text-muted">Il y a un aéroport à Toulouse avec au moins un vol par jour au départ de :
-                    <ul className="list-unstyled">
-                      <li>Lille</li>
-                      <li>Londres</li>
-                      <li>Lyon</li>
-                      <li>Marseille</li>
-                      <li>Nantes</li>
-                      <li>Nice</li>
-                      <li>Paris (Orly & Charles-de-Gaulle)</li>
-                      <li>Rennes</li>
-                      <li>Strasbourg</li>
-                    </ul>
-                  </p>
+                  <p className="text-muted">Il y a un aéroport à Toulouse avec au moins un vol par jour au départ de :</p>
+                  <ul className="list-unstyled">
+                    <li>Lille</li>
+                    <li>Londres</li>
+                    <li>Lyon</li>
+                    <li>Marseille</li>
+                    <li>Nantes</li>
+                    <li>Nice</li>
+                    <li>Paris (Orly & Charles-de-Gaulle)</li>
+                    <li>Rennes</li>
+                    <li>Strasbourg</li>
+                  </ul>
                   <p className="text-muted">Plus d'informations disponibles sur le <a href="http://www.toulouse.aeroport.fr/">site de l'aéroport</a>.
                     L'aéroport est proche de la ville, prenez le tramway jusqu'au Palais de justice où la navette Air France qui vous ramènera à la gare.
                   </p>
@@ -352,14 +348,14 @@ export default function Home() {
                   sur place, vous pourrez trouver un logement ou des points de restauration
                   accessibles à pied. Un réseau de transports en communs est accessible si vous
                   souhaitez rejoindre des ami⋅e⋅s ou vous extraire du centre ville.
-                  <ul className="list-unstyled">
-                    <li><a href="https://www.airbnb.fr/s/Rue-Camichel--Toulouse?checkin=16%2F11%2F2019&checkout=18%2F11%2F2019">Rechercher un AirBNB</a></li>
-                    <li><a href="https://all.accor.com/hotel/B3A1/index.fr.shtml">Hotel Ibis Style</a>, situé de l'autre côté du canal par rapport au campus de l'ENSEEIHT</li>
-                    <li><a href="http://www.athome-ah.com/">At Home Appart Hotel</a>, situé à quelques centaines de mètres le long du Canal du Midi</li>
-                    <li><a href="https://all.accor.com/hotel/1260/index.fr.shtml">Mercure Toulouse Centre Wilson Capitole</a>, proche de l'ENSEEIHT, en centre ville et proche des transports en commun</li>
-                    <li><a href="https://all.accor.com/hotel/0370/index.fr.shtml">Mercure Toulouse Centre Saint Georges</a>, prôche de l'ENSEEIHT et situé en centre ville</li>
-                  </ul>
                 </p>
+                <ul className="list-unstyled">
+                  <li><a href="https://www.airbnb.fr/s/Rue-Camichel--Toulouse?checkin=16%2F11%2F2019&checkout=18%2F11%2F2019">Rechercher un AirBNB</a></li>
+                  <li><a href="https://all.accor.com/hotel/B3A1/index.fr.shtml">Hotel Ibis Style</a>, situé de l'autre côté du canal par rapport au campus de l'ENSEEIHT</li>
+                  <li><a href="http://www.athome-ah.com/">At Home Appart Hotel</a>, situé à quelques centaines de mètres le long du Canal du Midi</li>
+                  <li><a href="https://all.accor.com/hotel/1260/index.fr.shtml">Mercure Toulouse Centre Wilson Capitole</a>, proche de l'ENSEEIHT, en centre ville et proche des transports en commun</li>
+                  <li><a href="https://all.accor.com/hotel/0370/index.fr.shtml">Mercure Toulouse Centre Saint Georges</a>, prôche de l'ENSEEIHT et situé en centre ville</li>
+                </ul>
               </div>
             </div>
           </div>

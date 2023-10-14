@@ -46,8 +46,8 @@ const NavBar = ({transparentOnTop}: Props) => {
           <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span className="sr-only">Toggle navigation</span> Menu <i className="fas fa-bars"></i>
           </button>
-          <Link href="/#page-top">
-            <a className="navbar-brand page-scroll">Capitole du Libre 2023</a>
+          <Link href="/#page-top" className="navbar-brand page-scroll">
+            Capitole du Libre 2023
           </Link>
         </div>
 
@@ -65,8 +65,8 @@ const NavBar = ({transparentOnTop}: Props) => {
               <a className="page-scroll" href="/#cfp">Appel à participation</a>
   </li> */}
             <li>
-              <Link href="/programme" >
-                <a className="page-scroll">Programme</a>
+              <Link href="/programme" className="page-scroll">
+                Programme
               </Link>
             </li>
             <li>
@@ -79,8 +79,8 @@ const NavBar = ({transparentOnTop}: Props) => {
               <a className="page-scroll" href="/#contact">Nous contacter</a>
             </li>
             <li>
-              <Link href="/code-of-conduct">
-                <a className="page-scroll">Code de Conduite</a>
+              <Link href="/code-of-conduct" className="page-scroll">
+                Code de Conduite
               </Link>
             </li>
             <li>
@@ -95,7 +95,7 @@ const NavBar = ({transparentOnTop}: Props) => {
       </div>
       {/* /.container-fluid */}
     </nav>
-  )
+  );
 }
 
 export default NavBar;
