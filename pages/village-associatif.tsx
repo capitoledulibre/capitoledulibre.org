@@ -11,44 +11,40 @@ export default function VillageAssociatif() {
 
                         <h1>Village associatif au Capitole du Libre</h1>
 
-                        <p>En 2022, étaient présents sur le village associatif:</p>
+                        <p>En 2023, nous accueuillons sur le village associatif:</p>
                         <ul>
-                            <li>/e/OS</li>
-                            <li>0 AD - Venez renconter l'équipe derrière 0 A.D., un RTS dans le monde antique !</li>
+                            <li>/e/OS, un système Android « déGooglisé »</li>
                             <li>April</li>
-                            <li>Box86 / Box64 - Linux x86/x86_64 Emulation with a Twist</li>
-                            <li>CHATONS "PIC"</li>
-                            <li>CHATONS "Le Filament"</li>
+                            <li>Borsalinux-FR</li>
+                            <li>Box86 & Box64</li>
+                            <li>CEFCYS (CErcle des Femmes de la CYberSécurité)</li>
+                            <li>Claviers libres et ergonomiques</li>
+                            <li>Communauté Héraultaise du Libre</li>
+                            <li>Devloprog (CHATONS)</li>
                             <li>Debian France</li>
-                            <li>Exarius</li>
-                            <li>FDN + Parinux</li>
-                            <li>Fedora-Fr</li>
+                            <li>Ergodis/BÉPO</li>
+                            <li>FDN</li>
                             <li>Framasoft</li>
-                            <li>Godot</li>
+                            <li>GNU Guix</li>
                             <li>Haiku</li>
-                            <li>HorsCiné - des films libres en libre accès</li>
-                            <li>Infini en voyage</li>
-                            <li>IndieHosters</li>
+                            <li>Infini</li>
                             <li>JabberFR</li>
                             <li>Khaganat</li>
                             <li>La Contre-Voie</li>
                             <li>La Mouette/LibreOffice</li>
+                            <li>La musique sous Linux / Fedora</li>
                             <li>Libre en Communs</li>
-                            <li>Mageia</li>
-                            <li>Monnaie libre Duniter Ğ1</li>
-                            <li>Montpel'libre</li>
-                            <li>NethServer</li>
-                            <li>Open Food Facts</li>
-                            <li>OpenStreetmap</li>
-                            <li>OSGeo-fr</li>
-                            <li>Purism</li>
-                            <li>Regroupement des stands des structures du collectif CHATONS</li>
-                            <li>Robotique Do It Yourself - user de la liberté de Coder et Partager</li>
-                            <li>Rust: initiation et entraide</li>
-                            <li>Skeptikon : esprit critique et méthodologie scientifique</li>
-                            <li>Stellarium</li>
+                            <li>OpenStreetMap</li>
+                            <li>Mageia.org</li>
+                            <li>OSGeo-fr, le logiciel libre en géomatique</li>
+                            <li>Owntech</li>
+                            <li>Projet Internet et Citoyenneté (PIC)</li>
+                            <li>SILICOOP : coopérative pour la microélectronique libre</li>
+                            <li>Skeptikon</li>
                             <li>Tetaneutral.net</li>
-                            <li>Tracim</li>
+                            <li>Tracim / Galae</li>
+                            <li>Toulibre</li>
+                            <li>WikiLibriste.fr</li>
                             <li>XWiki - CryptPad</li>
                         </ul>
                     </div>

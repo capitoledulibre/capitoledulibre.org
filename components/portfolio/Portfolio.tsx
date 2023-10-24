@@ -219,7 +219,7 @@ const Portfolio = () => {
                                     L'équipe d'organisation et les bénévoles
                                 </div>
                                 <div className="project-name">
-                                    Capitole du Libre 2017
+                                    Capitole du Libre 2022
                                 </div>
                             </div>
                         </div>

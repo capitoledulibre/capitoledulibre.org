@@ -35,7 +35,7 @@ export default function Home() {
         <EventDetails />
 
         <Portfolio />
-
+        {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
@@ -45,18 +45,18 @@ export default function Home() {
             </div>
           </div>
         </aside>
+        */}
 
-        {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
-              <h2>Découvrez le programme de l'édition 2022</h2>
+              <h2>Découvrez le programme de l'édition 2023</h2>
               <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
-              <Link href="/programme"><a className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2022</a></Link>
+              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2023</a>
             </div>
           </div>
         </aside>
-        */}
+
 
         <aside className="bg-dark">
           <div className="container text-center" id="sponsor">
@@ -70,68 +70,49 @@ export default function Home() {
         <section id="partners">
           <div className="container">
 
-            <h2>Nos partenaires en 2022</h2>
+            <h2>Nos partenaires en 2023</h2>
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
-                <h3>Sponsors Platine</h3>
+                <h3>Platine</h3>
+                <a href="http://bootlin.com" target="_blank">
+                    <img src="img/bootlin-logo-240.png" alt="Bootlin" className="logo-200px" title="Bootlin" />
+                </a>
+                &nbsp;     
+                &nbsp;                                            
                 <a href="https://www.csgroup.eu/fr" target="_blank">
                   <img src="img/logo_cs_fond_transparent.png" alt="CS" className="logo-200px" title="CS" />
                 </a>
                 &nbsp;
-                <a href="https://www.sogeti.com/" target="_blank">
-                  <img src="img/logo-sogeti.svg" alt="Sogeti" className="logo-150px" title="Sogeti" />
-                </a>                
-                &nbsp;
-                <a href="https://www.solibre.fr/" target="_blank">
-                  <img src="img/logo-solibre.jpg" alt="Solibre" className="logo-150px" title="Solibre" />
+                &nbsp;                 
+                <a href="https://www.sigb.net/" target="_blank">
+                  <img src="img/logo-pmb.jpg" alt="PMB Services" className="logo-150px" title="PMB Services" />
                 </a>
+                &nbsp;
+                &nbsp;                                                 
+                <a href="https://www.thalesgroup.com" target="_blank">
+                  <img src="img/logo-thales.svg" alt="Thales Group" className="logo-200px" title="Thales Group" />
+                </a>                
               </div>
             </div>
 
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
-                <h3>Sponsors Or</h3>
-                <a href="http://bootlin.com" target="_blank">
-                    <img src="img/bootlin-logo-240.png" alt="Bootlin" className="logo-100px" title="Bootlin" />
-                  </a>
-                  &nbsp;
-                  <a href="https://www.collabora.com" target="_blank">
-                  <img src="img/CollaboraLogo2017.png" alt="Collabora" className="logo-150px" title="Collabora" />
-                </a>
-                &nbsp;        
-                <a href="http://evolix.com/" target="_blank">
-                    <img src="img/logo_evolix_3.0.png" alt="Evolix" className="logo-100px" title="Evolix" />
-                </a>
-                &nbsp;
+                <h3>Or</h3>
                 <a href="https://www.linagora.com" target="_blank">
                   <img src="img/logo-linagora.png" alt="Linagora" className="logo-150px" title="Linagora" />
                 </a>
                 &nbsp;
+                &nbsp;                 
                 <a href="https://www.logilab.fr/" target="_blank">
                   <img src="img/logo-logilab.svg" alt="Logilab" className="logo-150px" title="Logilab" />
                 </a>
                 &nbsp;
+                &nbsp;                 
                 <a href="https://makina-corpus.com/" target="_blank">
                   <img src="img/makina-corpus.png" alt="Makina Corpus" className="logo-100px" title="Makina Corpus" />
                 </a>
                 &nbsp;
-                <a href="https://www.obeosoft.com/fr/" target="_blank">
-                  <img src="img/logo-obeo.png" alt="Obeo" className="logo-100px" title="Obeo" />
-                </a>
-                &nbsp;
-                <a href="https://www.onlyoffice.com/" target="_blank">
-                  <img src="img/logo-onlyoffice.svg" alt="OnlyOffice" className="logo-100px" title="OnlyOffice" />
-                </a>
-                &nbsp; 
-                <a href="https://www.open-dsi.fr/" target="_blank">
-                  <img src="img/logo-opendsi.png" alt="OpenDSI" className="logo-100px" title="OpenDSI" />
-                </a>
-                &nbsp;                                                           
-
-                <a href="https://smile.eu/fr" target="_blank">
-                  <img src="img/SMILE_icone-full-orange -baseline.png" alt="Smile" className="logo-150px" title="Smile" />
-                </a>
-                &nbsp;
+                &nbsp;                 
                 <a href="https://www.viveris.fr" target="_blank">
                   <img src="img/logo-viveris.svg" alt="Viveris" className="logo-150px" title="Viveris" />
                 </a>
@@ -140,30 +121,30 @@ export default function Home() {
 
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
-                <h3>Sponsors Argent</h3>
+                <h3>Argent</h3>
                 <a href="https://www.data-bene.io" target="_blank">
                   <img src="img/logo-databene.png" alt="DataBene" className="logo-100px" title="DataBene" />
                 </a>
                 &nbsp;
+                <a href="https://www.worteks.com" target="_blank">
+                  <img src="img/logo-worteks.png" alt="Worteks" className="logo-100px" title="Worteks" />
+                </a>
+                &nbsp;                
               </div>
             </div>
 
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
-                <h3>Sponsors Bronze</h3>
+                <h3>Bronze</h3>
                 <p>
                   <a href="https://bleemeo.com" target="_blank">
                     <img src="img/bleemeo_logo.svg" alt="Bleemeo" className="logo-100px" title="Bleemeo" />
                   </a>
                   &nbsp;
                   <a href="https://www.bluemind.net/" target="_blank">
-                    <img src="img/bluemind.jpg" alt="Bluemind" className="logo-100px" title="Bluemind" />
+                    <img src="img/logo-bluemind.png" alt="Bluemind" className="logo-100px" title="Bluemind" />
                   </a>
                   &nbsp;
-                  <a href="https://puri.sm" target="_blank">
-                  <img src="img/purism.svg" alt="Purism" className="logo-100px" title="Purism" />
-                </a>
-                &nbsp;
                 </p>
               </div>
             </div>
@@ -178,7 +159,7 @@ export default function Home() {
               <div className="col-lg-4">
                 <h3>Partenaires</h3>
                 <a href="http://enseeiht.fr/" target="_blank">
-                  <img src="img/inpn7logo.svg" alt="ENSEEIHT" className="logo-150px" title="ENSEEIHT" />
+                  <img src="img/logo-toulouse-inp-n7.png" alt="INP-N7" className="logo-150px" title="INP-N7" />
                 </a>
                 &nbsp;
                 <a href="http://www.frenchtechtoulouse.com" target="_blank">
@@ -192,6 +173,10 @@ export default function Home() {
                 <a href="https://www.laregion.fr" target="_blank">
                   <img src="img/1200px-Logo_Occitanie_2017.svg.png" alt="La Region Occitanie" className="logo-100px" title="La Region Occitanie" />
                 </a>
+                &nbsp;
+                <a href="https://www.haute-garonne.fr/" target="_blank">
+                  <img src="img/logo-hg31.svg" alt="Conseil Départemetal de la Haute Garonne" className="logo-100px" title="Conseil Départemetal de la Haute Garonne" />
+                </a>                
               </div>
               <div className="col-lg-4">
                 <h3>Communication</h3>
@@ -206,14 +191,6 @@ export default function Home() {
                   &nbsp;
                   <a href="https://tisseo-collectivites.fr/" target="_blank">
                     <img src="img/logo-tisseo-collectivites.png" alt="Tisséo Collectivités" className="logo-100px" title="Tisséo Collectivités" />
-                  </a>
-                  &nbsp;
-                  <a href="https://radio-fmr.net/" target="_blank">
-                    <img src="img/logo-radio-fmr.jpg" alt="Radio FMR" className="logo-100px" title="Radio FMR" />
-                  </a>
-                  &nbsp;
-                  <a href="http://www.developpez.com" target="_blank">
-                    <img src="img/logo-developpez.com.png" alt="Développez.com" className="logo-100px" title="Développez.com" />
                   </a>
                 </div>
               </div>
@@ -286,7 +263,7 @@ export default function Home() {
                 <div className="col-lg-12 text-center">
                   <h2 className="section-heading">Depuis Toulouse&nbsp;?</h2>
                   <hr className="primary" />
-                  <p>Le Capitole du Libre sera hébergé à l'<a href="http://www.enseeiht.fr">INP-N7</a>, 26 rue Riquet, 31000 Toulouse.</p>
+                  <p>Le Capitole du Libre sera hébergé à l'<a href="http://www.enseeiht.fr">INP-N7</a>, 2 rue Charles Camichel, 31000 Toulouse.</p>
                   <p><b>Coordonnées GPS :</b>43.60215 - 1.45524</p>
                   <iframe id="carte" src="https://umap.openstreetmap.fr/fr/map/cdl_2017_campus_173723?scaleControl=true&miniMap=false&scrollWheelZoom=true&zoomControl=true&allowEdit=false&moreControl=false&datalayersControl=false&onLoadPanel=undefined&captionBar=false&datalayers=198023#17/43.60215/1.45524"></iframe>
                   <p><a href="http://umap.openstreetmap.fr/en/map/cdl_2017_campus_173723#17/43.60215/1.45524">Voir en plein écran</a></p>
@@ -350,7 +327,7 @@ export default function Home() {
                   souhaitez rejoindre des ami⋅e⋅s ou vous extraire du centre ville.
                 </p>
                 <ul className="list-unstyled">
-                  <li><a href="https://www.airbnb.fr/s/Rue-Camichel--Toulouse?checkin=16%2F11%2F2019&checkout=18%2F11%2F2019">Rechercher un AirBNB</a></li>
+                  <li><a href="https://www.airbnb.fr/s/Rue-Camichel--Toulouse?checkin=17%2F11%2F2023&checkout=19%2F11%2F2023">Rechercher un AirBNB</a></li>
                   <li><a href="https://all.accor.com/hotel/B3A1/index.fr.shtml">Hotel Ibis Style</a>, situé de l'autre côté du canal par rapport au campus de l'ENSEEIHT</li>
                   <li><a href="http://www.athome-ah.com/">At Home Appart Hotel</a>, situé à quelques centaines de mètres le long du Canal du Midi</li>
                   <li><a href="https://all.accor.com/hotel/1260/index.fr.shtml">Mercure Toulouse Centre Wilson Capitole</a>, proche de l'ENSEEIHT, en centre ville et proche des transports en commun</li>
