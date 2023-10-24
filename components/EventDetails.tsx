@@ -76,6 +76,15 @@ const EventDetails = () => (
 
       </div>
 
+      <div className="row">
+          <p className="text-center"><a href="https://www.youtube.com/watch?v=b2Pgk1nzq9w" data-toggle="modal" data-target=".video-dialog" className="btn btn-primary btn-xl page-scroll">Découvrez le Capitole du Libre en vidéo</a></p>
+      </div>
+
+      <div className="row">
+           <p className="text-center"><a href="https://tickets.capitoledulibre.org/cdl/2023/" className="btn btn-primary btn-xl page-scroll"><span>INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
+      </div>
+
+
     </div>
   </section>
 )
