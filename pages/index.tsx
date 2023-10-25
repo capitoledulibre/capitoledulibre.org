@@ -62,7 +62,7 @@ export default function Home() {
           <div className="container text-center" id="sponsor">
             <div className="call-to-action">
               <h2>Soutenez le Capitole du Libre en devenant sponsor!</h2>
-              <a href="/Capitole-du-Libre-2023-Plaquette-Sponsors.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de sponsoring</a>
+              <a href="/Capitole-du-Libre-2023-Plaquette-Sponsors.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de partenariat</a>
             </div>
           </div>
         </aside>
@@ -98,6 +98,11 @@ export default function Home() {
             <div className="row text-center">
               <div className="col-xs-12 col-sm-12">
                 <h3>Or</h3>
+                <a href="https://evolix.com" target="_blank">
+                  <img src="img/logo-evolix.png" alt="Evolix" className="logo-150px" title="Evolix" />
+                </a>
+                &nbsp;
+                &nbsp;                  
                 <a href="https://www.linagora.com" target="_blank">
                   <img src="img/logo-linagora.png" alt="Linagora" className="logo-150px" title="Linagora" />
                 </a>
