@@ -107,12 +107,7 @@ export default function Home() {
                   <img src="img/logo-linagora.png" alt="Linagora" className="logo-150px" title="Linagora" />
                 </a>
                 &nbsp;
-                &nbsp;                 
-                <a href="https://www.logilab.fr/" target="_blank">
-                  <img src="img/logo-logilab.svg" alt="Logilab" className="logo-150px" title="Logilab" />
-                </a>
-                &nbsp;
-                &nbsp;                 
+                &nbsp;                             
                 <a href="https://makina-corpus.com/" target="_blank">
                   <img src="img/makina-corpus.png" alt="Makina Corpus" className="logo-100px" title="Makina Corpus" />
                 </a>
@@ -131,6 +126,10 @@ export default function Home() {
                   <img src="img/logo-databene.png" alt="DataBene" className="logo-100px" title="DataBene" />
                 </a>
                 &nbsp;
+                <a href="https://www.smile.eu" target="_blank">
+                  <img src="img/SMILE_icone-full-orange -baseline.png" alt="Smile" className="logo-100px" title="Smile" />
+                </a>
+                &nbsp;                
                 <a href="https://www.worteks.com" target="_blank">
                   <img src="img/logo-worteks.png" alt="Worteks" className="logo-100px" title="Worteks" />
                 </a>
