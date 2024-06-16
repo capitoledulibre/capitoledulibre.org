@@ -47,7 +47,7 @@ const NavBar = ({transparentOnTop}: Props) => {
             <span className="sr-only">Toggle navigation</span> Menu <i className="fas fa-bars"></i>
           </button>
           <Link href="/#page-top" className="navbar-brand page-scroll">
-            Capitole du Libre 2023
+            Capitole du Libre 2024
           </Link>
         </div>
 
