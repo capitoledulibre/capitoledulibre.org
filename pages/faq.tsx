@@ -1,0 +1,34 @@
+import NavBar from '../components/NavBar';
+
+export default function FAQ() {
+    return (
+        <>
+            <NavBar />
+
+            <section id="faq">
+                <div className="container">
+                    <div className="row">
+
+                        <h1>Questions Fréquences</h1>
+
+                        <p>Retrouvez ici les questions que l'on nous pause fréquemment à propos de l'événement.</p>
+
+                        <h2>L'évènement est gratuit?</h2>
+
+                        <p>L'évènement est gratuit et ouvert à toutes et tous. Depuis 2023, il faut au préalable s'inscrire sur Internet pour disposer d'un billet valide. Nous ne procédons pas à des vérifications d'identité, mais un contrôle des sacs est effectué à l'entrée du site.</p>
+
+                        <h2>Comment venir?</h2>
+
+                        <p>Nous avons dédié une <a href="/venir">page</a> aux accès à l'événement.</p>
+
+                        <h2>Puis-je venir avec mes enfants ? Ma famille ?</h2>
+
+                        <p>Toutes et tous sont les bienvenus. Des conférences sont accessibles à tous les niveaux, de l'initiation à l'expertise. Pour les plus jeunes, des ateliers et initation sont mis en place chaque année.</p>
+
+                    </div>
+                </div>
+
+            </section>
+        </>
+    )
+}

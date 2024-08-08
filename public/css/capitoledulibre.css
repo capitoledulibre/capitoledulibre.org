@@ -17,3 +17,11 @@ iframe#carte {
   height: 300px;
   border: 1px solid lightgrey;
 }
+
+.bg-primary {
+  background-color: #F05F40 !important;
+}
+
+.sr-icons {
+  color: #F05F40 !important;
+}

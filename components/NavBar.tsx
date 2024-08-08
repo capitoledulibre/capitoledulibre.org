@@ -39,62 +39,40 @@ const NavBar = ({transparentOnTop}: Props) => {
   }, [transparentOnTop, navRef])
 
   return (
-    <nav id="mainNav" ref={navRef} className={`navbar navbar-default navbar-fixed-top ${transparent ? 'affix-top' : 'affix'}`}>
-      <div className="container-fluid">
-        {/* Brand and toggle get grouped for better mobile display */}
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span className="sr-only">Toggle navigation</span> Menu <i className="fas fa-bars"></i>
-          </button>
-          <Link href="/#page-top" className="navbar-brand page-scroll">
-            Capitole du Libre 2024
-          </Link>
-        </div>
+<nav className="navbar navbar-expand-lg bg-light">
+  <div className="container-fluid">
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTopToggler" aria-controls="navbarTopToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <a className="navbar-brand" href="/"><img src="/img/logo-capitoledulibre.png" height="30px"></img></a>
+    <div className="collapse navbar-collapse" id="navbarTopToggler">
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        {/*
+        <li className="nav-item">
+          <a className="nav-link" href="/programme">Programme</a>
+        </li>
+        */}
+        <li className="nav-item">
+          <a className="nav-link" href="/cfp">Appel à participation</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="/venir">Venir</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="/partenaires">Nos partenaires</a>
+        </li>           
+        <li className="nav-item">
+          <a className="nav-link" href="/code-of-conduct">Code de conduite</a>
+        </li>    
+        <li className="nav-item">
+          <a className="nav-link" href="/faq">Questions fréquentes</a>
+        </li>              
+      </ul>
+    </div>
+  </div>
+</nav>
 
-        {/* Collect the nav links, forms, and other content for toggling */}
-        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <a className="page-scroll" href="/#about">About</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="/#event">L'événement</a>
-            </li>
-            {/*
-            <li>
-              <a className="page-scroll" href="/#cfp">Appel à participation</a>
-  </li> */}
-            <li>
-              <Link href="/programme" className="page-scroll">
-                Programme
-              </Link>
-            </li>
-            <li>
-              <a className="page-scroll" href="/#portfolio">Quelques images</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="/#partners">Partenaires</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="/#contact">Nous contacter</a>
-            </li>
-            <li>
-              <Link href="/code-of-conduct" className="page-scroll">
-                Code de Conduite
-              </Link>
-            </li>
-            <li>
-              <a className="page-scroll" href="/#come">Venir</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="/#accomodation">Se loger</a>
-            </li>
-          </ul>
-        </div>
-        {/* /.navbar-collapse */}
-      </div>
-      {/* /.container-fluid */}
-    </nav>
+
   );
 }
 
