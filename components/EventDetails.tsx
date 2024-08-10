@@ -36,7 +36,7 @@ const EventDetails = () => (
 
         <EventDetailsCard faIcon="fa-bullhorn" title="Conférences">
             Autour de thématiques techniques: C++, développement Web, embarqué, DevOps; de logiciels libres de création graphique et multimédia; de jeux libres; d'enjeux du logiciel libre dans la société et des communautés.<br />
-            <a href="https://2019.capitoledulibre.org/programme/#schedule">Retrouvez les conférences de l'édition 2023</a>
+            <a href="https://2023.capitoledulibre.org/programme/#schedule">Retrouvez les conférences de l'édition 2023</a>
         </EventDetailsCard>
 
         <EventDetailsCard faIcon="fa-university" title="Ateliers">
