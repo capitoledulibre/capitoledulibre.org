@@ -37,7 +37,7 @@ export default function CFP() {
 <li><b>conférence de 25 min</b> (incluant les questions)</li>
 <li><b>conférence de 55 min</b> (incluant les questions)</li>
 <li><b>atelier de 1h 55min</b></li>
-<li><b>stand au village associatif</b> pour toute la durée de l'événement (2 jours) </li>
+<li><b>stand au village associatif</b> pour toute la durée de l'évènement (2 jours) </li>
 </ul>
 
 <p>Vous pouvez proposer autant de conférences et d'ateliers que vous le souhaitez, mais nous retiendrons au maximum deux d'interventions par orateur ou oratrice. De plus, nous vous invitons à ne pas dépasser deux intervenants ou intervenantes par conférence. Par **intervenant ou intervenante, nous entendons un individu** (qui peut-être anonyme ou désigné par un pseudo) avec une biographie. Nous ne pourrons retenir les interventions proposées au nom d'un groupe ou d'une association.</p>

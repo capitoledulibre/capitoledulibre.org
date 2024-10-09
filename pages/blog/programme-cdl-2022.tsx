@@ -55,7 +55,7 @@ Nous avons également besoin de l'aide de la communauté du Libre pour nous aide
 
 <p>Une table ronde sera organisée pour aborder ce sujet le Dimanche à 10h00 pendant le Capitole du Libre.</p>
 
-<p><b>Nous sommes désolés que certaines personnes aient pu se sentir rejetées de part leur genre, religion, couleur ou tout autre critère qui serait discriminatoire. Notre volonté est de faire du Capitole du Libre un événement bienveillant ou chacun.e se retrouve pour échanger autour du Libre et du Logiciel Libre. Nos efforts ont été insuffisants, nous en prenons bonne note pour le jour J et les éditions futures.</b></p>
+<p><b>Nous sommes désolés que certaines personnes aient pu se sentir rejetées de part leur genre, religion, couleur ou tout autre critère qui serait discriminatoire. Notre volonté est de faire du Capitole du Libre un évènement bienveillant ou chacun.e se retrouve pour échanger autour du Libre et du Logiciel Libre. Nos efforts ont été insuffisants, nous en prenons bonne note pour le jour J et les éditions futures.</b></p>
 
 <p>L'équipe d'organisation du Capitole du Libre</p>
 

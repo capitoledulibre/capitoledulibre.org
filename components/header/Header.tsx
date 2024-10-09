@@ -84,7 +84,7 @@ const Header = () => (
         <div className="header-content-inner">
           <h1 id="homeHeading">Capitole du Libre 2024 <br />16 &amp; 17 novembre, ENSEEIHT, Toulouse</h1>
           <hr />
-          <p>Week-end dédié au logiciel libre à travers environ 100 conférences, 25 ateliers pour les expert⋅e⋅s et le grand public. L'événement a accueilli 1500 participant⋅e⋅s en 2023. L'évènement est ouvert à tous sur inscription en ligne gratuite préalable!</p>
+          <p>Week-end dédié au logiciel libre à travers environ 100 conférences, 25 ateliers pour les expert⋅e⋅s et le grand public. L'évènement a accueilli 1500 participant⋅e⋅s en 2023. L'évènement est ouvert à tous sur inscription en ligne gratuite préalable!</p>
           <p><a href="https://cfp.capitoledulibre.org/cdl-2024/cfp" className="btn btn-primary btn-xl page-scroll">Proposez une conférence, un atelier, un stand jusqu'au 15 septembre 23h59</a></p>
           {/*<p><a href="https://tickets.capitoledulibre.org/cdl/2024/" className="btn btn-primary btn-xl page-scroll"><span className="registration">INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>*/}
           {/*<p><a href="/programme" className="btn btn-primary btn-xl page-scroll"> Consultez le programme de l'édition 2023</a></p>*/}
