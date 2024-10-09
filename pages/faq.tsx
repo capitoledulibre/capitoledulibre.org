@@ -11,7 +11,7 @@ export default function FAQ() {
 
                         <h1>Questions Fréquences</h1>
 
-                        <p>Retrouvez ici les questions que l'on nous pose fréquemment à propos de l'événement.</p>
+                        <p>Retrouvez ici les questions que l'on nous pose fréquemment à propos de l'évènement.</p>
 
                         <h2>L'évènement est gratuit?</h2>
 
@@ -19,7 +19,7 @@ export default function FAQ() {
 
                         <h2>Comment venir?</h2>
 
-                        <p>Nous avons dédié une <a href="/venir">page</a> aux accès à l'événement.</p>
+                        <p>Nous avons dédié une <a href="/venir">page</a> aux accès à l'évènement.</p>
 
                         <h2>Puis-je venir avec mes enfants ? Ma famille ?</h2>
 
