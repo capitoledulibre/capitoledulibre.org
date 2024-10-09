@@ -11,7 +11,7 @@ export default function FAQ() {
 
                         <h1>Questions Fréquences</h1>
 
-                        <p>Retrouvez ici les questions que l'on nous pause fréquemment à propos de l'événement.</p>
+                        <p>Retrouvez ici les questions que l'on nous pose fréquemment à propos de l'événement.</p>
 
                         <h2>L'évènement est gratuit?</h2>
 
