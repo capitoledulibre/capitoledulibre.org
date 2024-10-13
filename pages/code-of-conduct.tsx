@@ -11,13 +11,13 @@ export default function CodeOfConduct() {
 
                         <h1>Code de conduite</h1>
 
-                        <p>En tant qu’événement organisé par Toulibre, la charte de Toulibre s'applique. Pour mémoire, cette charte est reprise dans la suite de cette page. Cette charte est largement reprise de nos amis de l'Association Francophone Python (AFPy).</p>
+                        <p>En tant qu’évènement organisé par Toulibre, la charte de Toulibre s'applique. Pour mémoire, cette charte est reprise dans la suite de cette page. Cette charte est largement reprise de nos amis de l'Association Francophone Python (AFPy).</p>
 
                         <h2>Charte Toulibre</h2>
 
-                        <p>Le but de Toulibre est d’assurer du logiciel et de la culture libre auprès du plus large public possible. Nous diffusons nos connaissances et sommes ouverts aux apports extérieurs car la diversité, l’écoute réciproque, la solidarité et la démocratie élargissent les horizons et accroissent le potentiel de Toulibre et de chacun de ses membres. En conséquence, nous encourageons donc la participation aux divers événements que nous (co-)organisons de toutes les personnes de la communauté du libre ou souhaitant en faire partie. Dans ce cadre, Toulibre souhaite que toute personne intéressée soit accueillie de manière agréable et enrichissante.</p>
+                        <p>Le but de Toulibre est d’assurer du logiciel et de la culture libre auprès du plus large public possible. Nous diffusons nos connaissances et sommes ouverts aux apports extérieurs car la diversité, l’écoute réciproque, la solidarité et la démocratie élargissent les horizons et accroissent le potentiel de Toulibre et de chacun de ses membres. En conséquence, nous encourageons donc la participation aux divers évènements que nous (co-)organisons de toutes les personnes de la communauté du libre ou souhaitant en faire partie. Dans ce cadre, Toulibre souhaite que toute personne intéressée soit accueillie de manière agréable et enrichissante.</p>
 
-                        <p>Toulibre s’attend donc à ce que chaque membre de l’association fasse preuve de respect et de courtoisie envers les autres membres de l’association et les personnes rencontrées dans le cadre de tout événement organisé (formellement ou non) par l’association.</p>
+                        <p>Toulibre s’attend donc à ce que chaque membre de l’association fasse preuve de respect et de courtoisie envers les autres membres de l’association et les personnes rencontrées dans le cadre de tout évènement organisé (formellement ou non) par l’association.</p>
 
                         <p>Ce texte est notamment inspiré par le code de conduite établi par l’Ada Initiative et par la loi française de lutte contre les discriminations.</p>
 
@@ -31,20 +31,20 @@ export default function CodeOfConduct() {
 
                         <p>Soyez poli(e). N’insultez personne. Discrimination et harcèlement sont à exclure aussi bien dans les écrits, les visuels, les paroles et les actes, et ce quelle que soit leur nature (sexuelle, raciste, religieuse, sociale...).</p>
 
-                        <p>Le non respect de ces règles de bienséance pourra entraîner l’exclusion de l’événement, à la seule discrétion d’un ou plusieurs organisateurs, ou de l’association, après délibération du comité directeur, ainsi que de tout service proposé par Toulibre (site web, blog, canaux IRC).</p>
+                        <p>Le non respect de ces règles de bienséance pourra entraîner l’exclusion de l’évènement, à la seule discrétion d’un ou plusieurs organisateurs, ou de l’association, après délibération du comité directeur, ainsi que de tout service proposé par Toulibre (site web, blog, canaux IRC).</p>
 
                         <h3>La version “longue”</h3>
 
                         <h4>Champ d’application</h4>
 
-                        <p>Ces bonnes pratiques s’appliquent dans le cadre de tout événement (co-)organisé par Toulibre de manière directe ou indirecte à savoir:</p>
+                        <p>Ces bonnes pratiques s’appliquent dans le cadre de tout évènement (co-)organisé par Toulibre de manière directe ou indirecte à savoir:</p>
 
                         <ul>
                             <li>les conférences</li>
                             <li>les canaux IRC ou XMPP ou autre messagerie instantanée</li>
                             <li>le blog</li>
                             <li>la liste de diffusion</li>
-                            <li>tout événement ou vous représentez Toulibre, y compris les rencontres informelles</li>
+                            <li>tout évènement ou vous représentez Toulibre, y compris les rencontres informelles</li>
                         </ul>
 
                         <h4>Définition de la discrimination</h4>
@@ -63,11 +63,11 @@ export default function CodeOfConduct() {
 
                         <h4>Traitement des incidents</h4>
 
-                        <p>En cas de harcèlement ou de discrimination commis par un participant, les organisateurs de l’événement ou membres du comité directeur pourront prendre immédiatement les mesures qu’ils jugent appropriées et qui peuvent aller jusqu’à l’exclusion temporaire ou définitive d’un événement.</p>
+                        <p>En cas de harcèlement ou de discrimination commis par un participant, les organisateurs de l’évènement ou membres du comité directeur pourront prendre immédiatement les mesures qu’ils jugent appropriées et qui peuvent aller jusqu’à l’exclusion temporaire ou définitive d’un évènement.</p>
 
                         <h3>Signaler</h3>
 
-                        <p>Si vous êtes harcelé(e) ou victime de discrimination, ou si vous êtes témoin de harcèlement ou de discrimination à l’égard d’autre(s) participant(e-s), ou si vous craignez la survenue d’un incident, contactez sans attendre un membre organisateur (dans le cas d’un événement) ou un membre du comité directeur de Toulibre.</p>
+                        <p>Si vous êtes harcelé(e) ou victime de discrimination, ou si vous êtes témoin de harcèlement ou de discrimination à l’égard d’autre(s) participant(e-s), ou si vous craignez la survenue d’un incident, contactez sans attendre un membre organisateur (dans le cas d’un évènement) ou un membre du comité directeur de Toulibre.</p>
 
                         <p>Contact: <a href="mailto:conduite@capitoledulibre.org">conduite@capitoledulibre.org</a></p>
 
