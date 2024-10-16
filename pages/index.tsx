@@ -85,7 +85,6 @@ export default function Home() {
             <div className="row">
               <div className="col-lg-8 offset-2 text-center">
                 <h2 className="section-heading">Une idée&nbsp;? Une question&nbsp;? Contactez-nous&nbsp;!</h2>
-                <hr className="primary" />
                 <p>Si vous avez des questions, n'hésitez pas à nous contacter&nbsp;!</p>
               </div>
             </div>
@@ -103,7 +102,6 @@ export default function Home() {
             <div className="row">
               <div className="col-lg-8 offset-2 text-center">
                 <h2 className="section-heading">Suivez-nous sur les réseaux sociaux</h2>
-                <hr className="primary" />
               </div>
             </div>
             <div className="row">
@@ -135,7 +133,6 @@ export default function Home() {
             <div className="row">
               <div className="col-lg-8 offset-2 text-center">
                 <h2 className="section-heading">Une erreur&nbsp;? Une faute d'orthographe&nbsp;?</h2>
-                <hr className="primary" />
                 <p>Vous pouver signaler les erreurs ou proposer vos corrections&nbsp;!</p>
               </div>
             </div>
