@@ -128,6 +128,47 @@ const Partners = () => (
       </div>
     </div>
   </div>
+
+  <div className="row text-center cdl-partner-category">
+    <div className="col-xs-12 col-sm-12">
+      <h3>Partenaires Techniques</h3>
+      <a href="https://tvn7.fr" target="_blank">
+          <img src="/img/logo-tvn7.png" alt="TVn7" className="logo-100px" title="TVn7 - Le club video de l'n7" />
+      </a>
+      &nbsp;
+      &nbsp;            
+      <a href="https://can7.fr" target="_blank">
+        <img src="/img/logo-can7.png" alt="CAn7" className="logo-100px" title="CAn7 - Le club animation de l'n7" />
+      </a>      
+      &nbsp;     
+      &nbsp;                                            
+      <a href="https://photo7.inpt.fr/" target="_blank">
+        <img src="/img/logo-photo7.png" alt="Photo7" className="logo-100px" title="Photo7 - Le club photo d l'n7" />
+      </a>
+      &nbsp;
+      &nbsp;                                                            
+      <a href="https://net7.dev" target="_blank">
+        <img src="/img/logo-net7.png" alt="net7" className="logo-100px" title="net7 - Le club informatique de l'n7" />
+      </a>
+      &nbsp;
+      &nbsp;                                                            
+      <a href="https://7fault.itch.io/" target="_blank">
+        <img src="/img/logo-7fault.png" alt="7fault" className="logo-100px" title="7Fault - Le club de jeux vidéos de l'n7" />
+      </a>         
+      &nbsp;
+      &nbsp;                                                            
+      <a href="https://artilect.fr" target="_blank">
+        <img src="/img/logo-artilect.png" alt="Atilect" className="logo-100px" title="Artilect - Fablab à Toulouse" />
+      </a>         
+      &nbsp;
+      &nbsp;                                                            
+      <a href="https://www.coworking-toulouse.com" target="_blank">
+        <img src="/img/logo-etincelle-coworking.png" alt="Etincelle Coworking" className="logo-100px" title="Etincelle Coworking - Espace coworking" />
+      </a>                   
+    </div>
+  </div>
+
+
   </div>
 
   );
