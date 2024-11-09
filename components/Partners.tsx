@@ -164,7 +164,12 @@ const Partners = () => (
       &nbsp;                                                            
       <a href="https://www.coworking-toulouse.com" target="_blank">
         <img src="/img/logo-etincelle-coworking.png" alt="Etincelle Coworking" className="logo-100px" title="Etincelle Coworking - Espace coworking" />
-      </a>                   
+      </a>
+      &nbsp;
+      &nbsp;                                                            
+      <a href="https://polymny.studio" target="_blank">
+        <img src="/img/logo-polymny.png" alt="Polymny Studio" className="logo-100px" title="Polymny Studio" />
+      </a>                         
     </div>
   </div>
 
