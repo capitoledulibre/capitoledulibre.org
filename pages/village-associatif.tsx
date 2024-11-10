@@ -11,41 +11,37 @@ export default function VillageAssociatif() {
 
                         <h1>Village associatif au Capitole du Libre</h1>
 
-                        <p>En 2023, nous accueuillons sur le village associatif:</p>
+                        <p>En 2024, nous accueuillons sur le village associatif:</p>
                         <ul>
-                            <li>/e/OS, un système Android « déGooglisé »</li>
                             <li>April</li>
-                            <li>Borsalinux-FR</li>
-                            <li>Box86 & Box64</li>
-                            <li>CEFCYS (CErcle des Femmes de la CYberSécurité)</li>
-                            <li>Claviers libres et ergonomiques</li>
-                            <li>Communauté Héraultaise du Libre</li>
-                            <li>Devloprog (CHATONS)</li>
+                            <li>Boc47</li>
+                            <li>Borsalinux-Fr</li>
+                            <li>CHATONS "PIC"</li>
                             <li>Debian France</li>
-                            <li>Ergodis/BÉPO</li>
+                            <li>/e/OS, un système Android « déGooglisé »</li>
+                            <li>Ergodis : dispositions de touches ergonomiques pour vos claviers</li>
                             <li>FDN</li>
+                            <li>foopgp</li>
                             <li>Framasoft</li>
-                            <li>GNU Guix</li>
+                            <li>GNU Guix </li>
                             <li>Haiku</li>
-                            <li>Infini</li>
-                            <li>JabberFR</li>
-                            <li>Khaganat</li>
                             <li>La Contre-Voie</li>
-                            <li>La Mouette/LibreOffice</li>
                             <li>La musique sous Linux / Fedora</li>
+                            <li>La Rebooterie, recyclerie numérique associative toulousaine</li>
                             <li>Libre en Communs</li>
-                            <li>OpenStreetMap</li>
-                            <li>Mageia.org</li>
-                            <li>OSGeo-fr, le logiciel libre en géomatique</li>
-                            <li>Owntech</li>
-                            <li>Projet Internet et Citoyenneté (PIC)</li>
-                            <li>SILICOOP : coopérative pour la microélectronique libre</li>
-                            <li>Skeptikon</li>
+                            <li>LibreOffice / La Mouette</li>
+                            <li>Mageia</li>
+                            <li>Montpel'libre</li>
+                            <li>OneDeadKey : claviers ergonomiques libres</li>
+                            <li>OpenStreetmap</li>
+                            <li>Ptilouk.net, livres & jeux vidéo libres</li>
+                            <li>SILICOOP : coopérative pour l'électronique libre</li>
+                            <li>ROSELAB</li>
                             <li>Tetaneutral.net</li>
                             <li>Tracim / Galae</li>
                             <li>Toulibre</li>
-                            <li>WikiLibriste.fr</li>
-                            <li>XWiki - CryptPad</li>
+                            <li>XWiki - CryptPad </li>
+                            <li>Worldwide Open Cyber Security Association (WOCSA)</li>
                         </ul>
                     </div>
                 </div>
