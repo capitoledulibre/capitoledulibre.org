@@ -1,0 +1,36 @@
+.summary {
+	padding: 0;
+	display: flex;
+	gap: 24px;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.container {
+	margin: 24px 24px 0 24px;
+
+}
+
+.title {
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.result {
+	border-radius: 10px;
+	max-width: 100%;
+	height: auto;
+
+	@media only screen and (min-width: 550px) {
+		max-width: 500px;
+	}
+}
+
+.recipe {
+	margin: 24px;
+	background-color: #eceff4;
+	border-radius: 10px;
+	padding: 24px;
+	max-width: 500px;
+}
