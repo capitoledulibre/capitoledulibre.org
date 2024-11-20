@@ -7,6 +7,7 @@ type Illustration = {
     url: string
     name: string
   }
+  learnMore?: string
 }
 
 export default function Logos() {
@@ -15,7 +16,7 @@ export default function Logos() {
     2024: {
       ext: "svg",
       by: { url: "https://gwen.works", name: "Gwen Le Bihan" },
-      // blogpost: "https://gwen.works/capitole-du-libre" TODO: publish this ^^
+      learnMore: "https://gwen.works/capitole-du-libre",
     },
   }
 
@@ -41,21 +42,31 @@ export default function Logos() {
                 Utilisée sur les visuels d'une édition (T-shirts, affiches,
                 etc). Change chaque année.
               </p>
-              {Object.entries(illustrations).map(([year, { by, ext }]) => (
-                <>
-                  <h3>Édition {year}</h3>
-                  <figure className={styles.illustration}>
-                    <img
-                      className={styles.illustrationImage}
-                      src={`/img/croix-${year}.${ext}`}
-                      alt={`Illustration de l'édition ${year}`}
-                    />
-                    <figcaption className={styles.illustrationCaption}>
-                      Par <a href={by.url}>{by.name}</a>
-                    </figcaption>
-                  </figure>
-                </>
-              ))}
+              {Object.entries(illustrations).map(
+                ([year, { by, ext, learnMore }]) => (
+                  <div key={year}>
+                    <h3>Édition {year}</h3>
+                    <figure className={styles.illustration}>
+                      <img
+                        className={styles.illustrationImage}
+                        src={`/img/croix-${year}.${ext}`}
+                        alt={`Illustration de l'édition ${year}`}
+                      />
+                      <figcaption className={styles.illustrationCaption}>
+                        Par <a href={by.url}>{by.name}</a>
+                        {learnMore ? (
+                          <>
+                            <span> · </span>
+                            <a href={learnMore}>En savoir plus</a>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </figcaption>
+                    </figure>
+                  </div>
+                )
+              )}
             </section>
           </div>
         </div>
