@@ -1,0 +1,16 @@
+.illustrationImage {
+    max-width: 20vw;
+    min-width: 200px;
+    padding: 2em;
+}
+
+.illustrationCaption {
+    text-align: center;
+}
+
+.illustration {
+    display: flex;
+    flex-direction: column;
+    max-width: 20vw;
+    min-width: 200px;
+}
