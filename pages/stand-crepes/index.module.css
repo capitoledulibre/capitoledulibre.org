@@ -34,3 +34,14 @@
 	padding: 24px;
 	max-width: 500px;
 }
+
+.license {
+	margin-left: 15px;
+}
+
+.license_txt {
+	font-size: 0.75em;
+	text-align: center;
+	color: #5b5b5b;
+	margin: 15px 10%;
+}
