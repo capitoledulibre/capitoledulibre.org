@@ -25,6 +25,10 @@ export default function FAQ() {
 
                         <p>Toutes et tous sont les bienvenus. Des conférences sont accessibles à tous les niveaux, de l'initiation à l'expertise. Pour les plus jeunes, des ateliers et initation sont mis en place chaque année.</p>
 
+                        <h2>J'aime beaucoup le logo / la croix occitane stylisée. Je peux la trouver quelque part?</h2>
+
+                        <p>Merci! Les illustrations de toutes les années, ainsi que le logo du Capitole du libre, sont <a href="/logos">listées ici</a></p>
+
                     </div>
                 </div>
 
