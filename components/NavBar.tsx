@@ -47,14 +47,14 @@ const NavBar = ({transparentOnTop}: Props) => {
     <a className="navbar-brand" href="/"><img src="/img/logo-capitoledulibre.png" height="30px"></img></a>
     <div className="collapse navbar-collapse" id="navbarTopToggler">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        {/*
         <li className="nav-item">
           <a className="nav-link" href="/programme">Programme</a>
         </li>
-        {/*
+        */}
         <li className="nav-item">
           <a className="nav-link" href="/cfp">Appel à participation</a>
         </li>
-        */}
         <li className="nav-item">
           <a className="nav-link" href="/venir">Venir</a>
         </li>

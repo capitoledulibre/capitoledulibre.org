@@ -20,7 +20,7 @@ export default function Home() {
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Capitole du Libre 2024</title>
+        <title>Capitole du Libre 2025</title>
 
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
@@ -38,34 +38,34 @@ export default function Home() {
 
         <Portfolio />
 
+        <aside className="bg-primary">
+          <div className="container text-center" id="cfp">
+            <div className="call-to-action">
+              <h2>L'appel à participation est ouvert jusqu'au Mardi 15 juillet 2025 23h59</h2>
+              <p>Vous pouvez proposer des conférences (de 25min ou de 55min), ateliers (de 1h55) et stands (tout le week-end) jusqu'au Mardi 15 juillet 23h59. Nous encourageons tout le monde à participer, que vous soyez un speaker averti ou débutant. Une seul contrainte: la conférence doit être liée au logiciel libre ou au libre de manière générale.</p>
+              <a href="https://cfp.capitoledulibre.org/cdl-2025/cfp" className="btn btn-default btn-xl sr-button">Formulaire de proposition</a>
+            </div>
+          </div>
+        </aside>
+
+
         {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
-              <h2>L'appel à participation est ouvert jusqu'au 15 septembre 23h59</h2>
-              <p>Vous pouvez proposer des conférences (de 25min ou de 55min), ateliers (de 1h55) et stands (tout le week-end) jusqu'au 15 septembre 23h59. Nous encourageons tout le monde à participer, que vous soyez un speaker averti ou débutant. Une seul contrainte: la conférence doit être liée au logiciel libre ou au libre de manière générale.</p>
-              <a href="https://cfp.capitoledulibre.org/cdl-2024/cfp" className="btn btn-default btn-xl sr-button">Formulaire de proposition</a>
+              <h2>Découvrez le programme de l'édition 2025</h2>
+              <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
+              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2025</a>
             </div>
           </div>
         </aside>
         */}
 
-
-        <aside className="bg-primary">
-          <div className="container text-center" id="cfp">
-            <div className="call-to-action">
-              <h2>Découvrez le programme de l'édition 2024</h2>
-              <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
-              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2024</a>
-            </div>
-          </div>
-        </aside>
-
         <aside className="bg-dark">
           <div className="container text-center" id="sponsor">
             <div className="call-to-action">
               <h2>Soutenez le Capitole du Libre en devenant partenaire!</h2>
-              <a href="/Capitole-du-Libre-2024-Plaquette-Partenaires.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de partenariat</a>
+              <a href="/Capitole-du-Libre-2025-Plaquette-Partenaires.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de partenariat</a>
             </div>
           </div>
         </aside>
@@ -73,7 +73,7 @@ export default function Home() {
         <section id="partners">
           <div className="container">
 
-            <h2>Nos partenaires</h2>
+            <h2>Nos partenaires 2024</h2>
 
             <Partners />
 
@@ -105,8 +105,11 @@ export default function Home() {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-2 text-center">
+              <div className="col-lg-2 text-center offset-2">
                 <p><a href="https://framapiaf.org/@capitoledulibre"><i className="fa-brands fa-mastodon fa-3x"></i></a></p>
+              </div>
+              <div className="col-lg-2 text-center">
+                <p><a href="https://bsky.app/profile/capitoledulibre.org"><i className="fa-brands fa-bluesky fa-3x"></i></a></p>
               </div>
               <div className="col-lg-2 text-center">
                 <p><a href="https://x.com/capitoledulibre"><i className="fa-brands fa-x-twitter fa-3x"></i></a></p>
@@ -115,7 +118,9 @@ export default function Home() {
                 <p><a href="https://www.facebook.com/CapitoleDuLibre/"><i className="fa-brands fa-facebook fa-3x"></i>
                 </a></p>
               </div>
-              <div className="col-lg-2 text-center">
+            </div>
+            <div className="row">
+              <div className="col-lg-2 text-center offset-3">
                 <p><a href="https://github.com/capitoledulibre"><i className="fa-brands fa-github fa-3x"></i></a></p>
               </div>
               <div className="col-lg-2 text-center">

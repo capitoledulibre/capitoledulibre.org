@@ -18,6 +18,7 @@ const NavBarBottom = () => {
     <a className="nav-link" href="//2019.capitoledulibre.org">2019</a>    
     <a className="nav-link" href="//2022.capitoledulibre.org">2022</a>
     <a className="nav-link" href="//2023.capitoledulibre.org">2023</a>
+    <a className="nav-link" href="//2024.capitoledulibre.org">2024</a>
   </div>
 </nav>
   );

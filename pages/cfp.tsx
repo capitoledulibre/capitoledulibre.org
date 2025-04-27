@@ -14,16 +14,16 @@ export default function CFP() {
 
 <div className="row">
 
-<p><b>L'édition 2024 du Capitole du Libre se tiendra les 16 et 17 novembre 2024 à l'INP-N7, en centre ville de Toulouse.</b></p>
+<p><b>L'édition 2025 du Capitole du Libre se tiendra les 15 et 16 novembre 2025 à l'INP-N7, en centre ville de Toulouse.</b></p>
 
-<p><b>L'appel à participation  est ouvert jusqu'au 15 septembre 23h59.</b></p>
+<p><b>L'appel à participation  est ouvert jusqu'au Mardi 15 juillet 23h59.</b></p>
 
 
 <aside className="bg-dark">
           <div className="container text-center" id="sponsor">
             <div className="call-to-action">
-              <h2>Proposez une conférence, un atelier ou un stand jusqu'au 15 septembre 23h59!</h2>
-              <a href="https://cfp.capitoledulibre.org/cdl-2024/cfp" className="btn btn-default btn-xl sr-button">Accéder au site du CFP</a>
+              <h2>Proposez une conférence, un atelier ou un stand jusqu'au Mardi 15 juillet 23h59!</h2>
+              <a href="https://cfp.capitoledulibre.org/cdl-2025/cfp" className="btn btn-default btn-xl sr-button">Accéder au site du CFP</a>
             </div>
           </div>
         </aside>

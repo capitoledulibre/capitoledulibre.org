@@ -11,7 +11,7 @@ export default function VillageAssociatif() {
 
                         <h1>Village associatif au Capitole du Libre</h1>
 
-                        <p>En 2024, nous accueuillons sur le village associatif:</p>
+                        <p>En 2024, nous avons accueuilli sur le village associatif:</p>
                         <ul>
                             <li>April</li>
                             <li>Boc47</li>

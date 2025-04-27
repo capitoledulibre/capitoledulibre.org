@@ -22,7 +22,7 @@ export default function Partenaires() {
           <div className="container text-center" id="sponsor">
             <div className="call-to-action">
               <h2>Soutenez le Capitole du Libre en devenant patenaire!</h2>
-              <a href="/Capitole-du-Libre-2024-Plaquette-Partenaires.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de partenariat</a>
+              <a href="/Capitole-du-Libre-2025-Plaquette-Partenaires.pdf" className="btn btn-default btn-xl sr-button">Téléchargez notre dossier de partenariat</a>
             </div>
           </div>
         </aside>
@@ -30,7 +30,7 @@ export default function Partenaires() {
         <section id="partners">
           <div className="container">
 
-            <h2>Nos partenaires</h2>
+            <h2>Nos partenaires 2024</h2>
 
             <Partners/>
 
