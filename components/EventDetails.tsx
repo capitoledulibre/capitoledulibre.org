@@ -80,7 +80,7 @@ const EventDetails = () => (
       </div>
 
       <div className="row">
-           <p className="text-center"><a href="https://tickets.capitoledulibre.org/cdl/2024/" className="btn btn-primary btn-xl page-scroll"><span>INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
+           <p className="text-center"><a href="https://tickets.capitoledulibre.org/cdl/2025/" className="btn btn-primary btn-xl page-scroll"><span>INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
       </div>
 
 
