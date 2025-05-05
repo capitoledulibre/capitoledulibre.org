@@ -86,7 +86,7 @@ const Header = () => (
           <hr />
           <p>Week-end dédié au logiciel libre à travers plus de 100 conférences, et plus de 20 ateliers pour les expert⋅e⋅s et le grand public. L'évènement a accueilli 1200 participant⋅e⋅s en 2024. L'évènement est ouvert à tous sur inscription en ligne gratuite préalable!</p>
           <p><a href="https://cfp.capitoledulibre.org/cdl-2025/cfp" className="btn btn-primary btn-xl page-scroll">Proposez une conférence, un atelier, un stand jusqu'au mardi 15 juillet 23h59</a></p>
-          <p><a href="https://tickets.capitoledulibre.org/cdl/2024/" className="btn btn-primary btn-xl page-scroll"><span className="registration">INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
+          <p><a href="https://tickets.capitoledulibre.org/cdl/2025/" className="btn btn-primary btn-xl page-scroll"><span className="registration">INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
           {/* <p><a href="/programme" className="btn btn-primary btn-xl page-scroll"> Consultez le programme de l'édition 2024</a></p>*/}
           <p><a href="/#sponsor" className="btn btn-primary btn-xl page-scroll">Devenez partenaire</a></p>
         </div>
