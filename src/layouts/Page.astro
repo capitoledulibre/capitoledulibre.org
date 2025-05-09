@@ -1,0 +1,14 @@
+---
+import Head from "@components/Head.astro";
+
+import "@styles/reset.css";
+
+const { title = "Capitole du Libre" } = Astro.props;
+---
+
+<html lang="en">
+  <Head title={title}/>
+  <body>
+    <slot />
+  </body>
+</html>
