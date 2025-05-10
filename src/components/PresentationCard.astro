@@ -1,0 +1,116 @@
+---
+import Link from "./Link.astro";
+
+interface Props {
+  category: string;
+  shortTitle: string;
+
+  title: string;
+
+  links: {
+    label: string;
+    href: string;
+  }[];
+}
+
+const { category, shortTitle, title, links }: Props = Astro.props;
+---
+
+<div class="presentation-card">
+  <img src="/background.jpg" alt="Capitole du Libre" />
+  <div class="content">
+    <h2>{category}</h2>
+    <h3>{shortTitle}</h3>
+
+    <div class="description">
+      <h4>{title}</h4>
+      <slot />
+    </div>
+
+    <div class="links">
+      {
+        links.map((link) => (
+          <Link href={link.href} color="primary" class="button">
+            {link.label}
+          </Link>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .presentation-card {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    margin: 5rem 2rem;
+
+    @media screen and (max-width: 800px) {
+      flex-wrap: wrap;
+      max-width: 450px;
+      margin: 5rem auto;
+    }
+
+    &:nth-child(2n) {
+      flex-direction: row-reverse;
+    }
+
+    img {
+      width: 50%;
+      border-radius: 10px;
+      object-fit: cover;
+      object-position: center;
+      min-width: 300px;
+      max-height: max-content;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      padding: 0.5rem 0;
+
+      h2 {
+        margin-bottom: 1rem;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      h3 {
+        margin-bottom: 1rem;
+        font-weight: 500;
+        font-size: 1.5rem;
+      }
+
+      h4 {
+        margin-bottom: 1rem;
+        font-weight: 400;
+        font-size: 1.25rem;
+      }
+
+      p {
+        font-weight: 300;
+        margin: 0.5rem 0;
+      }
+
+      .description {
+        background:
+          linear-gradient(#fff 0 0) padding-box,
+          linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+        padding: 0.5em;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+
+      .links {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-around;
+      }
+    }
+  }
+</style>
