@@ -1,3 +1,9 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 :root {
   --font-title: "Ubuntu", sans-serif;
   --font-content: Rubik, sans-serif;
