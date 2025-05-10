@@ -1,13 +1,18 @@
 ---
 import Head from "@components/Head.astro";
 
+import "@fontsource/ubuntu";
+import "@fontsource-variable/fira-code";
+import "@fontsource-variable/rubik";
+
 import "@styles/reset.css";
+import "@styles/theme.css";
 
 const { title = "Capitole du Libre" } = Astro.props;
 ---
 
-<html lang="en">
-  <Head title={title}/>
+<html lang="fr" data-theme="light">
+  <Head title={title} />
   <body>
     <slot />
   </body>
