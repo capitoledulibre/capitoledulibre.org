@@ -1,0 +1,49 @@
+---
+interface Props {
+  href: string;
+  type?: "button" | "link";
+  color?: "primary" | "secondary" | "accent";
+  class?: string;
+}
+
+const {
+  href,
+  type = "button",
+  color = "primary",
+  class: className = "",
+  ...rest
+} = Astro.props;
+---
+
+<a href={href} class:list={[className, type, color]} {...rest}>
+  <slot />
+</a>
+
+<style
+  define:vars={{
+    color: `var(--${color})`,
+    "color-hover": `var(--${color}-hover)`,
+  }}
+>
+  a {
+    transition: all 0.1s ease-in-out;
+    text-decoration: none;
+
+    /* automatic color from background color */
+    --l: clamp(0, (l / var(--l-threshold, 0.623) - 1) * -infinity, 1);
+    color: oklch(from var(--color) var(--l) 0 h);
+
+    &.button {
+      background-color: var(--color);
+      padding: 0.6em 0.7em;
+      border-radius: 5px;
+
+      box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.2);
+
+      &:hover {
+        box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+        background-color: var(--color-hover);
+      }
+    }
+  }
+</style>

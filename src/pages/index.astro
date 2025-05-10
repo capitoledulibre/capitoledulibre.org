@@ -1,16 +1,26 @@
 ---
+import Page from "@layouts/Page.astro";
 
+import Landing from "@components/Landing.astro";
+
+let year = 2025;
+let date = `15 & 16 novembre ${year}`;
+let place = "ENSEEIHT, Toulouse";
+let actions = [
+  {
+    label: "S'inscrire",
+    href: "https://tickets.capitoledulibre.org/cdl/2025/",
+  },
+  {
+    label: "Proposer un sujet",
+    href: "https://cfp.capitoledulibre.org/cdl-2025/cfp",
+  },
+  { label: "Devenir partenaire", href: "/sponsor" },
+];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<Page title={`Capitole du Libre ${year}`}>
+  <Landing date={date} place={place} actions={actions} />
+</Page>
+
+<style></style>

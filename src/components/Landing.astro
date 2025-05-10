@@ -1,0 +1,128 @@
+---
+import Link from "@components/Link.astro";
+import CapitoleDuLibre from "@assets/logo-capitoledulibre.svg";
+
+interface Props {
+  date: string;
+  place: string;
+  actions: {
+    label: string;
+    href: string;
+  }[];
+}
+
+const { date, place, actions } = Astro.props as Props;
+---
+
+<section class="landing">
+  <div class="landing__header">
+    <h3>
+      Weekend dédié au <span>logiciel libre</span>
+    </h3>
+    <div class="landing__header__actions">
+      {
+        actions.map((action) => (
+          <Link href={action.href} color="secondary">
+            {action.label}
+          </Link>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="landing__bottom">
+    <CapitoleDuLibre class="landing__bottom__logo" />
+    <div class="landing__bottom__info">
+      <h2>
+        {date}
+      </h2>
+      <h2>
+        {place}
+      </h2>
+    </div>
+  </div>
+  <div class="landing__background-gradient"></div>
+  <div class="landing__background"></div>
+</section>
+
+<style>
+  section.landing {
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+
+    .landing__background {
+      z-index: -100;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+
+      background-image: url("/background.jpg");
+      filter: blur(4px);
+    }
+
+    .landing__background-gradient {
+      z-index: -90;
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.45);
+      background-blend-mode: multiply;
+
+      background-image: linear-gradient(
+        -120deg,
+        color-mix(in srgb, var(--primary) 70%, transparent),
+        color-mix(in srgb, var(--primary) 35%, transparent)
+      );
+    }
+
+    .landing__header {
+      padding: 24px;
+      gap: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 400;
+
+        span {
+          color: var(--primary);
+        }
+      }
+
+      .landing__header__actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+    }
+
+    .landing__bottom {
+      padding: 42px;
+      gap: 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .landing__bottom__logo {
+        max-width: 400px;
+      }
+    }
+
+    .landing__bottom__info {
+      h2 {
+        font-family: var(--font-monospace);
+        font-size: 2.5rem;
+        font-weight: 400;
+        text-align: right;
+      }
+    }
+  }
+</style>
