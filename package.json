@@ -10,6 +10,9 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@fontsource-variable/fira-code": "^5.2.6",
+    "@fontsource-variable/rubik": "^5.2.5",
+    "@fontsource/ubuntu": "^5.2.5",
     "astro": "^5.7.12"
   },
   "devDependencies": {

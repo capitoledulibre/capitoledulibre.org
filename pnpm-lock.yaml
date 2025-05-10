@@ -7,6 +7,15 @@ settings:
 importers:
   .:
     dependencies:
+      "@fontsource-variable/fira-code":
+        specifier: ^5.2.6
+        version: 5.2.6
+      "@fontsource-variable/rubik":
+        specifier: ^5.2.5
+        version: 5.2.5
+      "@fontsource/ubuntu":
+        specifier: ^5.2.5
+        version: 5.2.5
       astro:
         specifier: ^5.7.12
         version: 5.7.12(@types/node@22.15.17)(rollup@4.40.2)(typescript@5.8.3)
@@ -316,6 +325,24 @@ packages:
     engines: { node: ">=18" }
     cpu: [x64]
     os: [win32]
+
+  "@fontsource-variable/fira-code@5.2.6":
+    resolution:
+      {
+        integrity: sha512-TZe+3xOB0JofZOTNeITYVsD1y/OiFucwTmcmhC19mj+GOgCnNkbp7bb1Jobfg+HjlAHr11HdptENKu0B+VkWLg==,
+      }
+
+  "@fontsource-variable/rubik@5.2.5":
+    resolution:
+      {
+        integrity: sha512-6tXqnHFA9/ItIEODfH5LrzLSmcNE5TXD8OuXx14cvmS7j1zX4JgEHjYrhlWhLGuBXXzrOnz0A0oMheMMbXwmWA==,
+      }
+
+  "@fontsource/ubuntu@5.2.5":
+    resolution:
+      {
+        integrity: sha512-VKVFVqmJ9MGnOJW2dsQ982qHN8Zr+tNeEwEHnzt5VdGi9ZWL37wYFD32YsqukWlI/+I7v5ZkgHTEAvsZxU6aDA==,
+      }
 
   "@img/sharp-darwin-arm64@0.33.5":
     resolution:
@@ -2675,6 +2702,12 @@ snapshots:
 
   "@esbuild/win32-x64@0.25.4":
     optional: true
+
+  "@fontsource-variable/fira-code@5.2.6": {}
+
+  "@fontsource-variable/rubik@5.2.5": {}
+
+  "@fontsource/ubuntu@5.2.5": {}
 
   "@img/sharp-darwin-arm64@0.33.5":
     optionalDependencies:
