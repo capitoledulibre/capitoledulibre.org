@@ -1,0 +1,22 @@
+:root {
+  --font-title: "Ubuntu", sans-serif;
+  --font-content: Rubik, sans-serif;
+  --font-monospace: "Fira Code Variable", monospace;
+
+  font-family: var(--font-content);
+  color: var(--text);
+
+  &[data-theme="light"] {
+    --text: #180e0a;
+    --background: #faf4f2;
+
+    --primary: #d03d00;
+    --primary-hover: color-mix(in srgb, var(--primary), white 20%);
+
+    --secondary: hsl(206.13, 42.47%, 71.37%);
+    --secondary-hover: hsl(206.13, 42.47%, 60%);
+
+    --accent: #a87fcc;
+    --accent-hover: color-mix(in srgb, var(--accent), black 20%);
+  }
+}
