@@ -11,16 +11,24 @@ interface Props {
     label: string;
     href: string;
   }[];
+
+  light?: boolean;
 }
 
-const { category, shortTitle, title, links }: Props = Astro.props;
+const {
+  category,
+  shortTitle,
+  title,
+  links,
+  light = false,
+}: Props = Astro.props;
 ---
 
 <div class="presentation-card">
   <img src="/background.jpg" alt="Capitole du Libre" />
   <div class="content">
-    <h2>{category}</h2>
-    <h3>{shortTitle}</h3>
+    <h2 class:list={{ light }}>{category}</h2>
+    <h3 class:list={{ light }}>{shortTitle}</h3>
 
     <div class="description">
       <h4>{title}</h4>
@@ -46,6 +54,7 @@ const { category, shortTitle, title, links }: Props = Astro.props;
     gap: 2rem;
     justify-content: center;
     margin: 5rem 2rem;
+    padding: 0 1em;
 
     @media screen and (max-width: 800px) {
       flex-wrap: wrap;
@@ -76,12 +85,20 @@ const { category, shortTitle, title, links }: Props = Astro.props;
         margin-bottom: 1rem;
         font-weight: 500;
         font-size: 0.9rem;
+
+        &.light {
+          color: #fff;
+        }
       }
 
       h3 {
         margin-bottom: 1rem;
         font-weight: 500;
         font-size: 1.5rem;
+
+        &.light {
+          color: #fff;
+        }
       }
 
       h4 {
@@ -108,6 +125,7 @@ const { category, shortTitle, title, links }: Props = Astro.props;
 
       .links {
         display: flex;
+        flex-wrap: wrap;
         gap: 1rem;
         justify-content: space-around;
       }
