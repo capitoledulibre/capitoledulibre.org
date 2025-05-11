@@ -24,5 +24,6 @@
 
     --accent: #a87fcc;
     --accent-hover: color-mix(in srgb, var(--accent), black 20%);
+    --accent-gradient: #32263d;
   }
 }

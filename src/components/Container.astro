@@ -1,0 +1,39 @@
+---
+interface Props {
+  color: string;
+  gradient?: boolean;
+}
+
+const { color, gradient = false } = Astro.props as Props;
+---
+
+<div class:list={["container", { gradient }]}>
+  <div class="content">
+    <slot />
+  </div>
+</div>
+
+<style define:vars={{ color }}>
+  .container {
+    padding: 2em 0;
+    height: 100%;
+    background-color: var(--color);
+
+    &.gradient {
+      background-image: radial-gradient(
+        90% 90% at -10% -10%,
+        var(--color) 0%,
+        color-mix(in srgb, var(--color) 80%, black) 5%,
+        color-mix(in srgb, var(--color) 60%, black) 30%,
+        color-mix(in srgb, var(--color) 30%, black) 100%
+      );
+    }
+
+    .content {
+      max-width: 70%;
+      margin: 0 auto;
+      padding: 2em auto;
+      max-width: 1000px;
+    }
+  }
+</style>
