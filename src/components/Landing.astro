@@ -42,7 +42,9 @@ const { date, place, actions } = Astro.props as Props;
     </div>
   </div>
   <div class="landing__background-gradient"></div>
-  <div class="landing__background"></div>
+  <div class="landing__background">
+    <video src="/main.mp4" autoplay muted loop></video>
+  </div>
 </section>
 
 <style>
@@ -61,6 +63,13 @@ const { date, place, actions } = Astro.props as Props;
       height: 100svh;
 
       background-image: url("/background.jpg");
+
+      video {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .landing__background-gradient {
