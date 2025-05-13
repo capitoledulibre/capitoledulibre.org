@@ -2,10 +2,10 @@
 import Link from "./Link.astro";
 
 interface Props {
-  category: string;
-  shortTitle: string;
+  category?: string;
+  shortTitle?: string;
 
-  title: string;
+  title?: string;
 
   links: {
     label: string;
@@ -13,6 +13,8 @@ interface Props {
   }[];
 
   light?: boolean;
+  invert?: boolean;
+  border?: boolean;
 }
 
 const {
@@ -21,17 +23,19 @@ const {
   title,
   links,
   light = false,
+  invert = false,
+  border = true,
 }: Props = Astro.props;
 ---
 
-<div class="presentation-card">
+<div class:list={["presentation-card", { invert }]}>
   <img src="/background.jpg" alt="Capitole du Libre" />
   <div class="content">
-    <h2 class:list={{ light }}>{category}</h2>
-    <h3 class:list={{ light }}>{shortTitle}</h3>
+    {category && <h2 class:list={{ light }}>{category}</h2>}
+    {shortTitle && <h3 class:list={{ light }}>{shortTitle}</h3>}
 
-    <div class="description">
-      <h4>{title}</h4>
+    <div class:list={["description", { border }]}>
+      {title && <h4 class:list={{ light }}>{title}</h4>}
       <slot />
     </div>
 
@@ -60,6 +64,10 @@ const {
       flex-wrap: wrap;
       max-width: 450px;
       margin: 5rem auto;
+    }
+
+    &.invert {
+      flex-direction: row-reverse;
     }
 
     &:nth-child(2n) {
@@ -113,14 +121,16 @@ const {
       }
 
       .description {
-        background:
-          linear-gradient(#fff 0 0) padding-box,
-          linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
-        padding: 0.5em;
-        border: 1px solid transparent;
-        border-radius: 5px;
-        display: inline-block;
         margin-bottom: 1rem;
+        &.border {
+          background:
+            linear-gradient(#fff 0 0) padding-box,
+            linear-gradient(45deg, var(--primary), var(--secondary)) border-box;
+          padding: 0.5em;
+          border: 1px solid transparent;
+          border-radius: 5px;
+          display: inline-block;
+        }
       }
 
       .links {

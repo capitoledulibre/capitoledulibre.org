@@ -2,6 +2,10 @@
 import Page from "@layouts/Page.astro";
 
 import Landing from "@components/Landing.astro";
+import Container from "@components/Container.astro";
+import PresentationCard from "@components/PresentationCard.astro";
+import Separator from "@components/Separator.astro";
+import Footer from "@components/Footer.astro";
 
 let year = 2025;
 let date = `15 & 16 novembre ${year}`;
@@ -21,6 +25,107 @@ let actions = [
 
 <Page title={`Capitole du Libre ${year}`}>
   <Landing date={date} place={place} actions={actions} />
+  <Container color="var(--accent)" gradient={true}>
+    <PresentationCard
+      category="Conférences"
+      shortTitle="Capitole du Libre"
+      title="Le rendez-vous des acteurs du libre"
+      links={[
+        { label: "Programme", href: "/program" },
+        { label: "Intervenants", href: "/speakers" },
+        { label: "Partenaires", href: "/partners" },
+      ]}
+      light
+    >
+      <p>
+        Des keynotes et tables rondes avec des intervenant·e·s reconnu·e·s pour
+        lancer les réflexions.
+      </p>
+      <p>
+        Des conférences variées autour du développement (C++, web, embarqué,
+        DevOps), de la création graphique libre, des jeux libres, ou encore des
+        enjeux de société et de communauté liés au logiciel libre.
+      </p>
+    </PresentationCard>
+    <PresentationCard
+      category="Conférences"
+      shortTitle="Capitole du Libre"
+      title="Le rendez-vous des acteurs du libre"
+      links={[
+        { label: "Programme", href: "/program" },
+        { label: "Intervenants", href: "/speakers" },
+        { label: "Partenaires", href: "/partners" },
+      ]}
+      light
+    >
+      <p>
+        Des keynotes et tables rondes avec des intervenant·e·s reconnu·e·s pour
+        lancer les réflexions.
+      </p>
+      <p>
+        Des conférences variées autour du développement (C++, web, embarqué,
+        DevOps), de la création graphique libre, des jeux libres, ou encore des
+        enjeux de société et de communauté liés au logiciel libre.
+      </p>
+    </PresentationCard>
+    <PresentationCard
+      category="Conférences"
+      shortTitle="Capitole du Libre"
+      title="Le rendez-vous des acteurs du libre"
+      links={[
+        { label: "Programme", href: "/program" },
+        { label: "Intervenants", href: "/speakers" },
+        { label: "Partenaires", href: "/partners" },
+      ]}
+      light
+    >
+      <p>
+        Des keynotes et tables rondes avec des intervenant·e·s reconnu·e·s pour
+        lancer les réflexions.
+      </p>
+      <p>
+        Des conférences variées autour du développement (C++, web, embarqué,
+        DevOps), de la création graphique libre, des jeux libres, ou encore des
+        enjeux de société et de communauté liés au logiciel libre.
+      </p>
+    </PresentationCard>
+  </Container>
+  <Separator color="var(--accent-gradient)" direction="left" />
+  <Container>
+    <PresentationCard
+      shortTitle="Appel à participation"
+      links={[
+        {
+          label: "Proposer un sujet, un atelier, un stand",
+          href: "https://cfp.capitoledulibre.org/cdl-2025/cfp",
+        },
+        { label: "Explorer le programme 2024", href: "/speakers" },
+      ]}
+      invert
+      border={false}
+    >
+      <p>
+        Envie de prendre la parole ? Proposez une conférence (25 ou 55 minutes),
+        un atelier (1h55) ou un stand (présent tout le week-end).
+      </p>
+      <p>
+        Débutant·e ou habitué·e des scènes, tout le monde est le·la bienvenu·e !
+      </p>
+      <p>
+        Seule condition : que votre sujet ait un lien avec le logiciel libre,
+        sous toutes ses formes.
+      </p>
+    </PresentationCard>
+  </Container>
+  <Separator color="var(--accent-gradient)" direction="left" orientation="up" />
+  <Footer />
 </Page>
 
-<style></style>
+<style>
+  .container {
+    max-width: 70%;
+    margin: 2em auto;
+    padding: 0 2em;
+    max-width: 1000px;
+  }
+</style>
