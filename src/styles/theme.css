@@ -11,6 +11,7 @@
 
   font-family: var(--font-content);
   color: var(--text);
+  font-size: 1.2em;
 
   &[data-theme="light"] {
     --text: #180e0a;
