@@ -1,10 +1,10 @@
 ---
 interface Props {
-  color: string;
+  color?: string;
   gradient?: boolean;
 }
 
-const { color, gradient = false } = Astro.props as Props;
+const { color = "white", gradient = false } = Astro.props as Props;
 ---
 
 <div class:list={["container", { gradient }]}>
