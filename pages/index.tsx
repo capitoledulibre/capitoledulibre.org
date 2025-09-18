@@ -38,6 +38,7 @@ export default function Home() {
 
         <Portfolio />
 
+        {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
@@ -47,9 +48,9 @@ export default function Home() {
             </div>
           </div>
         </aside>
+        */}
 
 
-        {/*
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
             <div className="call-to-action">
@@ -59,7 +60,6 @@ export default function Home() {
             </div>
           </div>
         </aside>
-        */}
 
         <aside className="bg-dark">
           <div className="container text-center" id="sponsor">
