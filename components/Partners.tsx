@@ -82,8 +82,8 @@ const Partners = () => (
           <img src="/img/logo-bluemind.png" alt="Bluemind" className="logo-100px" title="Bluemind" />
         </a>
         &nbsp;
-        <a href="https://www.loxodata.frr" target="_blank">
-        <img src="/img/logo-loxodata.png" alt="Loxodata" className="logo-100px" title="Linagora" />
+        <a href="https://www.loxodata.fr" target="_blank">
+        <img src="/img/logo-loxodata.png" alt="Loxodata" className="logo-100px" title="Loxodata" />
       </a>
       &nbsp;        
       </p>
