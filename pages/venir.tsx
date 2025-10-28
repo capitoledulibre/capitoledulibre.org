@@ -52,10 +52,10 @@ export default function Venir() {
                             <div className="service-box">
                                 <i className="fa fa-4x fa-subway text-primary sr-icons"></i>
                                 <h3>En Métro</h3>
-                                <p className="text-muted">L'école est située à 5min à pied de l'arrêt François Verdier sur la ligne de métro B.
-                                    Les métros circulent jusqu'à 0h00 du dimanche au jeudi et jusqu'à 3h les vendredis et samedis.
+                                <p className="text-muted">L'école est située à 10min à pied des arrêts François Verdier et Jean Jaurès sur la ligne de métro B.
+                                    Les métros circulent jusqu'à 0h00 du dimanche au mercredi et jusqu'à 3h les jeudis, vendredis et samedis.
                                     Pour plus d'informations sur les horaires des bus et métros vous pouvez
-                                    consulter <a href="http://www.tisseo.fr/se-deplacer/plans">le site du Réseau Métro/Bus/Tramway de Toulouse</a>
+                                    consulter <a href="https://www.tisseo.fr/se-deplacer/plans">le site du Réseau Métro/Bus/Tramway de Toulouse</a>
                                 </p>
                             </div>
                         </div>
@@ -63,10 +63,10 @@ export default function Venir() {
                             <div className="service-box">
                                 <i className="fa fa-4x fa-bus text-primary sr-icons"></i>
                                 <h3>En Bus</h3>
-                                <p className="text-muted">L'école est située à proximité de nombreuses lignes de bus: 14, 22, 23, 27, 38
+                                <p className="text-muted">L'école est située à proximité de nombreuses lignes de bus: par exemple Linéo 1 et 8 pour l'arrêt Place Dupuy ou la ligne 27 avec l'arrêt Guilhemery.
                                     Les bus et tramway circulent jusqu'à 0h30 du dimanche au jeudi et jusqu'à 1h00 les vendredis et samedi.
                                     Pour plus d'informations sur les horaires des bus et métros vous pouvez
-                                    consulter <a href="http://www.tisseo.fr/se-deplacer/plans">le site du Réseau Métro/Bus/Tramway de Toulouse</a>
+                                    consulter <a href="https://www.tisseo.fr/se-deplacer/plans">le site du Réseau Métro/Bus/Tramway de Toulouse</a>
                                 </p>
                             </div>
                         </div>
@@ -74,7 +74,9 @@ export default function Venir() {
                             <div className="service-box">
                                 <i className="fa fa-4x fa-bicycle text-primary sr-icons"></i>
                                 <h3>En vélo libre service</h3>
-                                <p className="text-muted">Toulouse dispose d'un système de vélos en libre service complémentaire des transports en commun : <a href="http://www.velo.toulouse.fr/">Vélô Toulouse</a>.
+                                <p className="text-muted">Toulouse dispose d'un système de vélos en libre service complémentaire des transports en commun : <a href="https://velotoulouse.tisseo.fr/">Vélô Toulouse</a>.
+                                    Les stations les plus proches sont <a href="https://www.openstreetmap.org/node/563728300">Riquet-Camichel</a>, <a href="https://www.openstreetmap.org/node/654572842">Escande Dauriac</a>
+                                    et <a href="https://www.openstreetmap.org/node/1313081288">Place Dupuy</a>
                                 </p>
                             </div>
                         </div>
