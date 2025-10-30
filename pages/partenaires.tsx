@@ -30,7 +30,7 @@ export default function Partenaires() {
         <section id="partners">
           <div className="container">
 
-            <h2>Nos partenaires 2024</h2>
+            <h2>Nos partenaires</h2>
 
             <Partners/>
 

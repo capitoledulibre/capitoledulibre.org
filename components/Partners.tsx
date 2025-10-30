@@ -8,8 +8,8 @@ const Partners = () => (
       </a>
       &nbsp;
       &nbsp;            
-      <a href="https://www.centreon.com" target="_blank">
-        <img src="/img/logo-centreon.png" alt="Centreon" className="logo-200px" title="Centreon" />
+      <a href="https://www.airbus.com" target="_blank">
+        <img src="/img/logo-airbus.png" alt="Airbus" className="logo-200px" title="Airbus" />
       </a>      
       &nbsp;     
       &nbsp;                                            
@@ -27,23 +27,18 @@ const Partners = () => (
   <div className="row text-center cdl-partner-category">
     <div className="col-xs-12 col-sm-12">
       <h3>Or</h3>       
+      <a href="https://www.collabora.com" target="_blank">
+        <img src="/img/logo-collabora.png" alt="Collabora" className="logo-150px" title="Collabora" />
+      </a>
+      &nbsp;
+      &nbsp;
       <a href="https://www.linagora.com" target="_blank">
         <img src="/img/logo-linagora.png" alt="Linagora" className="logo-150px" title="Linagora" />
       </a>
       &nbsp;
       &nbsp;
-      <a href="https://www.logilab.fr" target="_blank">
-        <img src="/img/logo-logilab.svg" alt="Logilab" className="logo-150px" title="Linagora" />
-      </a>
-      &nbsp;
-      &nbsp;                                     
-      <a href="https://makina-corpus.com/" target="_blank">
-        <img src="/img/makina-corpus.png" alt="Makina Corpus" className="logo-100px" title="Makina Corpus" />
-      </a>
-      &nbsp;
-      &nbsp;                 
-      <a href="https://www.viveris.fr" target="_blank">
-        <img src="/img/logo-viveris.svg" alt="Viveris" className="logo-150px" title="Viveris" />
+      <a href="https://www.plakar.com" target="_blank">
+        <img src="/img/logo-plakar.svg" alt="Plakar" className="logo-150px" title="Plakar" />
       </a>
     </div>
   </div>
@@ -58,15 +53,22 @@ const Partners = () => (
       <a href="https://evolix.com" target="_blank">
         <img src="/img/logo-evolix.png" alt="Evolix" className="logo-100px" title="Evolix" />
       </a>
+      &nbsp;
+      <a href="https://www.logilab.fr" target="_blank">
+        <img src="/img/logo-logilab.svg" alt="Logilab" className="logo-100px" title="Logilab" />
+      </a>
       &nbsp;        
       <a href="https://www.smile.eu" target="_blank">
         <img src="/img/SMILE_icone-full-orange -baseline.png" alt="Smile" className="logo-100px" title="Smile" />
+      </a>
+      &nbsp;                 
+      <a href="https://www.viveris.fr" target="_blank">
+        <img src="/img/logo-viveris.svg" alt="Viveris" className="logo-100px" title="Viveris" />
       </a>
       &nbsp;                
       <a href="https://www.worteks.com" target="_blank">
         <img src="/img/logo-worteks.png" alt="Worteks" className="logo-100px" title="Worteks" />
       </a>
-      &nbsp;                
     </div>
   </div>
 
@@ -74,6 +76,10 @@ const Partners = () => (
     <div className="col-xs-12 col-sm-12">
       <h3>Bronze</h3>
       <p>
+        <a href="https://www.bareos.com" target="_blank">
+          <img src="/img/logo-bareos.png" alt="Bareos" className="logo-100px" title="Bareos" />
+        </a>
+        &nbsp;
         <a href="https://bleemeo.com" target="_blank">
           <img src="/img/bleemeo_logo.svg" alt="Bleemeo" className="logo-100px" title="Bleemeo" />
         </a>
@@ -101,10 +107,6 @@ const Partners = () => (
       <h3>Support Institutionnels</h3>
       <a href="http://enseeiht.fr/" target="_blank">
         <img src="/img/logo-toulouse-inp-n7.png" alt="INP-N7" className="logo-150px" title="INP-N7" />
-      </a>
-      &nbsp;
-      <a href="http://www.toulouse.fr" target="_blank">
-        <img src="/img/Logo_mairie_de_Toulouse.svg" alt="Toulouse" className="logo-150px" title="Mairie de Toulouse" />
       </a>
       &nbsp;
       <a href="https://www.laregion.fr" target="_blank">
@@ -150,16 +152,6 @@ const Partners = () => (
       <a href="https://net7.dev" target="_blank">
         <img src="/img/logo-net7.png" alt="net7" className="logo-100px" title="net7 - Le club informatique de l'n7" />
       </a>
-      &nbsp;
-      &nbsp;                                                            
-      <a href="https://7fault.itch.io/" target="_blank">
-        <img src="/img/logo-7fault.png" alt="7fault" className="logo-100px" title="7Fault - Le club de jeux vidéos de l'n7" />
-      </a>         
-      &nbsp;
-      &nbsp;                                                            
-      <a href="https://artilect.fr" target="_blank">
-        <img src="/img/logo-artilect.png" alt="Atilect" className="logo-100px" title="Artilect - Fablab à Toulouse" />
-      </a>         
       &nbsp;
       &nbsp;                                                            
       <a href="https://www.coworking-toulouse.com" target="_blank">
