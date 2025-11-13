@@ -110,18 +110,16 @@ export default function Home() {
 
         <section id="contribuer">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-2 text-center">
-                <h2 className="section-heading">Une erreur&nbsp;? Une faute d'orthographe&nbsp;?</h2>
-                <p>Vous pouver signaler les erreurs ou proposer vos corrections&nbsp;!</p>
-              </div>
+            <div className="text-center">
+              <h2 className="section-heading">Une erreur&nbsp;? Une faute d'orthographe&nbsp;?</h2>
+              <p>Vous pouver signaler les erreurs ou proposer vos corrections&nbsp;!</p>
             </div>
-            <div className="row">
-              <div className="col-lg-3 offset-3 text-center">
+            <div className="d-flex flex-wrap justify-content-center gap-4">
+              <div className="text-center">
                 <i className="fab fa-github fa-3x"></i>
                 <p><a href="https://github.com/capitoledulibre/capitoledulibre.org/issues">Issues<br /><em>Signaler une erreur</em></a></p>
               </div>
-              <div className="col-lg-3 text-center">
+              <div className="text-center">
                 <i className="fab fa-github fa-3x"></i>
                 <p><a href="https://github.com/capitoledulibre/capitoledulibre.org/pulls">Pull request<br /><em>Proposer une modification</em></a></p>
               </div>
