@@ -53,10 +53,12 @@ export default function Home() {
 
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
-            <div className="call-to-action">
-              <h2>Découvrez le programme de l'édition 2025</h2>
-              <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
-              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2025</a>
+            <div className="row call-to-action">
+              <div className="col-lg-8 offset-lg-2">
+                <h2>Découvrez le programme de l'édition 2025</h2>
+                <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
+                <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2025</a>
+              </div>
             </div>
           </div>
         </aside>
