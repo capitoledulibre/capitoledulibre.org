@@ -93,36 +93,17 @@ export default function Home() {
 
         <section id="contact">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-2 text-center">
-                <h2 className="section-heading">Suivez-nous sur les réseaux sociaux</h2>
-              </div>
+            <div className="text-center">
+              <h2 className="section-heading mb-4">Suivez-nous sur les réseaux sociaux</h2>
             </div>
-            <div className="row">
-              <div className="col-lg-2 text-center offset-2">
-                <p><a href="https://framapiaf.org/@capitoledulibre"><i className="fa-brands fa-mastodon fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://bsky.app/profile/capitoledulibre.org"><i className="fa-brands fa-bluesky fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://x.com/capitoledulibre"><i className="fa-brands fa-x-twitter fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://www.facebook.com/CapitoleDuLibre/"><i className="fa-brands fa-facebook fa-3x"></i>
-                </a></p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-2 text-center offset-3">
-                <p><a href="https://github.com/capitoledulibre"><i className="fa-brands fa-github fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://linkedin.com/company/capitole-du-libre"><i className="fa-brands fa-linkedin fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://instagram.com/capitoledulibre"><i className="fa-brands fa-instagram fa-3x"></i></a></p>
-              </div>
+            <div className="d-flex flex-wrap justify-content-center gap-4">
+                <a href="https://framapiaf.org/@capitoledulibre"><i className="fa-brands fa-mastodon fa-3x"></i></a>
+                <a href="https://bsky.app/profile/capitoledulibre.org"><i className="fa-brands fa-bluesky fa-3x"></i></a>
+                <a href="https://x.com/capitoledulibre"><i className="fa-brands fa-x-twitter fa-3x"></i></a>
+                <a href="https://www.facebook.com/CapitoleDuLibre/"><i className="fa-brands fa-facebook fa-3x"></i></a>
+                <a href="https://github.com/capitoledulibre"><i className="fa-brands fa-github fa-3x"></i></a>
+                <a href="https://linkedin.com/company/capitole-du-libre"><i className="fa-brands fa-linkedin fa-3x"></i></a>
+                <a href="https://instagram.com/capitoledulibre"><i className="fa-brands fa-instagram fa-3x"></i></a>
             </div>
           </div>
         </section>
