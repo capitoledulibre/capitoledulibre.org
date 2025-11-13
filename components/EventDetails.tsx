@@ -63,9 +63,9 @@ const EventDetails = () => (
 
         <EventDetailsCard faIcon="fa-shopping-cart" title="Boutique de Goodies!">
           Repartez avec un t-shirt, un hoodie aux couleurs de votre projet libre préféré. Les ventes permettent de financer le Capitole du Libre et de financer les projets libres correspondants.
-        </EventDetailsCard>        
+        </EventDetailsCard>
       </div>
-      
+
       <div className="row">
 
         <EventDetailsCard faIcon="fa-gamepad" title="LAN Party">
@@ -75,12 +75,9 @@ const EventDetails = () => (
 
       </div>
 
-      <div className="row">
-          <p className="text-center"><a href="https://www.youtube.com/watch?v=b2Pgk1nzq9w" data-toggle="modal" data-target=".video-dialog" className="btn btn-primary btn-xl page-scroll">Découvrez le Capitole du Libre en vidéo</a></p>
-      </div>
-
-      <div className="row">
-           <p className="text-center"><a href="https://tickets.capitoledulibre.org/cdl/2025/" className="btn btn-primary btn-xl page-scroll"><span>INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
+      <div className="text-center mt-5">
+        <p className="text-center"><a href="https://www.youtube.com/watch?v=b2Pgk1nzq9w" data-toggle="modal" data-target=".video-dialog" className="btn btn-primary btn-xl page-scroll">Découvrez le Capitole du Libre en vidéo</a></p>
+        <p className="text-center"><a href="https://tickets.capitoledulibre.org/cdl/2025/" className="btn btn-primary btn-xl page-scroll"><span>INSCRIPTION GRATUITE OBLIGATOIRE</span></a></p>
       </div>
 
 
