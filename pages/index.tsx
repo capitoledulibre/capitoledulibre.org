@@ -82,18 +82,12 @@ export default function Home() {
 
         <section id="contact">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-2 text-center">
-                <h2 className="section-heading">Une idée&nbsp;? Une question&nbsp;? Contactez-nous&nbsp;!</h2>
-                <p>Si vous avez des questions, n'hésitez pas à nous contacter&nbsp;!</p>
+              <div className="text-center">
+                  <h2 className="section-heading">Une idée&nbsp;? Une question&nbsp;? Contactez-nous&nbsp;!</h2>
+                  <p>Si vous avez des questions, n'hésitez pas à nous contacter&nbsp;!</p>
+                  <i className="fas fa-envelope fa-3x sr-contact"></i>
+                  <p><a href="mailto:contact@capitoledulibre.org">contact@capitoledulibre.org</a></p>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-4 offset-4 text-center">
-                <i className="fas fa-envelope fa-3x sr-contact"></i>
-                <p><a href="mailto:contact@capitoledulibre.org">contact@capitoledulibre.org</a></p>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -128,7 +122,7 @@ export default function Home() {
               </div>
               <div className="col-lg-2 text-center">
                 <p><a href="https://instagram.com/capitoledulibre"><i className="fa-brands fa-instagram fa-3x"></i></a></p>
-              </div>                         
+              </div>
             </div>
           </div>
         </section>
