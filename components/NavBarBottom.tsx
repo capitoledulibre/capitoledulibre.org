@@ -1,24 +1,23 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+const years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024];
+
 const NavBarBottom = () => {
+  const yearLinks = years.map((year =>
+    <a
+      key={year}
+      className="nav-link px-3 py-2"
+      href={`//${year}.capitoledulibre.org`}>
+          {year}
+    </a>
+  ));
 
   return (
-<nav className="navbar bg-light">
+<nav className="navbar bg-light px-3">
   Éditions précédentes:
-  <div className="container-fluid">
-    <a className="nav-link" href="//2011.capitoledulibre.org">2011</a>
-    <a className="nav-link" href="//2012.capitoledulibre.org">2012</a>
-    <a className="nav-link" href="//2013.capitoledulibre.org">2013</a>
-    <a className="nav-link" href="//2014.capitoledulibre.org">2014</a>
-    <a className="nav-link" href="//2015.capitoledulibre.org">2015</a>
-    <a className="nav-link" href="//2016.capitoledulibre.org">2016</a>
-    <a className="nav-link" href="//2017.capitoledulibre.org">2017</a>
-    <a className="nav-link" href="//2018.capitoledulibre.org">2018</a>
-    <a className="nav-link" href="//2019.capitoledulibre.org">2019</a>    
-    <a className="nav-link" href="//2022.capitoledulibre.org">2022</a>
-    <a className="nav-link" href="//2023.capitoledulibre.org">2023</a>
-    <a className="nav-link" href="//2024.capitoledulibre.org">2024</a>
+  <div className="container-fluid justify-content-start">
+    {yearLinks}
   </div>
 </nav>
   );
