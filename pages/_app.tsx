@@ -8,11 +8,16 @@ import "../public/css/creative.css"
 
 import React from "react";
 
+import { BootstrapLoader } from '../components/BootstrapLoader'
+
 export default function MyApp({ Component, pageProps }) {
   if (typeof window !== "undefined") {
     window.$ = jQuery;
     window.jQuery = jQuery;
   }
 
-  return <Component {...pageProps} />
+  return <>
+    <Component {...pageProps} />
+    <BootstrapLoader />
+  </>
 }
