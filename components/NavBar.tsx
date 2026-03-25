@@ -48,24 +48,27 @@ const NavBar = ({transparentOnTop}: Props) => {
     <div className="collapse navbar-collapse" id="navbarTopToggler">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <a className="nav-link" href="/programme">Programme</a>
+          <a className="nav-link" href="/programme"><b>Programme</b></a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="/village-associatif/"><b>Village Associatif</b></a>
         </li>
         {/*
         <li className="nav-item">
-          <a className="nav-link" href="/cfp">Appel à participation</a>
+          <a className="nav-link" href="/cfp"><b>Appel à participation</b></a>
         </li>
         */}
         <li className="nav-item">
-          <a className="nav-link" href="/venir">Venir</a>
+          <a className="nav-link" href="/venir"><b>Venir</b></a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/partenaires">Nos partenaires</a>
+          <a className="nav-link" href="/partenaires"><b>Nos partenaires</b></a>
         </li>           
         <li className="nav-item">
-          <a className="nav-link" href="/code-of-conduct">Code de conduite</a>
+          <a className="nav-link" href="/code-of-conduct"><b>Code de conduite</b></a>
         </li>    
         <li className="nav-item">
-          <a className="nav-link" href="/faq">Questions fréquentes</a>
+          <a className="nav-link" href="/faq"><b>Questions fréquentes</b></a>
         </li>              
       </ul>
     </div>

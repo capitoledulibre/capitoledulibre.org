@@ -69,6 +69,11 @@ const Partners = () => (
       <a href="https://www.worteks.com" target="_blank">
         <img src="/img/logo-worteks.png" alt="Worteks" className="logo-100px" title="Worteks" />
       </a>
+    &nbsp;                
+      <a href="https://www.xwiki.com" target="_blank">
+        <img src="/img/logo-xwiki.svg" alt="XWiki" className="logo-100px" title="XWiki" />
+      </a>
+
     </div>
   </div>
 
