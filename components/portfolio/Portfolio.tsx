@@ -47,7 +47,7 @@ const Portfolio = () => {
             <div id="popup-gallery" className="row no-gutter">
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize1.src} className="portfolio-box">
-                        <img src={thumbnail1.src} className="img-responsive" alt="" />
+                        <img src={thumbnail1.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -62,7 +62,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize2.src} className="portfolio-box">
-                        <img src={thumbnail2.src} className="img-responsive" alt="" />
+                        <img src={thumbnail2.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -77,7 +77,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize3.src} className="portfolio-box">
-                        <img src={thumbnail3.src} className="img-responsive" alt="" />
+                        <img src={thumbnail3.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -92,7 +92,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize4.src} className="portfolio-box">
-                        <img src={thumbnail4.src} className="img-responsive" alt="" />
+                        <img src={thumbnail4.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -107,7 +107,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize5.src} className="portfolio-box">
-                        <img src={thumbnail5.src} className="img-responsive" alt="" />
+                        <img src={thumbnail5.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -122,7 +122,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize6.src} className="portfolio-box">
-                        <img src={thumbnail6.src} className="img-responsive" alt="" />
+                        <img src={thumbnail6.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -137,7 +137,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize7.src} className="portfolio-box">
-                        <img src={thumbnail7.src} className="img-responsive" alt="" />
+                        <img src={thumbnail7.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -152,7 +152,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize8.src} className="portfolio-box">
-                        <img src={thumbnail8.src} className="img-responsive" alt="" />
+                        <img src={thumbnail8.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -167,7 +167,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize9.src} className="portfolio-box">
-                        <img src={thumbnail9.src} className="img-responsive" alt="" />
+                        <img src={thumbnail9.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -182,7 +182,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize10.src} className="portfolio-box">
-                        <img src={thumbnail10.src} className="img-responsive" alt="" />
+                        <img src={thumbnail10.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -197,7 +197,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize11.src} className="portfolio-box">
-                        <img src={thumbnail11.src} className="img-responsive" alt="" />
+                        <img src={thumbnail11.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -212,7 +212,7 @@ const Portfolio = () => {
                 </div>
                 <div className="col-lg-4 col-sm-6">
                     <a href={fullSize12.src} className="portfolio-box">
-                        <img src={thumbnail12.src} className="img-responsive" alt="" />
+                        <img src={thumbnail12.src} className="ratio ratio-16x9" alt="" />
                         <div className="portfolio-box-caption">
                             <div className="portfolio-box-caption-content">
                                 <div className="project-category text-faded">
@@ -228,7 +228,7 @@ const Portfolio = () => {
 
             </div>
         </div>
-    </section>    
+    </section>
 )
 }
 

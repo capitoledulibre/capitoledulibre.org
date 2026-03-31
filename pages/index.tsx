@@ -53,10 +53,12 @@ export default function Home() {
 
         <aside className="bg-primary">
           <div className="container text-center" id="cfp">
-            <div className="call-to-action">
-              <h2>Découvrez le programme de l'édition 2025</h2>
-              <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
-              <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2025</a>
+            <div className="row call-to-action">
+              <div className="col-lg-8 offset-lg-2">
+                <h2>Découvrez le programme de l'édition 2025</h2>
+                <p>Cette année encore, un programme riche de conférences et ateliers vous attend lors du Capitole du Libre. Contsultez le programme pour découvrir tous les orateurs, conférences et ateliers de cette édition.</p>
+                <a href="/programme" className="btn btn-default btn-xl sr-button">Programme complet de l'édition 2025</a>
+              </div>
             </div>
           </div>
         </aside>
@@ -82,71 +84,44 @@ export default function Home() {
 
         <section id="contact">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-2 text-center">
-                <h2 className="section-heading">Une idée&nbsp;? Une question&nbsp;? Contactez-nous&nbsp;!</h2>
-                <p>Si vous avez des questions, n'hésitez pas à nous contacter&nbsp;!</p>
+              <div className="text-center">
+                  <h2 className="section-heading">Une idée&nbsp;? Une question&nbsp;? Contactez-nous&nbsp;!</h2>
+                  <p>Si vous avez des questions, n'hésitez pas à nous contacter&nbsp;!</p>
+                  <i className="fas fa-envelope fa-3x sr-contact"></i>
+                  <p><a href="mailto:contact@capitoledulibre.org">contact@capitoledulibre.org</a></p>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-4 offset-4 text-center">
-                <i className="fas fa-envelope fa-3x sr-contact"></i>
-                <p><a href="mailto:contact@capitoledulibre.org">contact@capitoledulibre.org</a></p>
-              </div>
-            </div>
           </div>
         </section>
 
         <section id="contact">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-2 text-center">
-                <h2 className="section-heading">Suivez-nous sur les réseaux sociaux</h2>
-              </div>
+            <div className="text-center">
+              <h2 className="section-heading mb-4">Suivez-nous sur les réseaux sociaux</h2>
             </div>
-            <div className="row">
-              <div className="col-lg-2 text-center offset-2">
-                <p><a href="https://framapiaf.org/@capitoledulibre"><i className="fa-brands fa-mastodon fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://bsky.app/profile/capitoledulibre.org"><i className="fa-brands fa-bluesky fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://x.com/capitoledulibre"><i className="fa-brands fa-x-twitter fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://www.facebook.com/CapitoleDuLibre/"><i className="fa-brands fa-facebook fa-3x"></i>
-                </a></p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-2 text-center offset-3">
-                <p><a href="https://github.com/capitoledulibre"><i className="fa-brands fa-github fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://linkedin.com/company/capitole-du-libre"><i className="fa-brands fa-linkedin fa-3x"></i></a></p>
-              </div>
-              <div className="col-lg-2 text-center">
-                <p><a href="https://instagram.com/capitoledulibre"><i className="fa-brands fa-instagram fa-3x"></i></a></p>
-              </div>                         
+            <div className="d-flex flex-wrap justify-content-center gap-4">
+                <a href="https://framapiaf.org/@capitoledulibre"><i className="fa-brands fa-mastodon fa-3x"></i></a>
+                <a href="https://bsky.app/profile/capitoledulibre.org"><i className="fa-brands fa-bluesky fa-3x"></i></a>
+                <a href="https://x.com/capitoledulibre"><i className="fa-brands fa-x-twitter fa-3x"></i></a>
+                <a href="https://www.facebook.com/CapitoleDuLibre/"><i className="fa-brands fa-facebook fa-3x"></i></a>
+                <a href="https://github.com/capitoledulibre"><i className="fa-brands fa-github fa-3x"></i></a>
+                <a href="https://linkedin.com/company/capitole-du-libre"><i className="fa-brands fa-linkedin fa-3x"></i></a>
+                <a href="https://instagram.com/capitoledulibre"><i className="fa-brands fa-instagram fa-3x"></i></a>
             </div>
           </div>
         </section>
 
         <section id="contribuer">
           <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-2 text-center">
-                <h2 className="section-heading">Une erreur&nbsp;? Une faute d'orthographe&nbsp;?</h2>
-                <p>Vous pouver signaler les erreurs ou proposer vos corrections&nbsp;!</p>
-              </div>
+            <div className="text-center">
+              <h2 className="section-heading">Une erreur&nbsp;? Une faute d'orthographe&nbsp;?</h2>
+              <p>Vous pouver signaler les erreurs ou proposer vos corrections&nbsp;!</p>
             </div>
-            <div className="row">
-              <div className="col-lg-3 offset-3 text-center">
+            <div className="d-flex flex-wrap justify-content-center gap-4">
+              <div className="text-center">
                 <i className="fab fa-github fa-3x"></i>
                 <p><a href="https://github.com/capitoledulibre/capitoledulibre.org/issues">Issues<br /><em>Signaler une erreur</em></a></p>
               </div>
-              <div className="col-lg-3 text-center">
+              <div className="text-center">
                 <i className="fab fa-github fa-3x"></i>
                 <p><a href="https://github.com/capitoledulibre/capitoledulibre.org/pulls">Pull request<br /><em>Proposer une modification</em></a></p>
               </div>
