@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import Picture from '../components/ui/Picture.astro';
+import { getCollection } from 'astro:content';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+import { getPhotosByTag } from '../lib/photos';
+
+const team = await getCollection('team');
+const staffPhotos = getPhotosByTag('staff');
+const benevolesPhotos = getPhotosByTag('benevoles');
+---
+
+<BaseLayout title="Équipe" description="L'équipe d'organisation du Capitole du Libre, bénévoles de l'association Toulibre.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Équipe', path: '/equipe' }])} />
+  <PageHeader title="L'équipe" description="Des bénévoles passionnés au service du logiciel libre." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <p class="text-lg text-cdl-gray leading-relaxed">
+          Le Capitole du Libre est organisé par des bénévoles de l'association
+          <a href={config.links.toulibre} class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">Toulibre</a>,
+          association de promotion du logiciel libre à Toulouse et en Occitanie.
+        </p>
+      </div>
+
+      {/* Photos de groupe */}
+      {staffPhotos.length > 0 && (
+        <div class="mb-16 space-y-6">
+          {staffPhotos.map((photo) => (
+            <div class="max-w-4xl mx-auto">
+              <Picture
+                src={photo.src}
+                alt={photo.alt}
+                class="w-full aspect-[21/9] object-cover rounded-2xl shadow-lg"
+                sizes="(max-width: 1024px) 100vw, 900px"
+              />
+              <p class="text-center text-xs text-cdl-gray mt-3">
+                {photo.alt} — {photo.credit}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Membres individuels */}
+      {team.length > 0 && (
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+          {team.map((member) => (
+            <div class="text-center p-4">
+              {member.data.photo ? (
+                <img
+                  src={member.data.photo}
+                  alt={member.data.name}
+                  class="h-24 w-24 rounded-full object-cover mx-auto mb-4 border-2 border-cdl-gray-light"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="h-24 w-24 rounded-full bg-cdl-orange/10 mx-auto mb-4 flex items-center justify-center">
+                  <span class="text-2xl font-bold text-cdl-orange">
+                    {member.data.name.split(' ').map((n: string) => n[0]).join('')}
+                  </span>
+                </div>
+              )}
+              <h2 class="font-bold text-cdl-blue text-sm">{member.data.name}</h2>
+              <p class="text-xs text-cdl-gray mt-1">{member.data.role}</p>
+              {member.data.social && (
+                <div class="flex items-center justify-center gap-2 mt-2">
+                  {member.data.social.mastodon && (
+                    <a href={member.data.social.mastodon} rel="me noopener noreferrer" target="_blank" class="text-cdl-gray hover:text-cdl-orange transition-colors" aria-label={`${member.data.name} sur Mastodon`}>
+                      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 00.023-.043v-1.809a.052.052 0 00-.02-.041.053.053 0 00-.046-.01 20.282 20.282 0 01-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 01-.319-1.433.053.053 0 01.066-.054 19.648 19.648 0 004.636.544c.568 0 1.133-.014 1.691-.049 2.284-.134 4.424-.732 4.69-.804a.166.166 0 00.122-.146c.346-2.77.32-6.782.05-8.99zm-3.844 8.36h-2.248v-5.59c0-1.18-.494-1.778-1.488-1.778-1.097 0-1.646.71-1.646 2.113v3.062h-2.234v-3.062c0-1.403-.549-2.113-1.647-2.113-.994 0-1.488.599-1.488 1.779v5.589H6.425V8.223c0-1.179.302-2.115.907-2.808.625-.693 1.443-1.048 2.46-1.048 1.176 0 2.066.452 2.649 1.354l.57.956.572-.956c.583-.902 1.473-1.354 2.648-1.354 1.017 0 1.836.355 2.46 1.048.606.693.908 1.63.908 2.808v5.45z"/></svg>
+                    </a>
+                  )}
+                  {member.data.social.github && (
+                    <a href={`https://github.com/${member.data.social.github}`} target="_blank" rel="noopener noreferrer" class="text-cdl-gray hover:text-cdl-orange transition-colors" aria-label={`${member.data.name} sur GitHub`}>
+                      <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Photos de bénévoles en action */}
+      {benevolesPhotos.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">Les bénévoles en action</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3">
+            {benevolesPhotos.slice(0, 8).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Clubs étudiants */}
+      <div class="mt-16">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-4 text-center">Nos partenaires étudiants</h2>
+        <p class="text-cdl-gray text-center mb-8 max-w-3xl mx-auto">
+          Le Capitole du Libre s'appuie chaque année sur les clubs techniques de l'ENSEEIHT
+          et les étudiants d'Epitech Toulouse, qui mettent leur énergie et leurs compétences
+          au service de l'événement.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
+          <a href="https://net7.dev" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+            <img src="/static/img/partners/logo-net7.png" alt="Net7" class="h-12 w-auto" loading="lazy" />
+            <p class="text-xs text-cdl-gray text-center">Install Party</p>
+          </a>
+          <a href="https://tvn7.fr" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+            <img src="/static/img/partners/logo-tvn7.png" alt="TVn7" class="h-12 w-auto" loading="lazy" />
+            <p class="text-xs text-cdl-gray text-center">Captation vidéo</p>
+          </a>
+          <a href="https://photo7.inpt.fr/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+            <img src="/static/img/partners/logo-photo7.png" alt="Photo7" class="h-12 w-auto" loading="lazy" />
+            <p class="text-xs text-cdl-gray text-center">Photographie</p>
+          </a>
+          <a href="https://can7.fr/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+            <img src="/static/img/partners/logo-can7.png" alt="CAn7" class="h-12 w-auto" loading="lazy" />
+            <p class="text-xs text-cdl-gray text-center">Son & lumière</p>
+          </a>
+          <a href="https://www.epitech.eu/ecole-informatique-toulouse/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-2 p-4 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+            <img src="/static/img/partners/logo-epitech.png" alt="Epitech Toulouse" class="h-12 w-auto" loading="lazy" />
+            <p class="text-xs text-cdl-gray text-center">Initiation au code</p>
+          </a>
+        </div>
+      </div>
+
+      {/* Toulibre */}
+      <div class="max-w-3xl mx-auto text-center mt-16">
+        <p class="text-cdl-gray">
+          Le Capitole du Libre est un événement de l'association
+          <a href={config.links.toulibre} class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">Toulibre</a>.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

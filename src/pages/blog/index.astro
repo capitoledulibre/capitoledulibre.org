@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import JsonLd from '../../components/ui/JsonLd.astro';
+import { getCollection } from 'astro:content';
+import { breadcrumb } from '../../lib/jsonld';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<BaseLayout title="Blog" description="Actualités, annonces et récaps du Capitole du Libre.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Blog', path: '/blog' }])} />
+  <PageHeader title="Blog" description="Actualités et annonces du Capitole du Libre." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+
+      {posts.length > 0 ? (
+        <div class="space-y-8">
+          {posts.map((post) => (
+            <article class="p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+              <time
+                datetime={post.data.date.toISOString().slice(0, 10)}
+                class="text-xs font-medium text-cdl-orange uppercase tracking-wider"
+              >
+                {post.data.date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </time>
+              <h2 class="text-xl font-bold text-cdl-blue mt-2 mb-2">
+                <a href={`/blog/${post.id}`} class="hover:text-cdl-orange transition-colors">
+                  {post.data.title}
+                </a>
+              </h2>
+              <p class="text-sm text-cdl-gray mb-3">{post.data.excerpt}</p>
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-cdl-gray">Par {post.data.author}</span>
+                <a
+                  href={`/blog/${post.id}`}
+                  class="text-sm text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors"
+                >
+                  Lire la suite →
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20">
+          <p class="text-cdl-gray">Aucun article pour le moment. Revenez bientôt !</p>
+        </div>
+      )}
+
+    </div>
+  </section>
+</BaseLayout>

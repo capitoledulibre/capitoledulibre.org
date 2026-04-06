@@ -1,0 +1,39 @@
+---
+interface Props {
+  subject?: string;
+  label?: string;
+  class?: string;
+  'aria-label'?: string;
+}
+
+const { subject, label, class: className, 'aria-label': ariaLabel } = Astro.props;
+
+const user = Buffer.from('contact').toString('base64');
+const domain = Buffer.from('capitoledulibre.org').toString('base64');
+---
+
+<a
+  href="#"
+  data-u={user}
+  data-d={domain}
+  data-s={subject ? Buffer.from(subject).toString('base64') : undefined}
+  class:list={['obfuscated-email', className]}
+  aria-label={ariaLabel || 'Envoyer un email'}
+>
+  {label && <Fragment>{label}</Fragment>}
+  <slot />
+</a>
+
+<script>
+  document.querySelectorAll('.obfuscated-email').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const a = el as HTMLAnchorElement;
+      const u = atob(a.dataset.u || '');
+      const d = atob(a.dataset.d || '');
+      const s = a.dataset.s ? atob(a.dataset.s) : '';
+      const mailto = `mailto:${u}@${d}${s ? `?subject=${encodeURIComponent(s)}` : ''}`;
+      window.location.href = mailto;
+    });
+  });
+</script>

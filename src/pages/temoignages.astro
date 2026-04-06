@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import VideoPlayer from '../components/ui/VideoPlayer.astro';
+import { breadcrumb } from '../lib/jsonld';
+
+const testimonials = [
+  {
+    name: 'JB Kempf',
+    role: 'Speaker',
+    org: 'VLC',
+    video: '/static/videos/itw-jbkempf-2024',
+    description: 'Créateur et président de VideoLAN, JB Kempf développe VLC, le lecteur multimédia libre le plus utilisé au monde.',
+  },
+  {
+    name: 'Isabella',
+    role: 'Speaker & village associatif',
+    org: 'April',
+    video: '/static/videos/itw-isabella-2024',
+    description: 'Membre active de l\'April, l\'association de promotion et de défense du logiciel libre en France.',
+  },
+  {
+    name: 'Khrys',
+    role: 'Speaker & village associatif',
+    org: 'FDN',
+    video: '/static/videos/itw-khrys-2024',
+    description: 'Membre de FDN (French Data Network), le plus ancien fournisseur d\'accès à Internet associatif en France.',
+  },
+  {
+    name: 'Sébastien Dinot',
+    role: 'Speaker & sponsor',
+    org: 'CS Group',
+    video: '/static/videos/itw-sebastien-2024',
+    description: 'Intervenant régulier du Capitole du Libre et représentant de CS Group, entreprise engagée dans le logiciel libre.',
+  },
+];
+
+const questions = [
+  'Une rapide présentation',
+  'Pourquoi tu viens au Capitole du Libre ?',
+  'Parle-nous de ton actu',
+];
+---
+
+<BaseLayout title="Témoignages" description="Découvrez les témoignages des speakers et participants du Capitole du Libre en vidéo.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Témoignages', path: '/temoignages' }])} />
+  <PageHeader title="Témoignages" description="Ils participent au Capitole du Libre. Voici ce qu'ils en pensent." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <!-- Intro -->
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <p class="text-lg text-cdl-gray leading-relaxed">
+          À chaque édition, nous rencontrons des speakers, des bénévoles et des visiteurs
+          qui partagent leur passion pour le logiciel libre. Nous leur avons posé trois questions :
+        </p>
+        <ul class="mt-6 flex flex-wrap justify-center gap-3">
+          {questions.map((q) => (
+            <li class="px-4 py-2 text-sm font-medium text-cdl-orange bg-cdl-orange/5 border border-cdl-orange/20 rounded-full">
+              {q}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Grille vidéos -->
+      <div class="space-y-16">
+        {testimonials.map((t, i) => (
+          <div class:list={[
+            'flex flex-col gap-8 items-center',
+            i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse',
+          ]}>
+            <!-- Vidéo -->
+            <div class="lg:w-[60%] w-full">
+              <VideoPlayer src={t.video} />
+            </div>
+
+            <!-- Info -->
+            <div class="lg:w-[40%]">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cdl-orange/10 text-xs font-medium text-cdl-orange mb-4">
+                {t.role}
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-2">
+                {t.name}
+              </h2>
+              <p class="text-sm font-medium text-cdl-orange mb-4">{t.org}</p>
+              <p class="text-cdl-gray leading-relaxed">
+                {t.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Édition info -->
+      <div class="mt-16 text-center">
+        <p class="text-sm text-cdl-gray">
+          Interviews réalisées lors du Capitole du Libre 2024.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

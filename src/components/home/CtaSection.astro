@@ -1,0 +1,37 @@
+---
+import OccitanCross from '../ui/OccitanCross.astro';
+import { config } from '../../config';
+---
+
+<section class="relative py-20 sm:py-28 bg-cdl-blue-fixed text-white overflow-hidden section-slant-top">
+  <!-- Motifs occitans -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <OccitanCross size={250} class="absolute -top-16 -right-16 text-white/[0.03] rotate-12" />
+    <OccitanCross size={180} class="absolute bottom-0 -left-12 text-cdl-gold/[0.05] -rotate-6" />
+  </div>
+
+  <div class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+    <OccitanCross size={32} class="text-cdl-gold/50 mx-auto mb-6" />
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+      Rendez-vous les {config.edition.displayDates}
+    </h2>
+    <p class="text-lg sm:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+      Gratuit sur inscription. Rejoignez {config.stats.visitors.toLocaleString('fr-FR')} passionnés
+      pour un week-end dédié au logiciel libre.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href={config.tickets.url}
+        class="inline-flex items-center px-8 py-3.5 text-lg font-medium text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-xl transition-colors shadow-lg shadow-cdl-orange/25"
+      >
+        S'inscrire (gratuit)
+      </a>
+      <a
+        href="/lieu"
+        class="inline-flex items-center px-8 py-3.5 text-lg font-medium text-white border-2 border-white/30 hover:border-white/60 rounded-xl transition-colors"
+      >
+        Comment venir
+      </a>
+    </div>
+  </div>
+</section>

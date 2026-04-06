@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import Picture from '../components/ui/Picture.astro';
+import { breadcrumb } from '../lib/jsonld';
+import { getPhotosByTag } from '../lib/photos';
+
+const foodPhotos = getPhotosByTag('food-trucks');
+const buvettePhotos = getPhotosByTag('buvette');
+const cocktailPhotos = getPhotosByTag('cocktail');
+---
+
+<BaseLayout title="Se restaurer" description="Food trucks, buvette et cocktail du samedi soir au Capitole du Libre.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Se restaurer', path: '/se-restaurer' }])} />
+  <PageHeader title="Se restaurer" description="Manger et boire pendant l'événement." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      {/* Food trucks */}
+      <div class="flex flex-col lg:flex-row gap-10 items-center mb-16">
+        <div class="lg:w-1/2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4">
+            Food trucks le midi
+          </h2>
+          <p class="text-cdl-gray leading-relaxed mb-4">
+            Deux food trucks sont installés sur l'esplanade de l'ENSEEIHT pour vous proposer
+            des déjeuners variés : cuisine asiatique, burgers, options végétariennes...
+            Il y en a pour tous les goûts !
+          </p>
+          <div class="flex items-center gap-4 mb-4">
+            <div class="flex items-center gap-2 px-4 py-2 bg-cdl-orange/5 rounded-lg">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span class="text-sm font-medium text-cdl-blue">10 – 15 € le menu avec boisson</span>
+            </div>
+          </div>
+          <p class="text-sm text-cdl-gray">
+            Paiement par carte bancaire et espèces. Service le samedi et le dimanche midi.
+          </p>
+        </div>
+        <div class="lg:w-1/2">
+          {foodPhotos[0] && (
+            <Picture
+              src={foodPhotos[0].src}
+              alt={foodPhotos[0].alt}
+              class="w-full aspect-[4/3] object-cover rounded-2xl shadow-lg"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Galerie food trucks */}
+      {foodPhotos.length > 1 && (
+        <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3 mb-16">
+          {foodPhotos.slice(0, 4).map((photo) => (
+            <div class="relative overflow-hidden rounded-xl">
+              <Picture
+                src={photo.src}
+                alt={photo.alt}
+                class="w-full aspect-[4/3] object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Buvette */}
+      <div class="mb-16 max-w-3xl mx-auto">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-4 text-center">Buvette</h2>
+        <p class="text-cdl-gray text-center leading-relaxed mb-6">
+          Une buvette est ouverte en continu dans le hall d'accueil pendant toute la durée de l'événement.
+          Café, thé, jus de fruits et autres boissons fraîches sont disponibles.
+        </p>
+        {buvettePhotos.length > 0 && (
+          <div class="lightbox-gallery grid grid-cols-2 gap-3">
+            {buvettePhotos.slice(0, 2).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 380px"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Cocktail */}
+      <div class="flex flex-col lg:flex-row-reverse gap-10 items-center mb-16">
+        <div class="lg:w-1/2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4">
+            Cocktail du samedi soir
+          </h2>
+          <p class="text-cdl-gray leading-relaxed mb-4">
+            Le samedi soir, l'événement se prolonge avec un cocktail dans le hall principal.
+            C'est le moment fort du week-end : l'occasion d'échanger avec les speakers,
+            de rencontrer d'autres passionnés et de prolonger les discussions de la journée.
+          </p>
+          <ul class="space-y-2 mb-4">
+            {[
+              'Ouvert à tous les participants, sans inscription supplémentaire',
+              'Canapés, petits fours et boissons non alcoolisées offerts',
+              'Dans le hall principal de l\'événement',
+            ].map((item) => (
+              <li class="flex items-start gap-2 text-sm text-cdl-gray">
+                <svg class="h-5 w-5 text-cdl-orange flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="lg:w-1/2">
+          {cocktailPhotos[0] && (
+            <Picture
+              src={cocktailPhotos[0].src}
+              alt={cocktailPhotos[0].alt}
+              class="w-full aspect-[4/3] object-cover rounded-2xl shadow-lg"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Galerie cocktail */}
+      {cocktailPhotos.length > 1 && (
+        <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3">
+          {cocktailPhotos.slice(0, 4).map((photo) => (
+            <div class="relative overflow-hidden rounded-xl">
+              <Picture
+                src={photo.src}
+                alt={photo.alt}
+                class="w-full aspect-[4/3] object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import HeroSection from '../components/home/HeroSection.astro';
+import CfpBanner from '../components/home/CfpBanner.astro';
+import WhyAttendSection from '../components/home/WhyAttendSection.astro';
+import HighlightsSection from '../components/home/HighlightsSection.astro';
+import ParcoursSection from '../components/home/ParcoursSection.astro';
+import TestimonialsSection from '../components/home/TestimonialsSection.astro';
+import TimelineSection from '../components/home/TimelineSection.astro';
+import GallerySection from '../components/home/GallerySection.astro';
+import VideoSection from '../components/home/VideoSection.astro';
+import PartnersPreview from '../components/home/PartnersPreview.astro';
+import CtaSection from '../components/home/CtaSection.astro';
+import { config } from '../config';
+
+const eventJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: 'Capitole du Libre 2026',
+  description: 'L\'événement du Logiciel Libre en Occitanie. Conférences, ateliers, village associatif, install party.',
+  startDate: '2026-11-14T09:30:00+01:00',
+  endDate: '2026-11-15T18:00:00+01:00',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: {
+    '@type': 'Place',
+    name: config.venue.name,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '2 rue Charles Camichel',
+      addressLocality: 'Toulouse',
+      postalCode: '31000',
+      addressCountry: 'FR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: config.venue.coordinates.lat,
+      longitude: config.venue.coordinates.lng,
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'Toulibre',
+    url: config.links.toulibre,
+  },
+  image: 'https://capitoledulibre.org/static/img/img01.jpg',
+  url: 'https://capitoledulibre.org',
+  isAccessibleForFree: true,
+  inLanguage: 'fr',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'EUR',
+    url: config.tickets.url,
+    availability: 'https://schema.org/InStock',
+  },
+};
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Capitole du Libre',
+  url: 'https://capitoledulibre.org',
+  logo: 'https://capitoledulibre.org/static/img/logo-capitoledulibre.svg',
+  sameAs: [
+    config.social.mastodon,
+    config.social.twitter,
+    config.social.facebook,
+    config.social.linkedin,
+    config.social.instagram,
+    config.social.bluesky,
+    config.links.github,
+  ],
+};
+---
+
+<BaseLayout title="Accueil">
+  <JsonLd slot="head" data={eventJsonLd} />
+  <JsonLd slot="head" data={orgJsonLd} />
+
+  <!-- 1. Impact immédiat (stats intégrées au hero) -->
+  <HeroSection />
+  <CfpBanner />
+
+  <!-- 2. Storytelling : pourquoi venir -->
+  <WhyAttendSection />
+
+  <!-- 4. Concret : ce qui vous attend -->
+  <HighlightsSection />
+
+  <!-- 5. Se projeter : c'est pour qui ? -->
+  <ParcoursSection />
+
+  <!-- 6. Preuve sociale -->
+  <TestimonialsSection />
+
+  <!-- 7. Immersion : une journée type -->
+  <TimelineSection />
+
+  <!-- 8. Ambiance visuelle -->
+  <GallerySection />
+  <VideoSection />
+
+  <!-- 9. Écosystème -->
+  <PartnersPreview />
+
+  <!-- 10. Appel à l'action final -->
+  <CtaSection />
+</BaseLayout>

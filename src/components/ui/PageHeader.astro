@@ -1,0 +1,38 @@
+---
+import OccitanCross from './OccitanCross.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<div class="relative bg-cdl-blue-fixed text-white py-16 sm:py-20 overflow-hidden">
+  <!-- Motif occitan décoratif -->
+  <OccitanCross size={200} class="absolute -top-10 -right-10 text-white/[0.04] rotate-12" />
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <span class="h-px w-10 bg-cdl-gold/50" aria-hidden="true"></span>
+      <OccitanCross size={18} class="text-cdl-gold/50" />
+      <span class="h-px w-10 bg-cdl-gold/50" aria-hidden="true"></span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+      {title}
+    </h1>
+    {description && (
+      <p class="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto">
+        {description}
+      </p>
+    )}
+  </div>
+
+  <!-- Diagonale en bas -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full" preserveAspectRatio="none">
+      <path d="M0 40V20L1440 0V40H0Z" class="fill-cdl-bg" />
+    </svg>
+  </div>
+</div>

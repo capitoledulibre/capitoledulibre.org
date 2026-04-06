@@ -1,0 +1,92 @@
+---
+/**
+ * Lightbox overlay for photo galleries.
+ * Add this component once per page that has clickable photos.
+ * Then add class="lightbox-trigger" and data-full="/static/img/img01.jpg"
+ * to any clickable container.
+ *
+ * Or wrap photos in a parent with class="lightbox-gallery" and it will
+ * auto-detect all <picture>/<img> children.
+ */
+---
+
+<!-- Lightbox overlay -->
+<dialog id="lightbox" class="fixed inset-0 m-auto w-full h-full max-w-none max-h-none bg-black/90 backdrop:bg-transparent border-none p-0">
+  <div class="relative w-full h-full flex items-center justify-center" id="lightbox-inner">
+    <button
+      id="lightbox-close"
+      class="absolute top-4 right-4 z-10 p-2 text-white/70 hover:text-white rounded-full hover:bg-white/10 transition-colors"
+      aria-label="Fermer"
+    >
+      <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl" />
+    <p id="lightbox-caption" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-sm bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm"></p>
+  </div>
+</dialog>
+
+<style>
+  #lightbox[open] {
+    animation: lightbox-in 0.2s ease-out;
+  }
+  @keyframes lightbox-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<script>
+  const lightbox = document.getElementById('lightbox') as HTMLDialogElement;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption') as HTMLElement;
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  // Find all gallery images and make them clickable
+  document.querySelectorAll('.lightbox-gallery').forEach((gallery) => {
+    gallery.querySelectorAll('picture, img').forEach((el) => {
+      const container = el.closest('.lightbox-gallery > *') || el.parentElement;
+      if (!container || container.hasAttribute('data-lightbox-ready')) return;
+      container.setAttribute('data-lightbox-ready', '');
+      container.style.cursor = 'pointer';
+
+      container.addEventListener('click', () => {
+        // Find the img (inside picture or direct)
+        const img = el.tagName === 'IMG' ? el as HTMLImageElement : el.querySelector('img') as HTMLImageElement;
+        if (!img) return;
+
+        // Use the original jpg src (not the responsive version)
+        const src = img.getAttribute('src') || '';
+        const alt = img.getAttribute('alt') || '';
+
+        // Try to get a larger version: replace responsive suffix or use original
+        const largeSrc = src.replace(/-\d+w\.(avif|webp)$/, '.jpg');
+
+        lightboxImg.src = largeSrc;
+        lightboxImg.alt = alt;
+        lightboxCaption.textContent = alt;
+        lightboxCaption.style.display = alt ? '' : 'none';
+        lightbox.showModal();
+      });
+    });
+  });
+
+  // Also support explicit triggers
+  document.querySelectorAll('.lightbox-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const src = trigger.getAttribute('data-full') || '';
+      const alt = trigger.getAttribute('data-alt') || '';
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightboxCaption.textContent = alt;
+      lightboxCaption.style.display = alt ? '' : 'none';
+      lightbox.showModal();
+    });
+  });
+
+  lightboxClose?.addEventListener('click', () => lightbox.close());
+  document.getElementById('lightbox-inner')?.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) lightbox.close();
+  });
+</script>

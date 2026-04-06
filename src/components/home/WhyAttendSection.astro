@@ -1,0 +1,81 @@
+---
+import OccitanCross from '../ui/OccitanCross.astro';
+import Picture from '../ui/Picture.astro';
+
+const reasons = [
+  {
+    title: 'Un week-end pour apprendre, partager et s\'inspirer',
+    text: 'Plus de 100 conférences et ateliers sur deux jours : développement, sécurité, design, IA, vie privée, culture libre... Il y a forcément un sujet qui vous passionne. Et si vous ne savez pas par où commencer, laissez-vous surprendre — les meilleures découvertes sont celles qu\'on n\'attendait pas.',
+    image: '/static/img/img21.jpg',
+    imageAlt: 'Keynote du Capitole du Libre dans l\'amphi plein',
+  },
+  {
+    title: 'Rencontrez ceux qui font le libre',
+    text: 'Le Capitole du Libre, c\'est avant tout des rencontres. Développeurs de distributions Linux, créateurs de logiciels que vous utilisez chaque jour, associations qui défendent vos libertés numériques — ils sont tous là, accessibles, prêts à échanger. Le village associatif réunit plus de 30 stands pour discuter, tester et repartir avec des idées plein la tête.',
+    image: '/static/img/img29.jpg',
+    imageAlt: 'Stand du village associatif avec échanges entre participants',
+  },
+  {
+    title: 'Gratuit, ouvert à tous, bienveillant',
+    text: 'Pas de billet à acheter, pas de prérequis technique. Que vous soyez développeur confirmé, étudiant curieux, enseignant, artiste ou simplement quelqu\'un qui se pose des questions sur le numérique — vous êtes les bienvenus. L\'install party vous aide à passer à Linux, l\'initiation au code accueille les enfants dès 8 ans, et le cocktail du samedi soir est offert.',
+    image: '/static/img/img57.jpg',
+    imageAlt: 'L\'équipe de bénévoles du Capitole du Libre 2025',
+  },
+];
+---
+
+<section class="relative py-16 sm:py-24 section-glow">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <span class="h-px w-12 bg-cdl-orange/40" aria-hidden="true"></span>
+        <OccitanCross size={24} class="text-cdl-orange/40" />
+        <span class="h-px w-12 bg-cdl-orange/40" aria-hidden="true"></span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        Pourquoi venir ?
+      </h2>
+      <p class="text-lg text-cdl-gray">
+        Depuis 2011, le Capitole du Libre rassemble chaque année la communauté du logiciel libre à Toulouse.
+      </p>
+    </div>
+
+    <div class="space-y-12 sm:space-y-0">
+      {reasons.map((reason, i) => (
+        <div class:list={[
+          'relative flex flex-col gap-8 items-center sm:py-12',
+          i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse',
+        ]}>
+          {/* Image avec cadre décalé */}
+          <div class="lg:w-[55%]">
+            <div class="relative">
+              {/* Fond décalé décoratif */}
+              <div class:list={[
+                'absolute -z-10 w-full h-full rounded-2xl bg-cdl-orange/10',
+                i % 2 === 0 ? 'top-4 -left-4' : 'top-4 -right-4',
+              ]} aria-hidden="true"></div>
+              <Picture
+                src={reason.image}
+                alt={reason.imageAlt}
+                loading="lazy"
+                class="relative w-full aspect-[3/2] object-cover rounded-2xl shadow-lg"
+                sizes="(max-width: 1024px) 100vw, 55vw"
+              />
+            </div>
+          </div>
+
+          {/* Texte */}
+          <div class="lg:w-[45%]">
+            <h3 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4 leading-snug">
+              {reason.title}
+            </h3>
+            <div class="h-1 w-16 bg-cdl-orange rounded-full mb-4" aria-hidden="true"></div>
+            <p class="text-cdl-gray leading-relaxed text-lg">
+              {reason.text}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

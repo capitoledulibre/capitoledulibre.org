@@ -1,0 +1,136 @@
+---
+import OccitanCross from '../ui/OccitanCross.astro';
+import { config } from '../../config';
+
+const stats = [
+  { value: '1 400', label: 'visiteurs' },
+  { value: '100+', label: 'conférences' },
+  { value: '30+', label: 'stands' },
+];
+---
+
+<section class="relative min-h-[90vh] flex items-center overflow-hidden bg-cdl-blue-fixed text-white">
+  <!-- Photo de fond -->
+  <picture>
+    <source type="image/avif" srcset="/static/img/img01-960w.avif 960w, /static/img/img01-1440w.avif 1440w, /static/img/img01.avif 1920w" sizes="100vw" />
+    <source type="image/webp" srcset="/static/img/img01-960w.webp 960w, /static/img/img01-1440w.webp 1440w, /static/img/img01.webp 1920w" sizes="100vw" />
+    <img
+      src="/static/img/img01.jpg"
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover object-center"
+      fetchpriority="high"
+    />
+  </picture>
+
+  <!-- Overlay gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-cdl-blue-fixed/90 via-cdl-blue-fixed/80 to-cdl-orange-dark/50"></div>
+
+  <!-- Motifs décoratifs occitans -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <OccitanCross size={300} class="absolute -top-20 -right-20 text-white/[0.03] rotate-12" />
+    <OccitanCross size={200} class="absolute bottom-10 -left-16 text-cdl-gold/[0.05] -rotate-6" />
+    <OccitanCross size={120} class="hidden lg:block absolute top-1/3 right-[12%] text-white/[0.04] rotate-45" />
+
+    <!-- Halos flottants -->
+    <div class="h-72 w-72 rounded-full bg-cdl-orange/10 blur-3xl absolute -top-20 -left-20 animate-float"></div>
+    <div class="h-96 w-96 rounded-full bg-cdl-gold/10 blur-3xl absolute top-1/3 -right-32 animate-float-delayed"></div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40 w-full">
+    <div class="hero-content">
+      <!-- Layout : texte à gauche, espace à droite sur desktop -->
+      <div class="max-w-3xl">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium mb-8">
+          <OccitanCross size={14} class="text-cdl-gold" />
+          Édition {config.edition.year} — Gratuit, inscription obligatoire
+        </div>
+
+        <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight mb-6 drop-shadow-lg leading-[0.95]">
+          Capitole<br /> du Libre
+        </h1>
+
+        <p class="text-xl sm:text-2xl lg:text-3xl text-white/90 mb-3 font-medium">
+          L'événement du Logiciel Libre en Occitanie
+        </p>
+
+        <p class="text-lg sm:text-xl text-cdl-gold font-medium mb-10">
+          <svg class="inline-block h-5 w-5 mr-1 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          {config.edition.displayDates}
+          <span class="mx-2 text-white/30">|</span>
+          <svg class="inline-block h-5 w-5 mr-1 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          {config.venue.name}, Toulouse
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-start gap-4 mb-14">
+          <a
+            href={config.tickets.url}
+            class="group inline-flex items-center px-8 py-4 text-lg font-bold text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-xl transition-all duration-300 shadow-xl shadow-cdl-orange/30 hover:shadow-2xl hover:shadow-cdl-orange/40 hover:scale-105 focus:outline-2 focus:outline-offset-2 focus:outline-cdl-orange"
+          >
+            S'inscrire (gratuit)
+            <svg class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <a
+            href="/programme"
+            class="inline-flex items-center px-8 py-4 text-lg font-medium text-white border-2 border-white/30 hover:border-white/60 hover:bg-white/10 rounded-xl transition-all duration-300 backdrop-blur-sm"
+          >
+            Voir le programme
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats intégrées au hero -->
+      <div class="grid grid-cols-3 gap-4 sm:gap-6 max-w-lg">
+        {stats.map((stat) => (
+          <div class="px-4 py-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+            <p class="text-2xl sm:text-3xl font-bold text-cdl-gold">{stat.value}</p>
+            <p class="text-xs sm:text-sm text-white/70">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce" aria-hidden="true">
+    <svg class="h-6 w-6 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+
+</section>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    33% { transform: translateY(-20px) translateX(10px); }
+    66% { transform: translateY(10px) translateX(-10px); }
+  }
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    33% { transform: translateY(15px) translateX(-15px); }
+    66% { transform: translateY(-25px) translateX(5px); }
+  }
+
+  .animate-float { animation: float 8s ease-in-out infinite; }
+  .animate-float-delayed { animation: float-delayed 10s ease-in-out infinite; }
+
+  .hero-content { animation: hero-enter 1s ease-out both; }
+  @keyframes hero-enter {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float, .animate-float-delayed { animation: none; }
+    .hero-content { animation: none; }
+  }
+</style>

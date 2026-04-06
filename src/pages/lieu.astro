@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import VenuePlan from '../components/ui/VenuePlan.astro';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+
+const transports = [
+  {
+    icon: 'M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l2-1h6l2 1zM13 6l5-2v12l-5 2',
+    title: 'Métro',
+    description: 'Ligne B, arrêt François Verdier (5 min à pied) ou ligne A, arrêt Jean Jaurès (10 min à pied).',
+  },
+  {
+    icon: 'M12 22c-4.97 0-9-2.239-9-5v-4c0-2.761 4.03-5 9-5s9 2.239 9 5v4c0 2.761-4.03 5-9 5zM12 8V2M5 12l-2-2M19 12l2-2',
+    title: 'Vélo',
+    description: 'Station VélôToulouse à proximité. Des attaches vélo sont disponibles dans les rues alentours.',
+  },
+  {
+    icon: 'M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2.7-5.4A1 1 0 0014.4 4H9.6a1 1 0 00-.9.6L6 10l-2.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2M7 17a2 2 0 104 0 2 2 0 00-4 0zM13 17a2 2 0 104 0 2 2 0 00-4 0z',
+    title: 'Voiture',
+    description: 'Nous recommandons de se garer dans un parking relais du métro et de venir en métro (station François Verdier). Parkings à proximité : Indigo Saint-Georges, Saint-Aubin, Jean Jaurès, Carnot.',
+  },
+  {
+    icon: 'M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7',
+    title: 'Train',
+    description: 'Gare Matabiau à 15 min à pied ou 5 min en métro (ligne A, direction Basso Cambo).',
+  },
+];
+
+const infos = [
+  { icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', title: 'Accessibilité PMR', text: 'Lieu accessible aux personnes à mobilité réduite. Ascenseurs disponibles.' },
+  { icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', title: 'Entrée gratuite', text: 'Inscription gratuite et obligatoire sur notre billetterie en ligne.' },
+  { icon: 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z', title: 'Restauration sur place', text: 'Deux food trucks proposent des déjeuners variés (10-15 €). Cocktail offert le samedi soir.' },
+];
+
+const { lat, lng } = config.venue.coordinates;
+---
+
+<BaseLayout title="Lieu & accès" description={`Le Capitole du Libre se déroule à l'${config.venue.name}, ${config.venue.address}.`}>
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Lieu & accès', path: '/lieu' }])} />
+  <PageHeader title="Lieu & accès" description={`${config.venue.name} — ${config.venue.address}`} />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      {/* Carte OpenStreetMap */}
+      <div class="rounded-2xl overflow-hidden shadow-lg mb-16 border border-cdl-gray-light">
+        <iframe
+          title="Carte de l'ENSEEIHT"
+          src={`https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.005},${lat - 0.003},${lng + 0.005},${lat + 0.003}&layer=mapnik&marker=${lat},${lng}`}
+          class="w-full h-72 sm:h-96"
+          loading="lazy"
+        ></iframe>
+        <div class="bg-white dark:bg-gray-800 px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+          <p class="text-sm text-cdl-gray">
+            <strong class="text-cdl-blue">{config.venue.name}</strong> — {config.venue.address}
+          </p>
+          <a
+            href={`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors"
+          >
+            Voir sur OpenStreetMap
+          </a>
+        </div>
+      </div>
+
+      {/* Plan du site */}
+      <div class="mb-16">
+        <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4 text-center">Plan du site</h2>
+        <p class="text-cdl-gray text-center mb-8 max-w-2xl mx-auto">Cliquez sur un bâtiment pour voir les salles disponibles.</p>
+        <div class="max-w-4xl mx-auto">
+          <VenuePlan />
+        </div>
+      </div>
+
+      {/* Comment venir */}
+      <div class="mb-16">
+        <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-8 text-center">Comment venir</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {transports.map((t) => (
+            <div class="p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+              <div class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-cdl-orange/10 mb-4">
+                <svg class="h-6 w-6 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={t.icon} />
+                </svg>
+              </div>
+              <h3 class="font-bold text-cdl-blue mb-2">{t.title}</h3>
+              <p class="text-sm text-cdl-gray leading-relaxed">{t.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Infos pratiques */}
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-8 text-center">Infos pratiques</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {infos.map((info) => (
+            <div class="flex gap-4 p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+              <div class="flex-shrink-0">
+                <svg class="h-6 w-6 text-cdl-orange mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={info.icon} />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-cdl-blue text-sm mb-1">{info.title}</h3>
+                <p class="text-sm text-cdl-gray">{info.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cocktail du samedi */}
+      <div class="mt-16 max-w-3xl mx-auto bg-cdl-gold/10 dark:bg-cdl-gold/5 rounded-2xl p-8 sm:p-10">
+        <h2 class="text-xl font-bold text-cdl-blue mb-4 flex items-center gap-2">
+          <svg class="h-6 w-6 text-cdl-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.5 3h13l-1.5 8.5a5 5 0 01-5 4.5 5 5 0 01-5-4.5L5.5 3zM8 21h8M12 15v6" />
+          </svg>
+          Cocktail du samedi soir
+        </h2>
+        <p class="text-cdl-gray leading-relaxed">
+          Le samedi soir, l'événement se prolonge avec un cocktail ouvert à toutes et tous dans le hall principal.
+          Aucune inscription supplémentaire n'est nécessaire. Des canapés, petits fours et boissons non alcoolisées
+          sont servis à l'ensemble des participants. C'est le moment idéal pour échanger avec les speakers et les autres visiteurs.
+        </p>
+      </div>
+
+      {/* Hébergement */}
+      <div class="mt-16">
+        <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4 text-center">Où dormir ?</h2>
+        <p class="text-cdl-gray text-center mb-8 max-w-2xl mx-auto">
+          Vous venez de loin ? Voici quelques hébergements à proximité de l'ENSEEIHT.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <a
+            href="https://all.accor.com/hotel/B3A1/index.fr.shtml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
+          >
+            <h3 class="font-bold text-cdl-blue text-sm mb-1">Ibis Styles Toulouse Centre Canal du Midi</h3>
+            <p class="text-xs text-cdl-gray">Juste de l'autre côté du canal, face à l'ENSEEIHT.</p>
+          </a>
+          <a
+            href="http://www.athome-ah.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
+          >
+            <h3 class="font-bold text-cdl-blue text-sm mb-1">At Home Appart Hôtel</h3>
+            <p class="text-xs text-cdl-gray">À quelques centaines de mètres le long du Canal du Midi.</p>
+          </a>
+          <a
+            href="https://all.accor.com/hotel/1260/index.fr.shtml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
+          >
+            <h3 class="font-bold text-cdl-blue text-sm mb-1">Mercure Toulouse Centre Wilson Capitole</h3>
+            <p class="text-xs text-cdl-gray">En centre-ville, à proximité des transports en commun.</p>
+          </a>
+          <a
+            href="https://all.accor.com/hotel/0370/index.fr.shtml"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
+          >
+            <h3 class="font-bold text-cdl-blue text-sm mb-1">Mercure Toulouse Centre Saint-Georges</h3>
+            <p class="text-xs text-cdl-gray">Proche de l'ENSEEIHT, en plein centre-ville.</p>
+          </a>
+          <div class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 sm:col-span-2 lg:col-span-2">
+            <h3 class="font-bold text-cdl-blue text-sm mb-1">Locations type Airbnb</h3>
+            <p class="text-xs text-cdl-gray">
+              De nombreux logements sont disponibles dans le quartier de la rue Camichel et aux alentours.
+              Recherchez autour de l'adresse « 2 rue Charles Camichel, Toulouse » pour les dates du {config.edition.displayDates}.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

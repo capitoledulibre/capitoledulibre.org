@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import { breadcrumb } from '../lib/jsonld';
+---
+
+<BaseLayout title="Code de conduite" description="Code de conduite du Capitole du Libre — un événement bienveillant et inclusif.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Code de conduite', path: '/code-de-conduite' }])} />
+  <PageHeader title="Code de conduite" description="Un événement bienveillant, ouvert et respectueux." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+
+      <div class="prose prose-lg max-w-none text-cdl-gray prose-headings:text-cdl-blue prose-a:text-cdl-orange">
+        <p>
+          En tant qu'événement organisé par <a href="https://toulibre.org">Toulibre</a>, la charte de Toulibre s'applique.
+          Ce code de conduite est largement adapté de celui de l'<a href="https://www.afpy.org">Association Francophone Python</a> (AFPy).
+        </p>
+
+        <h2>Charte Toulibre</h2>
+        <p>
+          Le but de Toulibre est d'assurer la promotion du logiciel et de la culture libre auprès du plus large public possible.
+          Nous diffusons nos connaissances et sommes ouverts aux apports extérieurs car la diversité, l'écoute réciproque,
+          la solidarité et la démocratie élargissent les horizons et accroissent le potentiel de Toulibre et de chacun de ses membres.
+        </p>
+        <p>
+          Toulibre s'attend donc à ce que chaque membre de l'association fasse preuve de respect et de courtoisie envers les autres membres.
+        </p>
+
+        <h2>La version courte</h2>
+        <p>
+          Toulibre souhaite éviter tout type de discrimination, que ce soit sur le sexe, l'orientation sexuelle,
+          le handicap, l'apparence physique, l'origine ou la religion, et sous quelque forme que ce soit (parole, image, texte et autre).
+        </p>
+        <p>
+          Bien que Toulibre ait pour but la promotion du libre dans le monde francophone, l'association s'engage à accueillir chacun,
+          quelle que soit son langage de programmation ou sa langue maternelle.
+        </p>
+        <p>
+          Toulibre attend de ses membres un langage et un style adaptés à une audience variée.
+          Les allusions sexuelles ou à caractère raciste ne sont en aucun cas tolérées, quel que soit leur support.
+        </p>
+        <p>
+          Soyez poli(e). N'insultez personne. Discrimination et harcèlement sont à exclure aussi bien dans les écrits,
+          les visuels, les paroles et les actes.
+        </p>
+        <p>
+          Le non-respect de ces règles de bienséance pourra entraîner l'exclusion de l'événement,
+          à la seule discrétion d'un ou plusieurs organisateurs, ou de l'association, après délibération du comité directeur.
+        </p>
+
+        <h2>La version longue</h2>
+
+        <h3>Champ d'application</h3>
+        <p>Ces bonnes pratiques s'appliquent à l'ensemble des espaces liés à l'événement :</p>
+        <ul>
+          <li>les conférences et ateliers</li>
+          <li>les canaux IRC, XMPP ou autre messagerie instantanée</li>
+          <li>le blog et les réseaux sociaux</li>
+          <li>la liste de diffusion</li>
+          <li>tout événement où vous représentez Toulibre, y compris les rencontres informelles</li>
+        </ul>
+
+        <h3>Définition de la discrimination</h3>
+        <p>
+          La discrimination inclut toute distinction opérée entre les personnes à raison de leur origine,
+          de leur sexe, de leur situation de famille, de leur grossesse, de leur apparence physique,
+          de leur patronyme, de leur état de santé, de leur handicap, de leurs caractéristiques génétiques,
+          de leurs mœurs, de leur orientation sexuelle, de leur âge, de leurs opinions politiques,
+          de leurs activités syndicales, de leur appartenance ou non-appartenance, vraie ou supposée,
+          à une ethnie, une nation, une race ou une religion déterminée.
+        </p>
+
+        <h3>Comportements à éviter</h3>
+        <p>En tant que participant à un événement Toulibre, vous devez vous abstenir :</p>
+        <ul>
+          <li>de toute expression ou attitude inappropriées</li>
+          <li>de présenter des images sexuelles ou choquantes (notamment violentes)</li>
+          <li>d'intimidation délibérée, de harcèlement, de contacts physiques inconvenants et non consentis</li>
+        </ul>
+
+        <h3>Traitement des incidents</h3>
+        <p>
+          En cas de harcèlement ou de discrimination commis par un participant, les organisateurs de l'événement
+          ou membres du comité directeur pourront prendre immédiatement les mesures qu'ils jugent appropriées
+          et qui peuvent aller jusqu'à l'exclusion temporaire ou définitive d'un événement.
+        </p>
+
+        <h2>Signaler un incident</h2>
+        <p>
+          Si vous êtes victime ou témoin d'un comportement inapproprié, contactez-nous immédiatement :
+        </p>
+        <ul>
+          <li>En personne : adressez-vous à un membre de l'équipe d'organisation (t-shirt rouge « STAFF »)</li>
+          <li>Par email : <strong>conduite@capitoledulibre.org</strong></li>
+        </ul>
+        <p>
+          Toute signalisation sera traitée avec sérieux et confidentialité.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

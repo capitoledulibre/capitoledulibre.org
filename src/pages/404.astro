@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const suggestions = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Programme', href: '/programme' },
+  { label: 'Lieu & accès', href: '/lieu' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<BaseLayout title="Page introuvable" noindex>
+  <section class="py-24 sm:py-32">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-8xl sm:text-9xl font-bold text-cdl-orange/20">404</p>
+      <h1 class="text-2xl sm:text-3xl font-bold text-cdl-blue mt-4 mb-4">
+        Page introuvable
+      </h1>
+      <p class="text-cdl-gray mb-10">
+        La page que vous cherchez n'existe pas ou a été déplacée.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+        {suggestions.map((s) => (
+          <a
+            href={s.href}
+            class="px-4 py-2 text-sm font-medium text-cdl-gray border border-cdl-gray-light rounded-lg hover:border-cdl-orange/30 hover:text-cdl-orange transition-colors bg-white dark:bg-gray-800"
+          >
+            {s.label}
+          </a>
+        ))}
+      </div>
+
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 px-6 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium"
+      >
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1h-2z" />
+        </svg>
+        Retour à l'accueil
+      </a>
+    </div>
+  </section>
+</BaseLayout>

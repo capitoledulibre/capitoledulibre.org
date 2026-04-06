@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import { getCollection, render } from 'astro:content';
+import { breadcrumb } from '../lib/jsonld';
+
+const allFaq = await getCollection('faq');
+allFaq.sort((a, b) => a.data.order - b.data.order);
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: allFaq.map((q) => ({
+    '@type': 'Question',
+    name: q.data.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: q.body,
+    },
+  })),
+};
+
+const categories = [
+  { key: 'pratique', label: 'Pratique' },
+  { key: 'programme', label: 'Programme' },
+  { key: 'accessibilite', label: 'Accessibilité' },
+] as const;
+
+const faqByCategory = categories
+  .map((cat) => ({
+    ...cat,
+    questions: allFaq.filter((q) => q.data.category === cat.key),
+  }))
+  .filter((cat) => cat.questions.length > 0);
+---
+
+<BaseLayout title="FAQ" description="Questions fréquentes sur le Capitole du Libre : inscription, accès, programme, accessibilité.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'FAQ', path: '/faq' }])} />
+  <JsonLd slot="head" data={faqJsonLd} />
+  <PageHeader title="Questions fréquentes" description="Tout ce que vous devez savoir avant de venir." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+
+      {faqByCategory.map((cat) => (
+        <div class="mb-12">
+          <h2 class="text-xl font-bold text-cdl-blue mb-6 flex items-center gap-2">
+            <span class="inline-block h-1 w-8 bg-cdl-orange rounded-full" aria-hidden="true"></span>
+            {cat.label}
+          </h2>
+          <div class="space-y-3">
+            {cat.questions.map(async (q) => {
+              const { Content } = await render(q);
+              return (
+                <details class="group rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+                  <summary class="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer font-medium text-cdl-blue hover:text-cdl-orange transition-colors list-none">
+                    <span>{q.data.question}</span>
+                    <svg class="h-5 w-5 flex-shrink-0 text-cdl-gray transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </summary>
+                  <div class="px-6 pb-4 text-sm text-cdl-gray leading-relaxed prose prose-sm max-w-none">
+                    <Content />
+                  </div>
+                </details>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+
+    </div>
+  </section>
+</BaseLayout>

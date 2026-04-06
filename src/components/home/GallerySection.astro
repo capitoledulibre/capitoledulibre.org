@@ -1,0 +1,60 @@
+---
+import { config } from '../../config';
+import Picture from '../ui/Picture.astro';
+
+const photos = [
+  { src: '/static/img/img01.jpg', alt: 'Conférence au Capitole du Libre' },
+  { src: '/static/img/img04.jpg', alt: 'Atelier pratique' },
+  { src: '/static/img/img09.jpg', alt: 'Village associatif' },
+  { src: '/static/img/img11.jpg', alt: 'Échanges entre participants' },
+  { src: '/static/img/img18.jpg', alt: 'Salle de conférence' },
+  { src: '/static/img/img20.jpg', alt: 'Stand associatif' },
+  { src: '/static/img/img30.jpg', alt: 'Keynote d\'ouverture' },
+  { src: '/static/img/img32.jpg', alt: 'Networking' },
+];
+---
+
+<section class="py-16 sm:py-24 bg-white dark:bg-gray-900 section-slant-top relative">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        L'ambiance Capitole du Libre
+      </h2>
+      <p class="text-lg text-cdl-gray">
+        Retour en images sur les éditions précédentes.
+      </p>
+    </div>
+
+    <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      {photos.map((photo, i) => (
+        <div class:list={[
+          'relative overflow-hidden rounded-xl group',
+          i === 0 ? 'md:col-span-2 md:row-span-2' : '',
+        ]}>
+          <Picture
+            src={photo.src}
+            alt={photo.alt}
+            loading="lazy"
+            class="h-full w-full object-cover aspect-square transition-transform duration-500 group-hover:scale-105"
+            sizes={i === 0 ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 50vw, 25vw'}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+            <p class="absolute bottom-3 left-3 text-white text-sm font-medium">{photo.alt}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center mt-8">
+      <a
+        href={config.links.photos}
+        class="inline-flex items-center gap-2 text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors"
+      >
+        Voir toutes les photos
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

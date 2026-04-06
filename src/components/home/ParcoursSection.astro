@@ -1,0 +1,64 @@
+---
+const parcours = [
+  {
+    icon: '🌱',
+    title: 'Curieux & débutants',
+    description: 'Première fois ? Install party Linux, initiation au code, village associatif : tout est fait pour vous accueillir.',
+    tags: ['Install Party', 'Initiation', 'Village associatif'],
+  },
+  {
+    icon: '🚀',
+    title: 'Développeurs',
+    description: 'Conférences techniques, retours d\'expérience, dernières tendances du libre et de l\'open source.',
+    tags: ['Conférences', 'Ateliers', 'Lightning talks'],
+  },
+  {
+    icon: '🎨',
+    title: 'Graphistes & créatifs',
+    description: 'Découvrez les outils libres pour la création : GIMP, Inkscape, Blender, Krita et bien d\'autres.',
+    tags: ['Démos', 'Ateliers pratiques', 'Stands'],
+  },
+  {
+    icon: '🏛️',
+    title: 'Associations & communautés',
+    description: 'Rencontrez les acteurs du libre en Occitanie. Tenez un stand, partagez votre projet, fédérez votre communauté.',
+    tags: ['Village associatif', 'Networking', 'Stands'],
+  },
+];
+import OccitanCross from '../ui/OccitanCross.astro';
+---
+
+<section class="py-16 sm:py-24 bg-white dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <div class="flex items-center justify-center gap-3 mb-4">
+        <span class="h-px w-12 bg-cdl-orange/40" aria-hidden="true"></span>
+        <OccitanCross size={24} class="text-cdl-orange/40" />
+        <span class="h-px w-12 bg-cdl-orange/40" aria-hidden="true"></span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        Le libre, c'est pas que pour les geeks
+      </h2>
+      <p class="text-lg text-cdl-gray">
+        Que vous soyez expert ou simple curieux, le Capitole du Libre a un parcours pour vous.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {parcours.map((item) => (
+        <div class="group relative p-6 rounded-xl border border-cdl-gray-light hover:border-cdl-orange/30 hover:shadow-lg transition-all bg-white dark:bg-gray-800">
+          <div class="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
+          <h3 class="text-lg font-bold text-cdl-blue mb-2">{item.title}</h3>
+          <p class="text-sm text-cdl-gray leading-relaxed mb-4">{item.description}</p>
+          <div class="flex flex-wrap gap-2">
+            {item.tags.map((tag) => (
+              <span class="inline-block px-2.5 py-0.5 text-xs font-medium rounded-full bg-cdl-gold/20 text-cdl-orange-dark">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

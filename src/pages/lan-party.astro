@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import Picture from '../components/ui/Picture.astro';
+import { breadcrumb } from '../lib/jsonld';
+import { getPhotosByTag } from '../lib/photos';
+
+const photos = getPhotosByTag('lan-party');
+
+const games = [
+  { name: 'SuperTuxKart', description: 'Course de karts fun et accessible, façon Mario Kart.' },
+  { name: '0 A.D.', description: 'Jeu de stratégie en temps réel historique, type Age of Empires.' },
+  { name: 'Xonotic', description: 'FPS nerveux et rapide dans la lignée de Quake.' },
+  { name: 'Minetest', description: 'Jeu de construction sandbox, alternative libre à Minecraft.' },
+  { name: 'OpenArena', description: 'FPS multijoueur basé sur le moteur Quake III Arena.' },
+  { name: 'Et bien d\'autres...', description: 'La liste complète des jeux sera annoncée avant l\'événement.' },
+];
+---
+
+<BaseLayout title="LAN Party" description="Événement gaming avec des jeux libres au Capitole du Libre. Apportez votre PC et rejoignez la partie !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'LAN Party', path: '/lan-party' }])} />
+  <PageHeader title="LAN Party" description="Du gaming 100% libre !" />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-lg text-cdl-gray leading-relaxed">
+          Rejoignez la LAN Party du Capitole du Libre pour des parties multijoueurs sur des jeux entièrement libres.
+          Ambiance décontractée, tous niveaux bienvenus !
+        </p>
+      </div>
+
+      {/* Jeux */}
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-8 text-center">Les jeux proposés</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {games.map((game) => (
+            <div class="p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all">
+              <h3 class="font-bold text-cdl-blue mb-2">{game.name}</h3>
+              <p class="text-sm text-cdl-gray">{game.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Comment participer */}
+      <div class="max-w-3xl mx-auto bg-cdl-blue/5 rounded-2xl p-8 sm:p-10">
+        <h2 class="text-xl font-bold text-cdl-blue mb-4">Comment participer</h2>
+        <ul class="space-y-3">
+          {[
+            'Des PC seront à votre disposition avec un ensemble de jeux pré-installés.',
+            'Pas besoin d\'apporter votre matériel, tout est fourni sur place.',
+            'Ouvert à tous, débutants comme joueurs confirmés.',
+          ].map((item) => (
+            <li class="flex items-start gap-3 text-sm text-cdl-gray">
+              <svg class="h-5 w-5 text-cdl-orange flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Photos */}
+      {photos.length > 0 && (
+        <div class="mt-12">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">En images</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {photos.slice(0, 4).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="max-w-3xl mx-auto text-center mt-12">
+        <p class="text-cdl-gray">
+          <strong class="text-cdl-blue">Horaires :</strong> Samedi et dimanche, de 10h à 18h.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

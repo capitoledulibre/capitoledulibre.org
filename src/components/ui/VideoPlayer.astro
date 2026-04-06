@@ -1,0 +1,29 @@
+---
+/**
+ * Video player with WebM/VP9 > MP4 fallback + poster.
+ * Expects optimized files from scripts/optimize-videos.sh.
+ */
+interface Props {
+  src: string; // Base path without extension, e.g. "/static/videos/itw-khrys-2024"
+  poster?: string;
+  class?: string;
+}
+
+const { src, poster, class: className } = Astro.props;
+
+// Poster: use generated poster if not specified
+const posterSrc = poster || `${src}-poster.jpg`;
+---
+
+<div class:list={['relative rounded-2xl overflow-hidden shadow-lg bg-cdl-blue-fixed group', className]}>
+  <video
+    controls
+    preload="metadata"
+    poster={posterSrc}
+    class="w-full aspect-video"
+  >
+    <source src={`${src}.webm`} type="video/webm" />
+    <source src={`${src}.mp4`} type="video/mp4" />
+    Votre navigateur ne supporte pas la lecture vidéo.
+  </video>
+</div>

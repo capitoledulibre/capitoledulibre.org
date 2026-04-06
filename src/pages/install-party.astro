@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import Picture from '../components/ui/Picture.astro';
+import { getPhotosByTag } from '../lib/photos';
+import { breadcrumb } from '../lib/jsonld';
+
+const photos = getPhotosByTag('install-party');
+
+const services = [
+  { title: 'Installer Linux', description: 'Faites-vous accompagner pour installer une distribution Linux (Ubuntu, Fedora, Debian...) sur votre ordinateur.' },
+  { title: 'Résoudre un problème', description: 'Un souci avec votre installation Linux ? Des bénévoles expérimentés sont là pour vous aider.' },
+  { title: 'Découvrir le libre', description: 'Venez poser vos questions sur le logiciel libre, les alternatives aux logiciels propriétaires, la vie privée numérique.' },
+];
+
+const tips = [
+  'Sauvegardez vos données importantes avant de venir.',
+  'Si possible, libérez de l\'espace disque (au moins 30 Go recommandés).',
+  'Apportez votre chargeur et votre câble réseau (si vous en avez un).',
+  'Notez le modèle de votre ordinateur pour vérifier la compatibilité.',
+  'Aucun prérequis technique : on vous guide de A à Z !',
+];
+---
+
+<BaseLayout title="Install Party" description="Atelier permanent d'installation Linux au Capitole du Libre. Venez avec votre PC, repartez avec Linux !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Install Party', path: '/install-party' }])} />
+  <PageHeader title="Install Party" description="Repartez avec Linux installé sur votre machine !" />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-lg text-cdl-gray leading-relaxed">
+          L'Install Party est un atelier permanent ouvert pendant toute la durée de l'événement.
+          Apportez votre ordinateur et repartez avec un système Linux fonctionnel, installé avec l'aide de bénévoles passionnés.
+        </p>
+      </div>
+
+      {/* Services */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {services.map((s, i) => (
+          <div class="p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+            <div class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-cdl-orange/10 text-cdl-orange font-bold text-lg mb-4">
+              {i + 1}
+            </div>
+            <h2 class="text-lg font-bold text-cdl-blue mb-2">{s.title}</h2>
+            <p class="text-sm text-cdl-gray leading-relaxed">{s.description}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Conseils */}
+      <div class="max-w-3xl mx-auto bg-cdl-gold/10 rounded-2xl p-8 sm:p-10">
+        <h2 class="text-xl font-bold text-cdl-blue mb-4 flex items-center gap-2">
+          <svg class="h-6 w-6 text-cdl-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Conseils pour bien préparer sa venue
+        </h2>
+        <ul class="space-y-3">
+          {tips.map((tip) => (
+            <li class="flex items-start gap-3 text-sm text-cdl-gray">
+              <svg class="h-5 w-5 text-cdl-orange flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              {tip}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Photos */}
+      {photos.length > 0 && (
+        <div class="max-w-3xl mx-auto mt-12">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">En images</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {photos.slice(0, 4).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Horaires */}
+      <div class="max-w-3xl mx-auto text-center mt-12">
+        <p class="text-cdl-gray">
+          <strong class="text-cdl-blue">Horaires :</strong> Samedi et dimanche, en continu de 9h à 18h.
+        </p>
+      </div>
+
+      {/* Partenaire */}
+      <div class="max-w-3xl mx-auto mt-12 p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 flex items-center gap-5">
+        <a href="https://net7.dev" target="_blank" rel="noopener noreferrer" class="flex-shrink-0">
+          <img src="/static/img/partners/logo-net7.png" alt="Net7" class="h-16 w-auto" loading="lazy" />
+        </a>
+        <div>
+          <p class="text-sm text-cdl-gray leading-relaxed">
+            L'Install Party est réalisée en collaboration avec
+            <a href="https://net7.dev" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">Net7</a>,
+            le club informatique de l'ENSEEIHT.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

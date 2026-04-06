@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+
+const user = Buffer.from('contact').toString('base64');
+const domain = Buffer.from('capitoledulibre.org').toString('base64');
+
+const subjects = [
+  'Question générale',
+  `Proposition de stand — Capitole du Libre ${config.edition.year}`,
+  `Partenariat — Capitole du Libre ${config.edition.year}`,
+  'Presse / Médias',
+  'Accessibilité',
+  'Autre',
+];
+---
+
+<BaseLayout title="Contact" description="Contactez l'équipe d'organisation du Capitole du Libre.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Contact', path: '/contact' }])} />
+  <PageHeader title="Nous contacter" description="Une question ? Une proposition ? Écrivez-nous !" />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+
+      <form id="contact-form" class="space-y-6" data-u={user} data-d={domain}>
+        <div>
+          <label for="name" class="block text-sm font-medium text-cdl-blue mb-1">Votre nom</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full px-4 py-2.5 border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange focus:border-cdl-orange transition-colors"
+            placeholder="Prénom Nom"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-cdl-blue mb-1">Votre email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-4 py-2.5 border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange focus:border-cdl-orange transition-colors"
+            placeholder="vous@exemple.com"
+          />
+        </div>
+
+        <div>
+          <label for="subject" class="block text-sm font-medium text-cdl-blue mb-1">Sujet</label>
+          <select
+            id="subject"
+            name="subject"
+            required
+            class="w-full px-4 py-2.5 border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange focus:border-cdl-orange transition-colors"
+          >
+            <option value="" disabled selected>Choisissez un sujet</option>
+            {subjects.map((s) => (
+              <option value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label for="message" class="block text-sm font-medium text-cdl-blue mb-1">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            required
+            class="w-full px-4 py-2.5 border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange focus:border-cdl-orange transition-colors resize-y"
+            placeholder="Votre message..."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium focus:outline-2 focus:outline-offset-2 focus:outline-cdl-orange"
+        >
+          Envoyer
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </button>
+
+        <p class="text-xs text-cdl-gray mt-2">
+          Ce formulaire ouvrira votre client email avec le message pré-rempli.
+        </p>
+      </form>
+
+      {/* Autres moyens de contact */}
+      <div class="mt-16 pt-12 border-t border-cdl-gray-light">
+        <h2 class="text-xl font-bold text-cdl-blue mb-6 text-center">Autres moyens de nous joindre</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <a href={config.social.mastodon} rel="me noopener noreferrer" target="_blank" class="flex items-center gap-3 p-4 rounded-xl border border-cdl-gray-light hover:border-cdl-orange/30 hover:shadow-md transition-all bg-white dark:bg-gray-800">
+            <svg class="h-6 w-6 text-cdl-orange flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 00.023-.043v-1.809a.052.052 0 00-.02-.041.053.053 0 00-.046-.01 20.282 20.282 0 01-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 01-.319-1.433.053.053 0 01.066-.054 19.648 19.648 0 004.636.544c.568 0 1.133-.014 1.691-.049 2.284-.134 4.424-.732 4.69-.804a.166.166 0 00.122-.146c.346-2.77.32-6.782.05-8.99zm-3.844 8.36h-2.248v-5.59c0-1.18-.494-1.778-1.488-1.778-1.097 0-1.646.71-1.646 2.113v3.062h-2.234v-3.062c0-1.403-.549-2.113-1.647-2.113-.994 0-1.488.599-1.488 1.779v5.589H6.425V8.223c0-1.179.302-2.115.907-2.808.625-.693 1.443-1.048 2.46-1.048 1.176 0 2.066.452 2.649 1.354l.57.956.572-.956c.583-.902 1.473-1.354 2.648-1.354 1.017 0 1.836.355 2.46 1.048.606.693.908 1.63.908 2.808v5.45z"/></svg>
+            <div>
+              <p class="font-medium text-cdl-blue text-sm">Mastodon</p>
+              <p class="text-xs text-cdl-gray">@capitoledulibre@framapiaf.org</p>
+            </div>
+          </a>
+          <a href={config.social.twitter} rel="noopener noreferrer" target="_blank" class="flex items-center gap-3 p-4 rounded-xl border border-cdl-gray-light hover:border-cdl-orange/30 hover:shadow-md transition-all bg-white dark:bg-gray-800">
+            <svg class="h-6 w-6 text-cdl-orange flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <div>
+              <p class="font-medium text-cdl-blue text-sm">X (Twitter)</p>
+              <p class="text-xs text-cdl-gray">@capitoledulibre</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const u = atob(form.dataset.u || '');
+    const d = atob(form.dataset.d || '');
+    const to = `${u}@${d}`;
+
+    const name = (form.querySelector('#name') as HTMLInputElement).value;
+    const email = (form.querySelector('#email') as HTMLInputElement).value;
+    const subject = (form.querySelector('#subject') as HTMLSelectElement).value;
+    const message = (form.querySelector('#message') as HTMLTextAreaElement).value;
+
+    const body = `${message}\n\n—\n${name}\n${email}`;
+    const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailto;
+  });
+</script>

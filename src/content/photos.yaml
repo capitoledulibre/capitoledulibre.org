@@ -1,0 +1,324 @@
+# Photos du Capitole du Libre
+# Tags disponibles : hero, ambiance, conference, atelier, village-associatif,
+#   install-party, lan-party, initiation-code, cocktail, benevoles, speaker,
+#   foule, food-trucks, accueil
+
+- src: /static/img/img01.jpg
+  alt: "Lettres #CDL géantes illuminées en orange sur la scène principale"
+  credit: Photo7
+  tags: [hero, ambiance]
+
+- src: /static/img/img02.jpg
+  alt: "Jeunes bénévoles en t-shirt rouge aidant un participant sur son laptop"
+  credit: Photo7
+  tags: [install-party, benevoles]
+
+- src: /static/img/img03.jpg
+  alt: "Atelier pratique avec des participants de tous âges sur leurs laptops"
+  credit: Photo7
+  tags: [atelier, initiation-code]
+
+- src: /static/img/img04.jpg
+  alt: "Bénévole aidant un enfant et une participante sur des ordinateurs portables"
+  credit: Photo7
+  tags: [atelier, initiation-code, benevoles]
+
+- src: /static/img/img05.jpg
+  alt: "Speakerine au pupitre avec le banner Capitole du Libre en arrière-plan"
+  credit: Photo7
+  tags: [conference, speaker]
+
+- src: /static/img/img06.jpg
+  alt: "Speaker au pupitre transparent avec micro, banner Capitole du Libre"
+  credit: Photo7
+  tags: [conference, speaker]
+
+- src: /static/img/img07.jpg
+  alt: "Salle de conférence vue depuis le fond avec l'écran de projection"
+  credit: Photo7
+  tags: [conference, ambiance]
+
+- src: /static/img/img08.jpg
+  alt: "Public attentif dans une salle de conférence"
+  credit: Photo7
+  tags: [conference, foule]
+
+- src: /static/img/img09.jpg
+  alt: "Deux speakers lors d'une présentation en b00"
+  credit: Photo7
+  tags: [speaker, conference]
+
+- src: /static/img/img10.jpg
+  alt: "Table ronde avec intervenants sur scène"
+  credit: Photo7
+  tags: [table-ronde, conference]
+
+- src: /static/img/img11.jpg
+  alt: "Foule de participants échangeant dans le hall principal"
+  credit: Photo7
+  tags: [foule, ambiance, cocktail]
+
+- src: /static/img/img12.jpg
+  alt: "Table ronde avec intervenants sur scène"
+  credit: Photo7
+  tags: [table-ronde, conference]
+
+- src: /static/img/img14.jpg
+  alt: "Conférence avec audience dans une salle éclairée"
+  credit: Photo7
+  tags: [conference, ambiance]
+
+- src: /static/img/img15.jpg
+  alt: "Participant posant une question au micro pendant une conférence"
+  credit: Photo7
+  tags: [conference]
+
+- src: /static/img/img16.jpg
+  alt: "Intervenant présentant des slides devant un public"
+  credit: Photo7
+  tags: [conference, speaker]
+
+- src: /static/img/img17.jpg
+  alt: "Stand sponsor platine"
+  credit: Photo7
+  tags: [sponsor]
+
+- src: /static/img/img18.jpg
+  alt: "Salle de conférence vue de côté avec projection et audience"
+  credit: Photo7
+  tags: [conference, ambiance]
+
+- src: /static/img/img19.jpg
+  alt: "Bénévole dans l'amphitéatre"
+  credit: Photo7
+  tags: [conference, benevoles]
+
+- src: /static/img/img20.jpg
+  alt: "Table ronde avec intervenants sur scène"
+  credit: Photo7
+  tags: [conference, table-ronde]
+
+- src: /static/img/img21.jpg
+  alt: "Keynote avec projection Capitole du Libre sur grand écran et panel de speakers"
+  credit: Photo7
+  tags: [conference, speaker, table-ronde, hero]
+
+- src: /static/img/img22.jpg
+  alt: "Intervention sponsor sur scène"
+  credit: Photo7
+  tags: [sponsor]
+
+- src: /static/img/img23.jpg
+  alt: "Speaker pendant une conférence"
+  credit: Photo7
+  tags: [speaker, conference]
+
+- src: /static/img/img24.jpg
+  alt: "Vue d'ensemble de l'espace sponsors avec plusieurs stands"
+  credit: Photo7
+  tags: [sponsor, ambiance]
+
+- src: /static/img/img25.jpg
+  alt: "Conférence en cours dans un amphi avec grand écran"
+  credit: Photo7
+  tags: [conference, speaker]
+
+- src: /static/img/img26.jpg
+  alt: "Boutique Capitole du Libre"
+  credit: Photo7
+  tags: [ambiance]
+
+- src: /static/img/img27.jpg
+  alt: "Espace stand sponsor"
+  credit: Photo7
+  tags: [sponsor]
+
+- src: /static/img/img28.jpg
+  alt: "Speaker lors d'une conférence en amphitéatre"
+  credit: Photo7
+  tags: [conference, speaker]
+
+- src: /static/img/img29.jpg
+  alt: "Exposant Mageia échangeant avec un visiteur au village associatif"
+  credit: Photo7
+  tags: [village-associatif]
+
+- src: /static/img/img30.jpg
+  alt: "Boutique Capitole du Libre"
+  credit: Photo7
+  tags: [ambiance, boutique]
+
+- src: /static/img/img31.jpg
+  alt: "Visiteurs parcourant les stands du village associatif"
+  credit: Photo7
+  tags: [village-associatif, foule]
+
+- src: /static/img/img32.jpg
+  alt: "Lettres CDL avec jeu de lumières"
+  credit: Photo7
+  tags: [ambiance, hero]
+
+- src: /static/img/img33.jpg
+  alt: "Stand avec peluche Tux et badges, exposant en pleine discussion"
+  credit: Photo7
+  tags: [village-associatif]
+
+- src: /static/img/img34.jpg
+  alt: "Foule dense dans le hall principal de l'ENSEEIHT"
+  credit: Photo7
+  tags: [foule, ambiance, cocktail]
+
+- src: /static/img/img35.jpg
+  alt: "Enfants et adultes apprenant Scratch ensemble lors de l'atelier d'initiation au code"
+  credit: Photo7
+  tags: [initiation-code, atelier, benevoles]
+
+- src: /static/img/img36.jpg
+  alt: "Buffet de canapés et petits fours préparé pour le cocktail"
+  credit: Photo7
+  tags: [cocktail]
+
+- src: /static/img/img37.jpg
+  alt: "Bénévole servant des boissons au stand buvette avec banners de sponsors"
+  credit: Photo7
+  tags: [accueil, benevoles, foule, buvette]
+
+- src: /static/img/img38.jpg
+  alt: "Équipe de bénévoles en t-shirts rouges préparant les boissons"
+  credit: Photo7
+  tags: [benevoles, cocktail, buvette]
+
+- src: /static/img/img39.jpg
+  alt: "Photo de groupe des organisateurs sur scène avec les lettres #CDL"
+  credit: Photo7
+  tags: [hero, benevoles, staff]
+
+- src: /static/img/img40.jpg
+  alt: "Stand Framboise 314 avec démonstrations Raspberry Pi et LED au village associatif"
+  credit: Photo7
+  tags: [village-associatif]
+
+- src: /static/img/img41.jpg
+  alt: "Jeunes bénévoles staff aidant des participants pendant un atelier"
+  credit: Photo7
+  tags: [install-party, benevoles]
+
+- src: /static/img/img42.jpg
+  alt: "Hall principal bondé pendant le cocktail du samedi soir"
+  credit: Guillaume Poullain
+  tags: [cocktail, foule, ambiance]
+
+- src: /static/img/img43.jpg
+  alt: "Participants en atelier d'installation Linux avec bénévoles staff"
+  credit: Photo7
+  tags: [atelier, install-party, benevoles]
+
+- src: /static/img/img44.jpg
+  alt: "Deux food trucks Gohan et Tommy's Events garés devant l'ENSEEIHT"
+  credit: Photo7
+  tags: [food-trucks]
+
+- src: /static/img/img45.jpg
+  alt: "Participants déjeunant en extérieur sous les voiles d'ombrage avec food trucks en arrière-plan"
+  credit: Photo7
+  tags: [food-trucks, ambiance]
+
+- src: /static/img/img46.jpg
+  alt: "File d'attente au food truck Tommy's Truck à l'heure du déjeuner"
+  credit: Photo7
+  tags: [food-trucks, ambiance]
+
+- src: /static/img/img47.jpg
+  alt: "Foule de participants autour du food truck Gohan sur l'esplanade"
+  credit: Photo7
+  tags: [food-trucks, foule, ambiance]
+
+- src: /static/img/img48.jpg
+  alt: "Speaker au pupitre avec laptop couvert de stickers sur la scène principale"
+  credit: Photo7
+  tags: [conference, speaker]
+
+- src: /static/img/img49.jpg
+  alt: "Trois adolescents collaborant sur du code dans un terminal pendant un atelier"
+  credit: Photo7
+  tags: [initiation-code, atelier]
+
+- src: /static/img/img50.jpg
+  alt: "Gros plan de mains tapant du code dans un éditeur terminal pendant un atelier"
+  credit: Photo7
+  tags: [atelier, initiation-code]
+
+- src: /static/img/img51.jpg
+  alt: "Stand sponsor avec deux représentants échangeant avec un visiteur"
+  credit: Photo7
+  tags: [sponsor, ambiance]
+
+- src: /static/img/img52.jpg
+  alt: "Bénévole staff aidant à installer Ubuntu sur un ordinateur portable"
+  credit: Photo7
+  tags: [install-party, benevoles]
+
+- src: /static/img/img53.jpg
+  alt: "Bénévole staff servant des petits fours aux participants pendant le cocktail"
+  credit: Photo7
+  tags: [cocktail, benevoles]
+
+- src: /static/img/img54.jpg
+  alt: "Enfant montrant fièrement son projet Scratch sur l'écran à un adulte"
+  credit: Photo7
+  tags: [initiation-code, atelier]
+
+- src: /static/img/img55.jpg
+  alt: "Participant travaillant sur un projet Scratch pendant l'atelier d'initiation"
+  credit: Photo7
+  tags: [initiation-code, atelier]
+
+- src: /static/img/img56.jpg
+  alt: "Jeunes bénévoles en t-shirts rouges collaborant autour de laptops"
+  credit: Photo7
+  tags: [benevoles, atelier, install-party]
+
+- src: /static/img/img57.jpg
+  alt: "Équipe au complet des bénévoles"
+  credit: Photo7
+  tags: [benevoles, staff]
+
+- src: /static/img/img58.jpg
+  alt: "Enfant en t-shirt Mozilla découvrant des jeux éducatifs sur un ordinateur, accompagné d'un bénévole"
+  credit: Photo7
+  tags: [initiation-code]
+
+- src: /static/img/img59.jpg
+  alt: "Bénévole photographe en t-shirt CDL prenant des photos devant l'ENSEEIHT"
+  credit: Photo7
+  tags: [benevoles, ambiance]
+
+- src: /static/img/img60.jpg
+  alt: "Deux bénévoles TVn7 installant une caméra sur trépied pour filmer une conférence"
+  credit: Photo7
+  tags: [benevoles, captation]
+
+- src: /static/img/img61.jpg
+  alt: "Vue d'ensemble de la salle de la LAN party avec participants sur leurs laptops"
+  credit: Photo7
+  tags: [lan-party, atelier]
+
+- src: /static/img/img62.jpg
+  alt: "Bénévole staff aidant un enfant à jouer à 0 A.D. pendant la LAN party"
+  credit: Photo7
+  tags: [lan-party, benevoles]
+
+- src: /static/img/img63.jpg
+  alt: "Deux enfants jouant à un jeu de stratégie libre pendant la LAN party"
+  credit: Photo7
+  tags: [lan-party]
+
+- src: /static/img/img64.jpg
+  alt: "Écran de retour caméra avec éclairage coloré pendant la captation d'une conférence"
+  credit: Photo7
+  tags: [captation, ambiance]
+
+- src: /static/img/img65.jpg
+  alt: "Régie de captation vidéo avec moniteurs, mélangeur et équipement technique"
+  credit: Photo7
+  tags: [captation, ambiance]

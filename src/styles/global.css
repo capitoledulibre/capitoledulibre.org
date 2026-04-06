@@ -1,0 +1,69 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Couleurs CDL — sémantiques (changent en dark mode) */
+  --color-cdl-orange: #d03d00;
+  --color-cdl-orange-light: #ff6b35;
+  --color-cdl-orange-dark: #a33000;
+  --color-cdl-blue: #1a365d;
+  --color-cdl-blue-light: #2c5282;
+  --color-cdl-gold: #f6ad55;
+  --color-cdl-gray: #4a5568;
+  --color-cdl-gray-light: #e2e8f0;
+  --color-cdl-bg: #fafafa;
+
+  /* Couleurs fixes — ne changent jamais (pour fonds foncés intentionnels) */
+  --color-cdl-blue-fixed: #1a365d;
+  --color-cdl-blue-dark-fixed: #0f2440;
+
+  /* Typographie */
+  --font-sans: 'Ubuntu', system-ui, sans-serif;
+  --font-mono: 'Ubuntu Mono', monospace;
+  --font-display: 'Ubuntu', system-ui, sans-serif;
+}
+
+/* ── Dark mode overrides ── */
+.dark {
+  --color-cdl-blue: #e2e8f0;
+  --color-cdl-blue-light: #90b4e0;
+  --color-cdl-orange: #ff6b35;
+  --color-cdl-orange-light: #ff8f5e;
+  --color-cdl-orange-dark: #d03d00;
+  --color-cdl-gold: #f6ad55;
+  --color-cdl-gray: #c8d2dc;
+  --color-cdl-gray-light: #2d3748;
+  --color-cdl-bg: #111827;
+}
+
+/* ── Diagonal section transitions ── */
+.section-slant-top {
+  clip-path: polygon(0 clamp(30px, 4vw, 60px), 100% 0, 100% 100%, 0 100%);
+  margin-top: calc(-1 * clamp(30px, 4vw, 60px));
+  padding-top: calc(clamp(30px, 4vw, 60px) + 4rem);
+}
+
+.section-slant-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - clamp(30px, 4vw, 60px)), 0 100%);
+  padding-bottom: calc(clamp(30px, 4vw, 60px) + 4rem);
+}
+
+.section-slant-both {
+  clip-path: polygon(0 clamp(30px, 4vw, 60px), 100% 0, 100% calc(100% - clamp(30px, 4vw, 60px)), 0 100%);
+  margin-top: calc(-1 * clamp(30px, 4vw, 60px));
+  padding-top: calc(clamp(30px, 4vw, 60px) + 4rem);
+  padding-bottom: calc(clamp(30px, 4vw, 60px) + 4rem);
+}
+
+/* ── Subtle warm glow background ── */
+.section-glow {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 10% 50%, rgb(208 61 0 / 0.04), transparent),
+    radial-gradient(ellipse 50% 60% at 90% 30%, rgb(246 173 85 / 0.05), transparent);
+}
+.dark .section-glow {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 10% 50%, rgb(208 61 0 / 0.06), transparent),
+    radial-gradient(ellipse 50% 60% at 90% 30%, rgb(246 173 85 / 0.04), transparent);
+}

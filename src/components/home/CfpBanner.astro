@@ -1,0 +1,54 @@
+---
+import { config } from '../../config';
+
+const now = new Date();
+const isOpen = now < config.cfp.deadline;
+
+const diffMs = config.cfp.deadline.getTime() - now.getTime();
+const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+const deadlineFormatted = config.cfp.deadline.toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+{isOpen && (
+  <section class="relative bg-gradient-to-r from-cdl-orange-dark via-cdl-orange to-cdl-orange-light overflow-hidden">
+    <!-- Motif de fond -->
+    <div class="absolute inset-0 opacity-10" aria-hidden="true">
+      <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, white 20px, white 21px);"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 text-white">
+          <span class="flex-shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/20 backdrop-blur-sm">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+          </span>
+          <div>
+            <p class="font-bold text-base sm:text-lg">
+              Appel à propositions ouvert !
+            </p>
+            <p class="text-sm text-white/80">
+              Jusqu'au {deadlineFormatted} — Plus que <strong class="text-white">{diffDays} jours</strong>
+            </p>
+          </div>
+        </div>
+
+        <a
+          href={config.cfp.url}
+          class="inline-flex items-center gap-2 px-6 py-2.5 font-bold text-cdl-orange bg-white hover:bg-white/90 rounded-lg transition-colors shadow-lg text-sm sm:text-base flex-shrink-0"
+        >
+          Proposer un sujet
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+)}

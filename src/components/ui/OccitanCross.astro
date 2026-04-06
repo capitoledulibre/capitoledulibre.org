@@ -1,0 +1,53 @@
+---
+/**
+ * Croix occitane (croix de Toulouse) — croix grecque pommetée évidée.
+ * Chaque bras se termine par trois pommettes et s'évase vers le centre.
+ */
+interface Props {
+  class?: string;
+  size?: number;
+}
+
+const { class: className, size = 40 } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 200 200"
+  width={size}
+  height={size}
+  fill="currentColor"
+  class={className}
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!--
+    Croix occitane : 4 bras en forme de losange évasé,
+    chacun terminé par 3 pommettes (boules).
+    Design fidèle à la croix de Toulouse traditionnelle.
+  -->
+  <g transform="translate(100,100)">
+    <!-- Bras haut -->
+    <polygon points="0,-82 -16,-40 0,-24 16,-40" />
+    <circle cx="0" cy="-90" r="8" />
+    <circle cx="-13" cy="-76" r="6.5" />
+    <circle cx="13" cy="-76" r="6.5" />
+
+    <!-- Bras bas -->
+    <polygon points="0,82 -16,40 0,24 16,40" />
+    <circle cx="0" cy="90" r="8" />
+    <circle cx="-13" cy="76" r="6.5" />
+    <circle cx="13" cy="76" r="6.5" />
+
+    <!-- Bras gauche -->
+    <polygon points="-82,0 -40,-16 -24,0 -40,16" />
+    <circle cx="-90" cy="0" r="8" />
+    <circle cx="-76" cy="-13" r="6.5" />
+    <circle cx="-76" cy="13" r="6.5" />
+
+    <!-- Bras droit -->
+    <polygon points="82,0 40,-16 24,0 40,16" />
+    <circle cx="90" cy="0" r="8" />
+    <circle cx="76" cy="-13" r="6.5" />
+    <circle cx="76" cy="13" r="6.5" />
+  </g>
+</svg>

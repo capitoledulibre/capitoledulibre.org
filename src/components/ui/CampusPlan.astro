@@ -1,0 +1,163 @@
+---
+/**
+ * Interactive campus plan using the real SVG plan.
+ * Overlays clickable hotspots on each building for highlighting.
+ */
+interface Props {
+  highlight?: string; // 'A', 'B', 'C'
+  compact?: boolean;
+  class?: string;
+}
+
+const { highlight, compact = false, class: className } = Astro.props;
+---
+
+<div class:list={['campus-plan relative', className]} data-highlight={highlight}>
+  <!-- Real SVG plan as background image -->
+  <img
+    src="/static/img/plan-n7-cdl.svg"
+    alt="Plan du campus ENSEEIHT avec les bâtiments A, B et C"
+    class="w-full h-auto rounded-xl"
+    loading="lazy"
+  />
+
+  <!-- Interactive overlays for each building -->
+  <!-- Coordinates are % based, matching the SVG viewBox layout -->
+  <button
+    type="button"
+    class="building-zone absolute rounded-lg transition-all duration-300"
+    data-building="B"
+    aria-label="Bâtiment B — Amphi, Install Party"
+    style="top: 24%; left: 28%; width: 44%; height: 20%;"
+  >
+    <span class="building-label">B</span>
+  </button>
+
+  <button
+    type="button"
+    class="building-zone absolute rounded-lg transition-all duration-300"
+    data-building="A"
+    aria-label="Bâtiment A — Conférences"
+    style="top: 30%; left: 5%; width: 25%; height: 30%;"
+  >
+    <span class="building-label">A</span>
+  </button>
+
+  <button
+    type="button"
+    class="building-zone absolute rounded-lg transition-all duration-300"
+    data-building="C"
+    aria-label="Bâtiment C — Accueil, Village associatif"
+    style="top: 62%; left: 5%; width: 20%; height: 25%;"
+  >
+    <span class="building-label">C</span>
+  </button>
+</div>
+
+<style>
+  .building-zone {
+    background: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .building-zone .building-label {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+    pointer-events: none;
+  }
+
+
+  /* Hover */
+  .building-zone:hover {
+    background: rgb(208 61 0 / 0.08);
+    border-color: rgb(208 61 0 / 0.4);
+  }
+  .building-zone[data-building="A"]:hover {
+    background: rgb(170 222 135 / 0.15);
+    border-color: rgb(100 160 50 / 0.5);
+  }
+  .building-zone[data-building="C"]:hover {
+    background: rgb(200 183 183 / 0.2);
+    border-color: rgb(150 130 130 / 0.5);
+  }
+
+  /* Active/highlighted state */
+  .building-zone.active {
+    border-width: 3px;
+    animation: zone-pulse 2s ease-in-out infinite;
+  }
+  .building-zone.active[data-building="B"] {
+    background: rgb(208 61 0 / 0.12);
+    border-color: rgb(208 61 0 / 0.6);
+  }
+  .building-zone.active[data-building="A"] {
+    background: rgb(170 222 135 / 0.2);
+    border-color: rgb(100 160 50 / 0.6);
+  }
+  .building-zone.active[data-building="C"] {
+    background: rgb(200 183 183 / 0.25);
+    border-color: rgb(150 130 130 / 0.6);
+  }
+
+  /* Dimmed */
+  .building-zone.dimmed {
+    opacity: 0.3;
+  }
+
+  @keyframes zone-pulse {
+    0%, 100% { border-opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .building-zone.active { animation: none; }
+  }
+</style>
+
+<script>
+  // Apply initial highlight from data attribute
+  document.querySelectorAll('.campus-plan').forEach((plan) => {
+    const hl = plan.getAttribute('data-highlight');
+    if (hl) {
+      plan.querySelectorAll('.building-zone').forEach((zone) => {
+        const letter = zone.getAttribute('data-building');
+        zone.classList.toggle('active', letter === hl);
+        zone.classList.toggle('dimmed', letter !== hl);
+      });
+    }
+  });
+
+  // Click to toggle
+  document.querySelectorAll('.building-zone').forEach((zone) => {
+    zone.addEventListener('click', () => {
+      const plan = zone.closest('.campus-plan');
+      if (!plan) return;
+      const letter = zone.getAttribute('data-building');
+      const isActive = zone.classList.contains('active');
+
+      plan.querySelectorAll('.building-zone').forEach((z) => {
+        if (isActive) {
+          // Deselect all
+          z.classList.remove('active', 'dimmed');
+        } else {
+          const zLetter = z.getAttribute('data-building');
+          z.classList.toggle('active', zLetter === letter);
+          z.classList.toggle('dimmed', zLetter !== letter);
+        }
+      });
+
+      // Dispatch event for parent components
+      plan.dispatchEvent(new CustomEvent('building-select', {
+        detail: { building: isActive ? null : letter },
+        bubbles: true,
+      }));
+    });
+  });
+</script>

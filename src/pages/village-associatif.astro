@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import ObfuscatedEmail from '../components/ui/ObfuscatedEmail.astro';
+import Picture from '../components/ui/Picture.astro';
+import { getPhotosByTag } from '../lib/photos';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+
+const photos = getPhotosByTag('village-associatif');
+
+const highlights = [
+  { title: 'Rencontrer des communautés', description: 'Échangez directement avec les acteurs du logiciel libre : distributions Linux, associations, projets communautaires.', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z' },
+  { title: 'Découvrir des projets', description: 'Démos en direct, présentations de logiciels, matériels libres et initiatives locales.', icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' },
+  { title: 'Repartir équipé', description: 'Stickers, goodies, documentation, clés USB... et surtout de bonnes idées et de nouveaux contacts !', icon: 'M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7' },
+];
+---
+
+<BaseLayout title="Village associatif" description="Rencontrez les communautés du logiciel libre au village associatif du Capitole du Libre.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Village associatif', path: '/village-associatif' }])} />
+  <PageHeader title="Village associatif" description="Le cœur battant du Capitole du Libre : rencontrez les communautés du libre." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      {/* Intro */}
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-lg text-cdl-gray leading-relaxed">
+          Le village associatif rassemble des dizaines d'associations, communautés et projets du logiciel libre.
+          C'est l'endroit idéal pour découvrir, échanger et s'impliquer. Ouvert en continu pendant les deux jours de l'événement.
+        </p>
+      </div>
+
+      {/* Ce qu'on y trouve */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {highlights.map((h) => (
+          <div class="text-center p-6">
+            <div class="inline-flex items-center justify-center h-14 w-14 rounded-full bg-cdl-orange/10 mb-4">
+              <svg class="h-7 w-7 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={h.icon} />
+              </svg>
+            </div>
+            <h2 class="text-lg font-bold text-cdl-blue mb-2">{h.title}</h2>
+            <p class="text-sm text-cdl-gray leading-relaxed">{h.description}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Photos */}
+      {photos.length > 0 && (
+        <div class="mb-16">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">En images</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {photos.slice(0, 4).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Liste des stands — placeholder */}
+      <div class="bg-white dark:bg-gray-800 rounded-2xl border border-cdl-gray-light p-8 sm:p-12 text-center mb-12">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-4">Stands confirmés</h2>
+        <p class="text-cdl-gray mb-6">La liste des stands sera publiée prochainement.</p>
+      </div>
+
+      {/* CTA proposer un stand */}
+      <div class="text-center">
+        <p class="text-cdl-gray mb-4">Vous représentez une association ou un projet libre ?</p>
+        <a
+          href={config.cfp.url}
+          class="inline-flex items-center gap-2 px-6 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium"
+        >
+          Proposer un stand
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

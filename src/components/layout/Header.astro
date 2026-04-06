@@ -1,0 +1,270 @@
+---
+import { config } from '../../config';
+
+const navItems = [
+  { label: 'Programme', href: '/programme' },
+  {
+    label: 'Infos pratiques',
+    children: [
+      { label: 'Lieu & accès', href: '/lieu' },
+      { label: 'Se restaurer', href: '/se-restaurer' },
+      { label: 'FAQ', href: '/faq' },
+    ],
+  },
+  {
+    label: 'Activités',
+    children: [
+      { label: 'Village associatif', href: '/village-associatif' },
+      { label: 'Install Party', href: '/install-party' },
+      { label: 'LAN Party', href: '/lan-party' },
+      { label: 'Initiation au code', href: '/initiation-code' },
+    ],
+  },
+  {
+    label: 'Participer',
+    children: [
+      { label: 'Devenir speaker', href: '/devenir-speaker' },
+      { label: 'Partenaires', href: '/partenaires' },
+      { label: 'L\'équipe', href: '/equipe' },
+    ],
+  },
+  { label: 'Médias', href: '/medias' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-cdl-gray-light">
+  <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Navigation principale">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
+      <a href="/" aria-label="Capitole du Libre - Accueil">
+        <img
+          src="/static/img/logo-capitoledulibre-horizontal.svg"
+          alt="Capitole du Libre"
+          class="h-8 sm:h-10 w-auto"
+        />
+      </a>
+
+      <!-- Navigation desktop -->
+      <ul class="hidden lg:flex items-center gap-1" role="list">
+        {navItems.map((item) => (
+          item.children ? (
+            <li class="relative group">
+              <button
+                class="px-3 py-2 text-sm font-medium text-cdl-gray hover:text-cdl-orange transition-colors rounded-md inline-flex items-center gap-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
+                {item.label}
+                <svg class="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <ul
+                class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all absolute top-full left-0 mt-1 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-cdl-gray-light py-2"
+                role="list"
+              >
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'block px-4 py-2 text-sm hover:bg-cdl-orange/5 hover:text-cdl-orange transition-colors',
+                        currentPath === child.href ? 'text-cdl-orange font-medium' : 'text-cdl-gray',
+                      ]}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  'px-3 py-2 text-sm font-medium transition-colors rounded-md inline-block',
+                  currentPath === item.href ? 'text-cdl-orange' : 'text-cdl-gray hover:text-cdl-orange',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        ))}
+      </ul>
+
+      <!-- CTA + theme + burger -->
+      <div class="flex items-center gap-2">
+        <!-- Theme switch (light / system / dark) -->
+        <div id="theme-switch" class="flex items-center gap-0.5 p-0.5 rounded-lg bg-cdl-gray-light/50 dark:bg-gray-700/50" role="radiogroup" aria-label="Thème">
+          <button
+            data-theme="light"
+            class="theme-option p-1.5 rounded-md transition-colors"
+            role="radio"
+            aria-checked="false"
+            aria-label="Thème clair"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </button>
+          <button
+            data-theme="system"
+            class="theme-option p-1.5 rounded-md transition-colors"
+            role="radio"
+            aria-checked="false"
+            aria-label="Thème système"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </button>
+          <button
+            data-theme="dark"
+            class="theme-option p-1.5 rounded-md transition-colors"
+            role="radio"
+            aria-checked="false"
+            aria-label="Thème sombre"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </div>
+
+        <a
+          href={config.tickets.url}
+          class="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-cdl-orange"
+        >
+          Inscription
+        </a>
+
+        <!-- Bouton menu mobile -->
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden p-2 text-cdl-gray hover:text-cdl-orange rounded-md"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Ouvrir le menu"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu mobile -->
+    <div id="mobile-menu" class="hidden lg:hidden pb-4">
+      <ul class="space-y-1" role="list">
+        {navItems.map((item) => (
+          item.children ? (
+            <li>
+              <span class="block px-3 py-2 text-xs font-semibold text-cdl-blue uppercase tracking-wider">
+                {item.label}
+              </span>
+              <ul class="ml-4 space-y-1" role="list">
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'block px-3 py-2 text-sm rounded-md',
+                        currentPath === child.href ? 'text-cdl-orange font-medium bg-cdl-orange/5' : 'text-cdl-gray hover:text-cdl-orange hover:bg-cdl-orange/5',
+                      ]}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                class:list={[
+                  'block px-3 py-2 text-sm font-medium rounded-md',
+                  currentPath === item.href ? 'text-cdl-orange bg-cdl-orange/5' : 'text-cdl-gray hover:text-cdl-orange hover:bg-cdl-orange/5',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          )
+        ))}
+        <li class="pt-2">
+          <a
+            href={config.tickets.url}
+            class="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors"
+          >
+            Inscription
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Mobile menu
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  btn?.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    btn.setAttribute('aria-label', expanded ? 'Ouvrir le menu' : 'Fermer le menu');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+  });
+
+  // Theme switch (light / system / dark)
+  const THEME_KEY = 'cdl-theme';
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function applyTheme(mode) {
+    const isDark = mode === 'dark' || (mode === 'system' && prefersDark.matches);
+    document.documentElement.classList.toggle('dark', isDark);
+    // Update switch UI
+    document.querySelectorAll('.theme-option').forEach((btn) => {
+      const active = btn.getAttribute('data-theme') === mode;
+      btn.setAttribute('aria-checked', String(active));
+      btn.classList.toggle('bg-white', active && !isDark);
+      btn.classList.toggle('dark:bg-gray-600', active);
+      btn.classList.toggle('shadow-sm', active);
+      btn.classList.toggle('text-cdl-orange', active);
+    });
+  }
+
+  function getStoredTheme() {
+    return localStorage.getItem(THEME_KEY) || 'system';
+  }
+
+  document.querySelectorAll('.theme-option').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const mode = btn.getAttribute('data-theme');
+      if (mode === 'system') {
+        localStorage.removeItem(THEME_KEY);
+      } else {
+        localStorage.setItem(THEME_KEY, mode);
+      }
+      applyTheme(mode);
+    });
+  });
+
+  prefersDark.addEventListener('change', () => {
+    const stored = getStoredTheme();
+    if (stored === 'system') applyTheme('system');
+  });
+
+  // Init
+  applyTheme(getStoredTheme());
+</script>

@@ -1,0 +1,39 @@
+---
+import { config } from '../../config';
+---
+
+<section class="py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        Découvrez l'événement en vidéo
+      </h2>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-cdl-blue-fixed">
+        <video
+          controls
+          preload="metadata"
+          class="w-full aspect-video"
+          poster="/static/img/img01-1440w.webp"
+        >
+          <source src="/static/videos/teaser.mp4" type="video/mp4" />
+          Votre navigateur ne supporte pas la lecture vidéo.
+        </video>
+      </div>
+
+      <div class="text-center mt-6">
+        <a
+          href={config.links.videos}
+          class="inline-flex items-center gap-2 text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors"
+        >
+          Toutes les vidéos des conférences
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

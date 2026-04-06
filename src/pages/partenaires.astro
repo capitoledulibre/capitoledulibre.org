@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import ObfuscatedEmail from '../components/ui/ObfuscatedEmail.astro';
+import Picture from '../components/ui/Picture.astro';
+import { getPhotosByTag } from '../lib/photos';
+import { getCollection } from 'astro:content';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+
+const sponsorPhotos = getPhotosByTag('sponsor');
+
+const allPartners = await getCollection('partners');
+
+const levels = [
+  { key: 'platine', label: 'Platine', color: 'bg-gray-100' },
+  { key: 'or', label: 'Or', color: 'bg-cdl-gold/10' },
+  { key: 'argent', label: 'Argent', color: 'bg-gray-50' },
+  { key: 'bronze', label: 'Bronze', color: 'bg-orange-50' },
+  { key: 'technique', label: 'Partenaires techniques', color: 'bg-cdl-blue/5' },
+  { key: 'institutionnel', label: 'Partenaires institutionnels', color: 'bg-cdl-blue/5' },
+] as const;
+
+const partnersByLevel = levels
+  .map((level) => ({
+    ...level,
+    partners: allPartners.filter((p) => p.data.level === level.key),
+  }))
+  .filter((level) => level.partners.length > 0);
+---
+
+<BaseLayout title="Partenaires" description="Les partenaires du Capitole du Libre rendent l'événement possible. Découvrez-les et rejoignez-les !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Partenaires', path: '/partenaires' }])} />
+  <PageHeader title="Partenaires" description="Ils rendent le Capitole du Libre possible." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      {partnersByLevel.length > 0 ? (
+        <div class="space-y-16">
+          {partnersByLevel.map((level) => (
+            <div>
+              <h2 class="text-2xl font-bold text-cdl-blue mb-8 text-center">{level.label}</h2>
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                {level.partners.map((partner) => (
+                  <a
+                    href={partner.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={`flex items-center justify-center p-6 rounded-xl border border-cdl-gray-light hover:border-cdl-orange/30 hover:shadow-md transition-all ${level.color}`}
+                  >
+                    <img
+                      src={partner.data.logo}
+                      alt={partner.data.name}
+                      class="max-h-16 w-auto object-contain"
+                      loading="lazy"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20">
+          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-cdl-orange/10 mb-6">
+            <svg class="h-8 w-8 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-cdl-blue mb-4">Partenaires à venir</h2>
+          <p class="text-cdl-gray max-w-md mx-auto">
+            Les partenaires de l'édition {config.edition.year} seront annoncés prochainement.
+          </p>
+        </div>
+      )}
+
+      {/* Photos */}
+      {sponsorPhotos.length > 0 && (
+        <div class="mt-16">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">En images</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {sponsorPhotos.slice(0, 4).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* CTA devenir partenaire */}
+      <div class="mt-16 text-center bg-cdl-blue/5 rounded-2xl p-8 sm:p-12">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-4">Devenir partenaire</h2>
+        <p class="text-cdl-gray max-w-2xl mx-auto mb-8">
+          Vous souhaitez soutenir le logiciel libre et gagner en visibilité auprès d'un public passionné ?
+          Contactez-nous pour recevoir notre dossier de partenariat.
+        </p>
+        <ObfuscatedEmail
+          subject={`Partenariat — Capitole du Libre ${config.edition.year}`}
+          class="inline-flex items-center gap-2 px-6 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium"
+        >
+          Nous contacter
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </ObfuscatedEmail>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

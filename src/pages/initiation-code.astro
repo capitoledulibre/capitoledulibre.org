@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import Picture from '../components/ui/Picture.astro';
+import { getPhotosByTag } from '../lib/photos';
+import { breadcrumb } from '../lib/jsonld';
+
+const photos = getPhotosByTag('initiation-code');
+
+const audiences = [
+  { title: 'Enfants (8-14 ans)', description: 'Découverte ludique de la programmation avec Scratch et des activités interactives.', icon: '🧒' },
+  { title: 'Ados & adultes', description: 'Premiers pas en Python ou en développement web. Aucune connaissance préalable requise.', icon: '🧑‍💻' },
+  { title: 'Familles', description: 'Venez en famille ! Les ateliers sont pensés pour être partagés entre parents et enfants.', icon: '👨‍👩‍👧‍👦' },
+];
+
+const learnings = [
+  'Les bases de la logique et de l\'algorithmique',
+  'Créer un petit jeu ou une animation avec Scratch',
+  'Écrire ses premières lignes de code en Python',
+  'Comprendre comment fonctionne un site web',
+  'Découvrir les métiers du numérique',
+];
+---
+
+<BaseLayout title="Initiation au code" description="Atelier d'initiation à la programmation pour débutants au Capitole du Libre. Enfants et adultes, aucun prérequis !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Initiation au code', path: '/initiation-code' }])} />
+  <PageHeader title="Initiation au code" description="Découvrez la programmation, quel que soit votre âge ou votre niveau." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <p class="text-lg text-cdl-gray leading-relaxed">
+          Pas besoin de savoir coder pour participer ! Nos ateliers d'initiation sont conçus pour les grands débutants.
+          Des bénévoles passionnés vous accompagnent pas à pas dans la découverte de la programmation.
+        </p>
+      </div>
+
+      {/* Public cible */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {audiences.map((a) => (
+          <div class="text-center p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+            <div class="text-4xl mb-4" aria-hidden="true">{a.icon}</div>
+            <h2 class="text-lg font-bold text-cdl-blue mb-2">{a.title}</h2>
+            <p class="text-sm text-cdl-gray leading-relaxed">{a.description}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Ce qu'on apprend */}
+      <div class="max-w-3xl mx-auto bg-cdl-orange/5 rounded-2xl p-8 sm:p-10 mb-12">
+        <h2 class="text-xl font-bold text-cdl-blue mb-4">Ce que vous allez apprendre</h2>
+        <ul class="space-y-3">
+          {learnings.map((item) => (
+            <li class="flex items-start gap-3 text-sm text-cdl-gray">
+              <svg class="h-5 w-5 text-cdl-orange flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Photos */}
+      {photos.length > 0 && (
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">En images</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            {photos.slice(0, 4).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="text-cdl-gray mb-2">
+          <strong class="text-cdl-blue">Prérequis :</strong> Aucun ! Venez comme vous êtes.
+        </p>
+        <p class="text-cdl-gray">
+          <strong class="text-cdl-blue">Horaires :</strong> Samedi et dimanche, sessions de 10h à 12h et de 14h à 17h.
+        </p>
+      </div>
+
+      {/* Partenaire */}
+      <div class="max-w-3xl mx-auto mt-12 p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 flex items-center gap-5">
+        <a href="https://www.epitech.eu/ecole-informatique-toulouse/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0">
+          <img src="/static/img/partners/logo-epitech.png" alt="Epitech" class="h-16 w-auto" loading="lazy" />
+        </a>
+        <div>
+          <p class="text-sm text-cdl-gray leading-relaxed">
+            L'atelier d'initiation au code est réalisé en collaboration avec
+            <a href="https://www.epitech.eu/ecole-informatique-toulouse/" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">Epitech Toulouse</a>,
+            l'école de l'innovation et de l'expertise informatique.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

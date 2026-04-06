@@ -1,0 +1,26 @@
+/* TEAM */
+
+Event: Capitole du Libre
+Organizer: Toulibre (https://toulibre.org)
+Location: ENSEEIHT, 2 rue Charles Camichel, 31000 Toulouse, France
+Contact: contact@capitoledulibre.org
+
+/* SITE */
+
+Standards: HTML5, CSS3
+Framework: Astro 5
+Styling: Tailwind CSS 4
+Language: TypeScript
+Software: Visual Studio Code, Inkscape
+
+/* THANKS */
+
+Photography: Photo7, Guillaume Poullain
+Video: TVn7 (https://tvn7.fr)
+Sound: CAn7 (https://can7.fr)
+Install Party: Net7 (https://net7.dev)
+Code workshops: Epitech Toulouse
+
+/* LICENSE */
+
+Content: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)

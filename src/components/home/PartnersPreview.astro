@@ -1,0 +1,41 @@
+---
+import { config } from '../../config';
+import ObfuscatedEmail from '../ui/ObfuscatedEmail.astro';
+---
+
+<section class="py-16 sm:py-24 bg-white dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        Ils soutiennent l'événement
+      </h2>
+      <p class="text-lg text-cdl-gray">
+        Le Capitole du Libre est rendu possible grâce à nos partenaires.
+      </p>
+    </div>
+
+    <!-- Placeholder — les logos seront ajoutés via content collections -->
+    <div class="text-center py-12 border-2 border-dashed border-cdl-gray-light rounded-2xl">
+      <p class="text-cdl-gray">Logos des partenaires à venir</p>
+    </div>
+
+    <div class="text-center mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="/partenaires"
+        class="inline-flex items-center gap-2 text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors"
+      >
+        Voir tous les partenaires
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+      <span class="text-cdl-gray-light hidden sm:inline">|</span>
+      <ObfuscatedEmail
+        subject={`Partenariat — Capitole du Libre ${config.edition.year}`}
+        class="inline-flex items-center gap-2 text-cdl-blue-light hover:text-cdl-blue font-medium transition-colors"
+      >
+        Devenir partenaire
+      </ObfuscatedEmail>
+    </div>
+  </div>
+</section>

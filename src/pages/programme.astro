@@ -1,0 +1,744 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+import { getTalks, type FormattedTalk } from '../lib/pretalx';
+import { parseRoom } from '../lib/rooms';
+import { marked } from 'marked';
+
+// Configure marked for safe output (no raw HTML passthrough)
+marked.setOptions({ breaks: true, gfm: true });
+
+function renderMd(text: string | null): string {
+  if (!text) return '';
+  return marked.parse(text) as string;
+}
+
+let talks: FormattedTalk[] = [];
+let fetchError = false;
+
+try {
+  talks = await getTalks();
+  talks.sort((a, b) => {
+    if (!a.start || !b.start) return 0;
+    return new Date(a.start).getTime() - new Date(b.start).getTime();
+  });
+} catch (e) {
+  console.error('Pretalx fetch error:', e);
+  fetchError = true;
+}
+
+const days = [...new Set(talks.map((t) => t.start?.slice(0, 10)).filter(Boolean))] as string[];
+const tracks = [...new Set(talks.map((t) => t.track).filter(Boolean))].sort() as string[];
+const types = [...new Set(talks.map((t) => t.type).filter(Boolean))].sort() as string[];
+
+function formatTime(iso: string | null): string {
+  if (!iso) return '';
+  return new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+}
+
+function formatDay(dateStr: string): string {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+function formatDayShort(dateStr: string): string {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-FR', { weekday: 'long' });
+}
+
+// Group talks by day then by time slot
+type TimeSlot = { time: string; timeEnd: string; talks: FormattedTalk[] };
+type DaySchedule = { day: string; slots: TimeSlot[] };
+
+const schedule: DaySchedule[] = days.map((day) => {
+  const dayTalks = talks.filter((t) => t.start?.startsWith(day));
+  const slotMap = new Map<string, FormattedTalk[]>();
+
+  for (const talk of dayTalks) {
+    const key = talk.start!;
+    if (!slotMap.has(key)) slotMap.set(key, []);
+    slotMap.get(key)!.push(talk);
+  }
+
+  const slots = [...slotMap.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([time, slotTalks]) => ({
+      time,
+      timeEnd: slotTalks.reduce((latest, t) => {
+        if (!t.end) return latest;
+        return t.end > latest ? t.end : latest;
+      }, ''),
+      talks: slotTalks.sort((a, b) => (a.room ?? '').localeCompare(b.room ?? '')),
+    }));
+
+  return { day, slots };
+});
+
+// Serialize talks for client-side modal (with room info + rendered markdown)
+const talksJson = JSON.stringify(
+  talks.map((t) => ({
+    ...t,
+    startFormatted: formatTime(t.start),
+    endFormatted: formatTime(t.end),
+    roomInfo: t.room ? parseRoom(t.room) : null,
+    descriptionHtml: renderMd(t.description),
+    speakers: t.speakers.map((s) => ({
+      ...s,
+      biographyHtml: renderMd(s.biography),
+    })),
+  }))
+);
+---
+
+<BaseLayout title="Programme" description="Découvrez le programme complet du Capitole du Libre : conférences, ateliers, keynotes.">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Programme', path: '/programme' }])} />
+  <PageHeader title="Programme" description="Conférences, ateliers et keynotes sur deux jours." />
+
+  {/* Bandeau programme 2025 */}
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="p-4 rounded-xl bg-cdl-gold/10 dark:bg-cdl-gold/5 border border-cdl-gold/20 text-center">
+      <p class="text-sm text-cdl-gray">
+        <strong class="text-cdl-blue">Le programme 2026 sera publié prochainement.</strong>
+        En attendant, vous pouvez consulter ci-dessous le programme de l'édition 2025 pour vous donner un aperçu.
+      </p>
+    </div>
+  </div>
+
+  <section class="py-8 sm:py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {fetchError || talks.length === 0 ? (
+        <div class="text-center py-20">
+          <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-cdl-orange/10 mb-6">
+            <svg class="h-8 w-8 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-cdl-blue mb-4">Programme à venir</h2>
+          <p class="text-cdl-gray max-w-md mx-auto mb-8">
+            Le programme sera publié prochainement. En attendant, vous pouvez proposer un sujet !
+          </p>
+          <a
+            href={config.cfp.url}
+            class="inline-flex items-center gap-2 px-6 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium"
+          >
+            Proposer un sujet
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+      ) : (
+        <>
+          {/* Barre de filtres sticky */}
+          <div class="sticky top-16 z-30 bg-cdl-bg/95 dark:bg-gray-900/95 backdrop-blur-sm -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 border-b border-cdl-gray-light mb-8">
+            <div class="flex flex-wrap items-center gap-3">
+              {/* Onglets jour */}
+              <div class="flex gap-1 p-1 bg-cdl-gray-light rounded-lg" role="tablist" aria-label="Jour">
+                {days.map((day, i) => (
+                  <button
+                    role="tab"
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                    data-tab-day={day}
+                    class:list={[
+                      'day-tab px-4 py-2 text-sm font-medium rounded-md transition-colors capitalize',
+                      i === 0 ? 'bg-white dark:bg-gray-800 text-cdl-orange shadow-sm' : 'text-cdl-gray hover:text-cdl-orange',
+                    ]}
+                  >
+                    {formatDayShort(day)}
+                  </button>
+                ))}
+              </div>
+
+              {/* Recherche */}
+              <div class="relative flex-1 min-w-[200px] max-w-sm">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-cdl-gray/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  id="search"
+                  type="search"
+                  placeholder="Rechercher un talk, un speaker..."
+                  class="w-full pl-10 pr-4 py-2 text-sm border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange placeholder:text-cdl-gray/40"
+                />
+              </div>
+
+              {/* Filtres secondaires */}
+              {tracks.length > 1 && (
+                <select id="filter-track" class="px-3 py-2 text-sm border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange">
+                  <option value="all">Toutes les tracks</option>
+                  {tracks.map((track) => (
+                    <option value={track}>{track}</option>
+                  ))}
+                </select>
+              )}
+              {types.length > 1 && (
+                <select id="filter-type" class="px-3 py-2 text-sm border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange">
+                  <option value="all">Tous les formats</option>
+                  {types.map((type) => (
+                    <option value={type}>{type}</option>
+                  ))}
+                </select>
+              )}
+
+              {/* Toggle favoris */}
+              <button
+                id="filter-favs"
+                class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray hover:border-cdl-orange/30 hover:text-cdl-orange transition-colors"
+                aria-pressed="false"
+              >
+                <svg class="h-4 w-4 fav-icon-off" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <svg class="h-4 w-4 fav-icon-on hidden" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Mes favoris
+                <span id="fav-count" class="hidden text-xs bg-cdl-orange text-white rounded-full px-1.5 py-0.5 leading-none"></span>
+              </button>
+            </div>
+          </div>
+
+          {/* Compteur résultats */}
+          <p id="results-count" class="text-sm text-cdl-gray mb-6"></p>
+
+          {/* Timeline par jour */}
+          {schedule.map((daySchedule, dayIdx) => (
+            <div
+              data-day-panel={daySchedule.day}
+              class:list={['day-panel', dayIdx > 0 && 'hidden']}
+            >
+              <h2 class="text-2xl font-bold text-cdl-blue mb-8 capitalize">{formatDay(daySchedule.day)}</h2>
+
+              <div class="relative">
+                {/* Ligne verticale timeline */}
+                <div class="absolute left-[39px] sm:left-[55px] top-0 bottom-0 w-0.5 bg-cdl-gray-light" aria-hidden="true"></div>
+
+                <div class="space-y-10">
+                  {daySchedule.slots.map((slot) => (
+                    <div class="time-slot relative" data-slot-time={slot.time}>
+                      {/* Marqueur horaire */}
+                      <div class="flex items-start gap-4 sm:gap-6">
+                        <div class="relative z-10 flex-shrink-0 w-[78px] sm:w-[110px]">
+                          <div class="inline-flex items-center px-3 py-1.5 bg-cdl-orange text-white text-sm font-bold rounded-lg shadow-sm">
+                            {formatTime(slot.time)}
+                          </div>
+                        </div>
+
+                        {/* Talks du créneau */}
+                        <div class="flex-1 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 pb-2">
+                          {slot.talks.map((talk) => (
+                            <div class="relative">
+                            <button
+                              type="button"
+                              class="talk-card text-left p-4 pr-10 w-full rounded-xl border border-cdl-gray-light hover:border-cdl-orange/40 hover:shadow-md transition-all bg-white dark:bg-gray-800 group cursor-pointer"
+                              data-code={talk.code}
+                              data-track={talk.track}
+                              data-type={talk.type}
+                              data-search={`${talk.title} ${talk.speakers.map((s) => s.name).join(' ')} ${talk.track} ${talk.description}`.toLowerCase()}
+                            >
+                              {/* En-tête compact */}
+                              <div class="flex items-center gap-1.5 mb-2 flex-wrap">
+                                {talk.room && (() => {
+                                  const ri = parseRoom(talk.room);
+                                  return (
+                                    <span class="text-[11px] font-medium text-cdl-blue-light bg-cdl-blue/5 px-2 py-0.5 rounded" title={ri?.directions}>
+                                      {talk.room}{ri ? ` · ${ri.buildingLetter}${ri.floor}` : ''}
+                                    </span>
+                                  );
+                                })()}
+                                <span class="text-[11px] text-cdl-gray bg-cdl-gray-light/70 px-2 py-0.5 rounded">
+                                  {talk.duration} min
+                                </span>
+                                {talk.type && (
+                                  <span class:list={[
+                                    'text-[11px] font-medium px-2 py-0.5 rounded',
+                                    talk.type.toLowerCase().includes('atelier')
+                                      ? 'bg-cdl-gold/20 text-cdl-orange-dark'
+                                      : talk.type.toLowerCase().includes('keynote')
+                                        ? 'bg-cdl-orange/10 text-cdl-orange'
+                                        : 'bg-cdl-gray-light/70 text-cdl-gray',
+                                  ]}>
+                                    {talk.type}
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Titre */}
+                              <h3 class="font-bold text-cdl-blue text-sm leading-snug mb-2 group-hover:text-cdl-orange transition-colors">
+                                {talk.title}
+                              </h3>
+
+                              {/* Speakers */}
+                              {talk.speakers.length > 0 && (
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                  {talk.speakers.map((speaker) => (
+                                    <span class="inline-flex items-center gap-1 text-xs text-cdl-gray">
+                                      {speaker.avatar ? (
+                                        <img src={speaker.avatar} alt="" class="h-4 w-4 rounded-full object-cover" loading="lazy" />
+                                      ) : (
+                                        <span class="h-4 w-4 rounded-full bg-cdl-orange/10 flex items-center justify-center text-[9px] font-bold text-cdl-orange">{speaker.name.charAt(0)}</span>
+                                      )}
+                                      {speaker.name}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Track badge */}
+                              {talk.track && (
+                                <div class="mt-2 pt-2 border-t border-cdl-gray-light/50">
+                                  <span class="text-[11px] font-medium text-cdl-orange">
+                                    {talk.track}
+                                  </span>
+                                </div>
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              class="fav-btn absolute top-3 right-3 p-1.5 rounded-full hover:bg-cdl-orange/5 transition-colors z-10"
+                              data-fav={talk.code}
+                              aria-label="Ajouter aux favoris"
+                            >
+                              <svg class="fav-off h-5 w-5 text-cdl-gray-light hover:text-cdl-orange transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                              </svg>
+                              <svg class="fav-on h-5 w-5 text-cdl-orange hidden" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                              </svg>
+                            </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Message quand aucun résultat */}
+          <div id="no-results" class="hidden text-center py-16">
+            <p class="text-cdl-gray text-lg">Aucun résultat pour cette recherche.</p>
+            <button id="reset-filters" class="mt-4 text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">
+              Réinitialiser les filtres
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+  {/* Modal */}
+  <dialog
+    id="talk-modal"
+    class="fixed inset-0 m-auto w-full max-w-2xl max-h-[85vh] rounded-2xl border-none shadow-2xl p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm dark:bg-gray-800"
+  >
+    <div class="relative overflow-y-auto max-h-[85vh]">
+      {/* Header modal */}
+      <div class="sticky top-0 bg-white dark:bg-gray-800 z-10 flex items-center justify-between px-6 py-4 border-b border-cdl-gray-light">
+        <div class="flex items-center gap-2" id="modal-badges"></div>
+        <button id="modal-close" class="p-1.5 text-cdl-gray hover:text-cdl-orange rounded-lg hover:bg-cdl-orange/5 transition-colors" aria-label="Fermer">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Contenu modal */}
+      <div class="px-6 py-6">
+        <div class="flex items-start gap-3 mb-4">
+          <h2 id="modal-title" class="text-xl sm:text-2xl font-bold text-cdl-blue flex-1"></h2>
+          <button
+            id="modal-fav"
+            type="button"
+            class="flex-shrink-0 p-2 rounded-full hover:bg-cdl-orange/5 transition-colors"
+            aria-label="Ajouter aux favoris"
+          >
+            <svg class="modal-fav-off h-6 w-6 text-cdl-gray-light hover:text-cdl-orange transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+            <svg class="modal-fav-on h-6 w-6 text-cdl-orange hidden" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+        </div>
+
+        <div id="modal-meta" class="flex flex-wrap items-center gap-3 mb-6 text-sm text-cdl-gray"></div>
+
+        <div id="modal-room-info" class="hidden mb-6">
+          <div id="modal-room-text" class="mb-3"></div>
+          <div id="modal-room-plan" class="hidden sm:block"></div>
+        </div>
+
+        <div id="modal-speakers" class="mb-6"></div>
+
+        <div id="modal-resources" class="hidden mb-6"></div>
+
+        <div id="modal-desc-section">
+          <h3 class="text-sm font-semibold text-cdl-blue uppercase tracking-wider mb-3">Description</h3>
+          <div id="modal-description" class="prose prose-sm max-w-none text-cdl-gray leading-relaxed"></div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</BaseLayout>
+
+<style>
+  dialog::backdrop {
+    background: rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(4px);
+  }
+  dialog[open] {
+    animation: modal-in 0.2s ease-out;
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+</style>
+
+<script define:vars={{ talksJson }}>
+  const talks = JSON.parse(talksJson);
+  const talksMap = new Map(talks.map((t) => [t.code, t]));
+
+  // ── Favorites (localStorage) ──
+  const STORAGE_KEY = 'cdl-favorites';
+
+  function getFavorites() {
+    try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); }
+    catch { return new Set(); }
+  }
+  function saveFavorites(favs) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...favs]));
+  }
+  function toggleFavorite(code) {
+    const favs = getFavorites();
+    if (favs.has(code)) favs.delete(code); else favs.add(code);
+    saveFavorites(favs);
+    syncFavUI();
+    return favs.has(code);
+  }
+
+  function syncFavUI() {
+    const favs = getFavorites();
+    // Card fav buttons
+    document.querySelectorAll('.fav-btn').forEach((btn) => {
+      const code = btn.getAttribute('data-fav');
+      const active = favs.has(code);
+      btn.querySelector('.fav-off')?.classList.toggle('hidden', active);
+      btn.querySelector('.fav-on')?.classList.toggle('hidden', !active);
+      btn.setAttribute('aria-label', active ? 'Retirer des favoris' : 'Ajouter aux favoris');
+      // Highlight card border
+      const card = btn.closest('.relative')?.querySelector('.talk-card');
+      if (card) {
+        card.classList.toggle('border-cdl-orange/40', active);
+        card.classList.toggle('ring-1', active);
+        card.classList.toggle('ring-cdl-orange/20', active);
+      }
+    });
+    // Filter button counter
+    const count = favs.size;
+    const countEl = document.getElementById('fav-count');
+    if (countEl) {
+      countEl.textContent = String(count);
+      countEl.classList.toggle('hidden', count === 0);
+    }
+    // Modal fav button
+    const modalFavBtn = document.getElementById('modal-fav');
+    if (modalFavBtn) {
+      const code = modalFavBtn.getAttribute('data-code');
+      const active = favs.has(code);
+      modalFavBtn.querySelector('.modal-fav-off')?.classList.toggle('hidden', active);
+      modalFavBtn.querySelector('.modal-fav-on')?.classList.toggle('hidden', !active);
+      modalFavBtn.setAttribute('aria-label', active ? 'Retirer des favoris' : 'Ajouter aux favoris');
+    }
+    // Re-apply filters if fav filter is active
+    if (favFilterActive) applyFilters();
+  }
+
+  // Card fav buttons
+  document.querySelectorAll('.fav-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const code = btn.getAttribute('data-fav');
+      toggleFavorite(code);
+    });
+  });
+
+  // ── Fav filter toggle ──
+  let favFilterActive = false;
+  const favFilterBtn = document.getElementById('filter-favs');
+
+  favFilterBtn?.addEventListener('click', () => {
+    favFilterActive = !favFilterActive;
+    favFilterBtn.setAttribute('aria-pressed', String(favFilterActive));
+    favFilterBtn.classList.toggle('border-cdl-orange', favFilterActive);
+    favFilterBtn.classList.toggle('text-cdl-orange', favFilterActive);
+    favFilterBtn.classList.toggle('bg-cdl-orange/5', favFilterActive);
+    favFilterBtn.querySelector('.fav-icon-off')?.classList.toggle('hidden', favFilterActive);
+    favFilterBtn.querySelector('.fav-icon-on')?.classList.toggle('hidden', !favFilterActive);
+    applyFilters();
+  });
+
+  // ── Day tabs ──
+  const tabs = document.querySelectorAll('.day-tab');
+  const panels = document.querySelectorAll('.day-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => {
+        t.classList.remove('bg-white', 'dark:bg-gray-800', 'text-cdl-orange', 'shadow-sm');
+        t.classList.add('text-cdl-gray');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('bg-white', 'dark:bg-gray-800', 'text-cdl-orange', 'shadow-sm');
+      tab.classList.remove('text-cdl-gray');
+      tab.setAttribute('aria-selected', 'true');
+
+      const day = tab.getAttribute('data-tab-day');
+      panels.forEach((p) => {
+        p.classList.toggle('hidden', p.getAttribute('data-day-panel') !== day);
+      });
+      applyFilters();
+    });
+  });
+
+  // ── Search + filters ──
+  const searchInput = document.getElementById('search');
+  const trackSelect = document.getElementById('filter-track');
+  const typeSelect = document.getElementById('filter-type');
+  const resultsCount = document.getElementById('results-count');
+  const noResults = document.getElementById('no-results');
+  const resetBtn = document.getElementById('reset-filters');
+
+  let searchTimeout;
+  searchInput?.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(applyFilters, 150);
+  });
+  trackSelect?.addEventListener('change', applyFilters);
+  typeSelect?.addEventListener('change', applyFilters);
+
+  resetBtn?.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    if (trackSelect) trackSelect.value = 'all';
+    if (typeSelect) typeSelect.value = 'all';
+    if (favFilterActive) favFilterBtn?.click();
+    applyFilters();
+  });
+
+  function applyFilters() {
+    const query = searchInput?.value?.toLowerCase().trim() || '';
+    const track = trackSelect?.value || 'all';
+    const type = typeSelect?.value || 'all';
+    const favs = favFilterActive ? getFavorites() : null;
+
+    let visible = 0;
+    let total = 0;
+
+    // Apply on ALL day panels (not just visible) so counts are correct
+    const activePanel = document.querySelector('.day-panel:not(.hidden)');
+    if (!activePanel) return;
+
+    activePanel.querySelectorAll('.talk-card').forEach((card) => {
+      total++;
+      const code = card.getAttribute('data-code');
+      const matchSearch = !query || card.getAttribute('data-search')?.includes(query);
+      const matchTrack = track === 'all' || card.getAttribute('data-track') === track;
+      const matchType = type === 'all' || card.getAttribute('data-type') === type;
+      const matchFav = !favs || favs.has(code);
+      const show = matchSearch && matchTrack && matchType && matchFav;
+      // Hide the wrapper div (.relative parent)
+      const wrapper = card.closest('.relative');
+      if (wrapper) wrapper.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    // Hide empty time slots
+    activePanel.querySelectorAll('.time-slot').forEach((slot) => {
+      const hasVisible = slot.querySelector('.relative:not([style*="display: none"])');
+      slot.style.display = hasVisible ? '' : 'none';
+    });
+
+    const hasFilter = query || track !== 'all' || type !== 'all' || favFilterActive;
+    resultsCount.textContent = hasFilter
+      ? `${visible} résultat${visible > 1 ? 's' : ''} sur ${total}`
+      : '';
+
+    noResults?.classList.toggle('hidden', visible > 0);
+  }
+
+  // ── Modal ──
+  const modal = document.getElementById('talk-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalMeta = document.getElementById('modal-meta');
+  const modalBadges = document.getElementById('modal-badges');
+  const modalSpeakers = document.getElementById('modal-speakers');
+  const modalDescription = document.getElementById('modal-description');
+  const modalClose = document.getElementById('modal-close');
+  const modalFav = document.getElementById('modal-fav');
+
+  function openModal(code) {
+    const talk = talksMap.get(code);
+    if (!talk || !modal) return;
+
+    modalTitle.textContent = talk.title;
+    modalFav.setAttribute('data-code', code);
+
+    // Badges
+    modalBadges.innerHTML = '';
+    if (talk.type) {
+      const cls = talk.type.toLowerCase().includes('atelier')
+        ? 'bg-cdl-gold/20 text-cdl-orange-dark'
+        : talk.type.toLowerCase().includes('keynote')
+          ? 'bg-cdl-orange/10 text-cdl-orange'
+          : 'bg-cdl-gray-light text-cdl-gray';
+      modalBadges.innerHTML += `<span class="text-xs font-medium px-2.5 py-1 rounded-full ${cls}">${talk.type}</span>`;
+    }
+    if (talk.track) {
+      modalBadges.innerHTML += `<span class="text-xs font-medium px-2.5 py-1 rounded-full bg-cdl-blue/5 text-cdl-blue-light">${talk.track}</span>`;
+    }
+
+    // Meta
+    const metaParts = [];
+    if (talk.startFormatted && talk.endFormatted) {
+      metaParts.push(`<span class="inline-flex items-center gap-1"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>${talk.startFormatted} — ${talk.endFormatted}</span>`);
+    }
+    if (talk.room) {
+      metaParts.push(`<span class="inline-flex items-center gap-1"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Salle ${talk.room}</span>`);
+    }
+    metaParts.push(`<span>${talk.duration} min</span>`);
+    modalMeta.innerHTML = metaParts.join('<span class="text-cdl-gray-light">·</span>');
+
+    // Room info with mini plan
+    const modalRoomInfo = document.getElementById('modal-room-info');
+    const modalRoomText = document.getElementById('modal-room-text');
+    const modalRoomPlan = document.getElementById('modal-room-plan');
+    if (modalRoomInfo && modalRoomText) {
+      if (talk.roomInfo) {
+        const ri = talk.roomInfo;
+        modalRoomText.innerHTML = `
+          <div class="flex items-start gap-3 p-4 rounded-xl border" style="border-color: ${ri.color}20; background-color: ${ri.color}05">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg flex items-center justify-center font-bold text-white text-lg" style="background-color: ${ri.color}">
+              ${ri.buildingLetter}
+            </div>
+            <div>
+              <p class="font-medium text-cdl-blue text-sm">${ri.building} — Salle ${ri.name}</p>
+              <p class="text-xs text-cdl-gray mt-0.5">${ri.directions}</p>
+            </div>
+          </div>
+        `;
+        // Mini campus plan with highlighted building zone
+        if (modalRoomPlan) {
+          // Same positions as CampusPlan.astro hotspots
+          const zones = {
+            B: { top: '24%', left: '28%', width: '44%', height: '20%', bg: 'rgb(208 61 0 / 0.25)', border: 'rgb(208 61 0 / 0.7)' },
+            A: { top: '30%', left: '5%', width: '25%', height: '30%', bg: 'rgb(100 160 50 / 0.25)', border: 'rgb(100 160 50 / 0.7)' },
+            C: { top: '62%', left: '5%', width: '20%', height: '25%', bg: 'rgb(150 130 130 / 0.3)', border: 'rgb(150 130 130 / 0.7)' },
+          };
+          const z = zones[ri.buildingLetter] || zones.B;
+          modalRoomPlan.innerHTML = `
+            <a href="/lieu" class="block relative rounded-xl overflow-hidden border border-cdl-gray-light hover:border-cdl-orange/30 transition-colors" title="Voir le plan complet">
+              <img src="/static/img/plan-n7-cdl.svg" alt="Plan du campus" class="w-full h-auto" />
+              <div class="absolute rounded-md border-2 flex items-center justify-center"
+                   style="top:${z.top}; left:${z.left}; width:${z.width}; height:${z.height}; background:${z.bg}; border-color:${z.border};">
+                <span class="px-2 py-0.5 rounded text-white text-xs font-bold shadow" style="background-color: ${ri.color}">
+                  ${ri.buildingLetter}
+                </span>
+              </div>
+            </a>
+          `;
+          modalRoomPlan.classList.remove('hidden');
+        }
+        modalRoomInfo.classList.remove('hidden');
+      } else {
+        modalRoomInfo.classList.add('hidden');
+      }
+    }
+
+    // Speakers with avatar and bio
+    if (talk.speakers.length > 0) {
+      const speakerLabel = talk.speakers.length > 1 ? 'Intervenant·es' : 'Intervenant·e';
+      modalSpeakers.innerHTML = `
+        <h3 class="text-sm font-semibold text-cdl-blue uppercase tracking-wider mb-3">${speakerLabel}</h3>
+        <div class="space-y-3">
+          ${talk.speakers.map((speaker) => {
+            const avatarHtml = speaker.avatar
+              ? `<img src="${speaker.avatar}" alt="" class="h-10 w-10 rounded-full object-cover flex-shrink-0" />`
+              : `<span class="h-10 w-10 rounded-full bg-cdl-orange/10 flex items-center justify-center text-sm font-bold text-cdl-orange flex-shrink-0">${speaker.name.charAt(0)}</span>`;
+            const bioHtml = speaker.biographyHtml
+              ? `<div class="text-xs text-cdl-gray mt-1 leading-relaxed prose prose-xs max-w-none">${speaker.biographyHtml}</div>`
+              : '';
+            return `
+              <div class="flex gap-3 p-3 bg-cdl-bg rounded-xl">
+                ${avatarHtml}
+                <div class="min-w-0">
+                  <p class="font-medium text-cdl-blue text-sm">${speaker.name}</p>
+                  ${bioHtml}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    } else {
+      modalSpeakers.innerHTML = '';
+    }
+
+    // Resources (slides, videos, links)
+    const modalResources = document.getElementById('modal-resources');
+    if (modalResources) {
+      if (talk.resources && talk.resources.length > 0) {
+        const iconForUrl = (url) => {
+          if (url.endsWith('.pdf') || url.includes('/pdf')) return '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>';
+          if (url.includes('video') || url.includes('peertube') || url.includes('youtube') || url.includes('youtu.be')) return '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+          return '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>';
+        };
+        modalResources.innerHTML = `
+          <h3 class="text-sm font-semibold text-cdl-blue uppercase tracking-wider mb-3">Ressources</h3>
+          <div class="flex flex-wrap gap-2">
+            ${talk.resources.map((r) => `
+              <a href="${r.url}" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-cdl-orange bg-cdl-orange/5 hover:bg-cdl-orange/10 border border-cdl-orange/20 rounded-lg transition-colors">
+                ${iconForUrl(r.url)}
+                ${r.description || 'Ressource'}
+              </a>
+            `).join('')}
+          </div>
+        `;
+        modalResources.classList.remove('hidden');
+      } else {
+        modalResources.classList.add('hidden');
+      }
+    }
+
+    // Description (pre-rendered markdown)
+    modalDescription.innerHTML = talk.descriptionHtml || '<p>Pas de description disponible.</p>';
+
+    syncFavUI();
+    modal.showModal();
+  }
+
+  document.querySelectorAll('.talk-card').forEach((card) => {
+    card.addEventListener('click', () => openModal(card.getAttribute('data-code')));
+  });
+
+  // Modal fav button
+  modalFav?.addEventListener('click', () => {
+    const code = modalFav.getAttribute('data-code');
+    if (code) toggleFavorite(code);
+  });
+
+  modalClose?.addEventListener('click', () => modal?.close());
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.close();
+  });
+
+  // ── Init ──
+  syncFavUI();
+  applyFilters();
+</script>

@@ -1,0 +1,74 @@
+# Capitole du Libre
+
+> Le Capitole du Libre est un événement gratuit dédié au logiciel libre, organisé chaque année à Toulouse (France) par l'association Toulibre.
+
+## Édition 2026
+
+- Dates : 14 & 15 novembre 2026
+- Lieu : ENSEEIHT, 2 rue Charles Camichel, 31000 Toulouse
+- Inscription : gratuite et obligatoire sur https://tickets.capitoledulibre.org/cdl/2026/
+- Site : https://capitoledulibre.org
+
+## L'événement
+
+Le Capitole du Libre rassemble environ 1 400 visiteurs sur un week-end pour des conférences, ateliers, un village associatif, une install party Linux, une LAN party avec jeux libres et des ateliers d'initiation au code pour enfants et adultes.
+
+C'est la 14e édition. L'événement existe depuis 2011.
+
+## Programme
+
+Plus de 100 conférences et ateliers sur deux jours. Les thématiques couvrent : technologies libres, vie privée et sécurité, culture libre, communautés, design et création libre, administration système, développement logiciel, hardware libre.
+
+Le programme complet est disponible sur https://capitoledulibre.org/programme et est géré via Pretalx (https://cfp.capitoledulibre.org).
+
+## Activités
+
+- Village associatif : 30+ stands d'associations et projets du logiciel libre
+- Install Party : atelier permanent d'installation Linux (en collaboration avec Net7)
+- LAN Party : gaming sur jeux libres (SuperTuxKart, 0 A.D., Xonotic, Minetest...)
+- Initiation au code : ateliers Scratch et Python pour enfants dès 8 ans (en collaboration avec Epitech Toulouse)
+- Cocktail du samedi soir : ouvert à tous, canapés et boissons offerts
+
+## Restauration
+
+Deux food trucks sur site le midi (10-15 € le menu). Buvette ouverte en continu.
+
+## Accès
+
+- Métro ligne B, arrêt François Verdier (5 min à pied)
+- Métro ligne A, arrêt Jean Jaurès (10 min à pied)
+- Gare Matabiau : 15 min à pied
+- Accessible PMR
+
+## Médias
+
+- Vidéos des conférences : https://videos.capitoledulibre.org (PeerTube)
+- Photos : https://photos.capitoledulibre.org
+- Témoignages vidéo : https://capitoledulibre.org/temoignages
+
+## Proposer une conférence
+
+L'appel à propositions (CFP) est ouvert sur https://cfp.capitoledulibre.org/cdl-2026/cfp jusqu'au 20 juillet 2026. Un programme de mentoring est disponible pour les primo-speakers.
+
+## Contact
+
+- Email : contact@capitoledulibre.org
+- Matrix : #general:capitoledulibre.org
+- Discord : https://discord.gg/SzMAMPFGUq
+- Mastodon : https://framapiaf.org/@capitoledulibre
+- Bluesky : https://bsky.app/profile/capitoledulibre.org
+- X : https://x.com/capitoledulibre
+- Hashtag : #cdl2026
+
+## Organisation
+
+Organisé par l'association Toulibre (https://toulibre.org).
+Code de conduite : https://capitoledulibre.org/code-de-conduite
+
+## Éditions précédentes
+
+https://2025.capitoledulibre.org, https://2024.capitoledulibre.org, https://2023.capitoledulibre.org, https://2022.capitoledulibre.org, https://2019.capitoledulibre.org, https://2018.capitoledulibre.org, https://2017.capitoledulibre.org, https://2016.capitoledulibre.org, https://2015.capitoledulibre.org, https://2014.capitoledulibre.org, https://2013.capitoledulibre.org, https://2012.capitoledulibre.org, https://2011.capitoledulibre.org
+
+## Licence
+
+Contenu sous licence CC BY-SA 4.0.

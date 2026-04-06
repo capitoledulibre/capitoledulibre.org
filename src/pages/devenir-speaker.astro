@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import Picture from '../components/ui/Picture.astro';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+import { getPhotosByTag } from '../lib/photos';
+
+const speakerPhotos = getPhotosByTag('speaker');
+const conferencePhotos = getPhotosByTag('conference');
+
+const formats = [
+  { title: 'Lightning talk', duration: '5 min', description: 'Présentation éclair sur un sujet précis. Idéal pour partager une découverte, un outil ou une idée en quelques minutes.' },
+  { title: 'Conférence courte', duration: '25 min', description: 'Présentation concise incluant les questions. Idéal pour un retour d\'expérience ou la découverte d\'un outil.' },
+  { title: 'Conférence longue', duration: '55 min', description: 'Présentation approfondie incluant les questions. Pour les sujets qui méritent d\'être développés.' },
+  { title: 'Atelier', duration: '1h55', description: 'Session pratique hands-on. Les participants viennent avec leur laptop et repartent avec de nouvelles compétences.' },
+  { title: 'Stand au village associatif', duration: '2 jours', description: 'Tenez un stand pendant toute la durée de l\'événement pour présenter votre projet ou association.' },
+];
+
+const topics = [
+  'Technologies libres et retours d\'expérience Open Source',
+  'Vie privée, sécurité et enjeux techniques/sociétaux',
+  'Culture libre et logiciel libre',
+  'Communautés et développement du mouvement du libre',
+  'Design, création et outils libres',
+  'Administration système, DevOps, infrastructure',
+  'Développement logiciel, langages, frameworks',
+  'Hardware libre, embarqué, IoT',
+];
+---
+
+<BaseLayout title="Devenir speaker" description="Proposez une conférence ou un atelier au Capitole du Libre. Appel à propositions ouvert !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Devenir speaker', path: '/devenir-speaker' }])} />
+  <PageHeader title="Devenir speaker" description="Partagez votre passion et votre expertise avec la communauté." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      {/* Intro avec photo */}
+      <div class="flex flex-col lg:flex-row gap-10 items-center mb-16">
+        <div class="lg:w-1/2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4">
+            Votre sujet nous intéresse
+          </h2>
+          <p class="text-cdl-gray leading-relaxed mb-4">
+            Le Capitole du Libre accueille chaque année plus de 100 interventions sur deux jours.
+            Que vous soyez un·e expert·e reconnu·e ou que vous donniez votre première conférence,
+            nous cherchons des sujets passionnants autour du logiciel libre et de la culture libre.
+          </p>
+          <p class="text-cdl-gray leading-relaxed mb-6">
+            Les propositions sont évaluées par un comité de sélection bénévole.
+            Chaque intervenant·e peut soumettre plusieurs propositions, mais le comité retiendra
+            au maximum deux interventions par personne.
+          </p>
+          <a
+            href={config.cfp.url}
+            class="inline-flex items-center gap-2 px-6 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium"
+          >
+            Proposer un sujet
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+        <div class="lg:w-1/2">
+          {speakerPhotos[0] && (
+            <Picture
+              src={speakerPhotos[0].src}
+              alt={speakerPhotos[0].alt}
+              class="w-full aspect-[4/3] object-cover rounded-2xl shadow-lg"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Formats */}
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-8 text-center">Formats de propositions</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {formats.map((f) => (
+            <div class="p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+              <span class="inline-block px-3 py-1 text-xs font-bold text-cdl-orange bg-cdl-orange/10 rounded-full mb-3">
+                {f.duration}
+              </span>
+              <h3 class="font-bold text-cdl-blue mb-2">{f.title}</h3>
+              <p class="text-sm text-cdl-gray leading-relaxed">{f.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Thématiques */}
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-8 text-center">Thématiques recherchées</h2>
+        <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {topics.map((t) => (
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-white dark:bg-gray-800 border border-cdl-gray-light">
+              <svg class="h-5 w-5 text-cdl-orange flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-sm text-cdl-gray">{t}</span>
+            </div>
+          ))}
+        </div>
+        <p class="text-center text-sm text-cdl-gray mt-4">
+          Les propositions sans rapport avec le logiciel libre ou à caractère commercial ne sont pas retenues.
+        </p>
+      </div>
+
+      {/* Mentoring */}
+      <div class="mb-16 max-w-3xl mx-auto bg-cdl-gold/10 dark:bg-cdl-gold/5 rounded-2xl p-8 sm:p-10">
+        <h2 class="text-xl font-bold text-cdl-blue mb-4 flex items-center gap-2">
+          <svg class="h-6 w-6 text-cdl-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          Programme de mentoring — Nouveau !
+        </h2>
+        <p class="text-cdl-gray leading-relaxed mb-4">
+          Vous avez un sujet passionnant mais vous n'avez jamais donné de conférence ?
+          Cette année, nous lançons un <strong class="text-cdl-blue">programme de mentoring</strong> pour
+          accompagner les primo-speakers dans la préparation de leur intervention.
+        </p>
+        <p class="text-cdl-gray leading-relaxed mb-4">
+          Un·e speaker expérimenté·e vous sera attribué·e pour vous aider à :
+        </p>
+        <ul class="space-y-2 mb-4">
+          {[
+            'Structurer votre présentation et définir les messages clés',
+            'Préparer vos slides et vos démos',
+            'Répéter et recevoir des retours bienveillants',
+            'Gérer le stress et les questions du public',
+          ].map((item) => (
+            <li class="flex items-start gap-2 text-sm text-cdl-gray">
+              <svg class="h-5 w-5 text-cdl-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="text-sm text-cdl-gray">
+          Indiquez simplement dans votre proposition que vous souhaitez bénéficier du mentoring.
+          Nous vous recontacterons après la sélection.
+        </p>
+      </div>
+
+      {/* Infos pratiques speakers */}
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-6 text-center">Infos pratiques pour les speakers</h2>
+        <div class="space-y-4">
+          {[
+            { q: 'Prise en charge des frais', a: 'L\'organisation prend en charge les frais de déplacement et d\'hébergement à hauteur de 150 €, limités à deux interventions par personne.' },
+            { q: 'Équipement des salles', a: 'Toutes les salles de conférence sont équipées d\'un vidéoprojecteur HDMI. Un adaptateur sera disponible en régie si besoin.' },
+            { q: 'Captation vidéo', a: 'Toutes les conférences sont filmées et publiées ensuite sur notre PeerTube et notre chaîne YouTube, sauf si vous ne le souhaitez pas.' },
+            { q: 'Langue', a: 'Les conférences sont principalement en français. Les interventions en anglais sont acceptées.' },
+          ].map((item) => (
+            <div class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+              <h3 class="font-bold text-cdl-blue text-sm mb-1">{item.q}</h3>
+              <p class="text-sm text-cdl-gray">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA final */}
+      <div class="text-center mt-12">
+        <a
+          href={config.cfp.url}
+          class="inline-flex items-center gap-2 px-8 py-4 text-lg font-bold text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-xl transition-colors shadow-lg"
+        >
+          Proposer un sujet
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

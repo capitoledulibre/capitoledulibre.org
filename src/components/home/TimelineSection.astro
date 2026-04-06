@@ -1,0 +1,62 @@
+---
+const timelineItems = [
+  { time: '9h30', title: 'Accueil & petit-déjeuner', description: 'Café et thé pour bien commencer la journée.', icon: 'coffee' },
+  { time: '10h00', title: 'Keynote d\'ouverture', description: 'Une conférence plénière pour lancer la journée.', icon: 'mic' },
+  { time: '10h30', title: 'Premières conférences', description: 'Sessions en parallèle dans plusieurs salles. Choisissez votre parcours !', icon: 'grid' },
+  { time: '12h30', title: 'Déjeuner sur place', description: 'Food trucks sur site. Profitez-en pour visiter le village associatif et les stands sponsors.', icon: 'utensils' },
+  { time: '14h00', title: 'Sessions de l\'après-midi', description: 'Conférences, ateliers pratiques, install party en continu.', icon: 'code' },
+  { time: '16h00', title: 'Pause & village associatif', description: 'Prenez un café et allez à la rencontre des communautés du libre.', icon: 'coffee' },
+  { time: '18h30', title: 'Table ronde de clôture', description: 'Une discussion ouverte pour conclure la journée.', icon: 'mic' },
+  { time: '19h30', title: 'Cocktail & networking', description: 'Le samedi soir, on prolonge les échanges autour de canapés et boissons offerts.', icon: 'glass' },
+];
+
+const icons: Record<string, string> = {
+  coffee: 'M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z',
+  mic: 'M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8',
+  grid: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z',
+  utensils: 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2v0a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7',
+  code: 'M16 18l6-6-6-6M8 6l-6 6 6 6',
+  zap: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+  glass: 'M8 21h8M12 15v6M5.5 3h13l-1.5 8.5a5 5 0 01-5 4.5 5 5 0 01-5-4.5L5.5 3z',
+};
+---
+
+<section class="py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        Une journée type
+      </h2>
+      <p class="text-lg text-cdl-gray">
+        Deux jours intenses de conférences, ateliers et rencontres.
+      </p>
+    </div>
+
+    <div class="relative max-w-3xl mx-auto">
+      <!-- Ligne verticale -->
+      <div class="absolute left-6 sm:left-8 top-0 bottom-0 w-0.5 bg-cdl-gray-light" aria-hidden="true"></div>
+
+      <div class="space-y-8">
+        {timelineItems.map((item, i) => (
+          <div class="relative flex gap-4 sm:gap-6">
+            <!-- Pastille horaire -->
+            <div class="relative z-10 flex-shrink-0 flex items-center justify-center h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-white dark:bg-gray-800 border-2 border-cdl-orange shadow-sm">
+              <svg class="h-5 w-5 sm:h-6 sm:w-6 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={icons[item.icon]} />
+              </svg>
+            </div>
+
+            <!-- Contenu -->
+            <div class="pt-1 sm:pt-3 pb-2">
+              <span class="inline-block px-2.5 py-0.5 text-xs font-bold rounded-full bg-cdl-orange/10 text-cdl-orange mb-2">
+                {item.time}
+              </span>
+              <h3 class="text-base sm:text-lg font-bold text-cdl-blue">{item.title}</h3>
+              <p class="text-sm text-cdl-gray mt-1">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

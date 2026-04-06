@@ -1,0 +1,75 @@
+---
+import { config } from '../../config';
+
+const stats = [
+  { value: 14, suffix: 'e', label: 'édition' },
+  { value: config.stats.visitors, suffix: '', label: 'visiteurs' },
+  { value: config.stats.conferences, suffix: '+', label: 'conférences' },
+  { value: config.stats.stands, suffix: '+', label: 'stands associatifs' },
+  { value: config.stats.workshops, suffix: '+', label: 'ateliers' },
+];
+---
+
+<section class="py-16 sm:py-20 bg-white dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <h2 class="text-3xl sm:text-4xl font-bold text-cdl-blue mb-4">
+        L'événement libre incontournable du Sud-Ouest
+      </h2>
+      <p class="text-lg text-cdl-gray">
+        Chaque année en novembre, la communauté du logiciel libre se retrouve à Toulouse
+        pour un week-end de partage, de découverte et de convivialité.
+      </p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
+      {stats.map((stat) => (
+        <div class="text-center p-4" data-stat data-target={stat.value}>
+          <p class="text-4xl sm:text-5xl font-bold text-cdl-orange" data-stat-value>
+            0{stat.suffix}
+          </p>
+          <p class="mt-2 text-sm text-cdl-gray font-medium">
+            {stat.label}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function animateStats() {
+    const statElements = document.querySelectorAll('[data-stat]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-target') || '0', 10);
+          const valueEl = el.querySelector('[data-stat-value]');
+          if (!valueEl) return;
+
+          const suffix = valueEl.textContent?.replace(/[\d\s]/g, '') || '';
+          const duration = 1500;
+          const start = performance.now();
+
+          function update(now: number) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            valueEl!.textContent = current.toLocaleString('fr-FR') + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+
+          requestAnimationFrame(update);
+          observer.unobserve(el);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    statElements.forEach((el) => observer.observe(el));
+  }
+
+  animateStats();
+</script>

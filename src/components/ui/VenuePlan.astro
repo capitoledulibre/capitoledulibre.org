@@ -1,0 +1,74 @@
+---
+import CampusPlan from './CampusPlan.astro';
+
+interface Props {
+  highlight?: string;
+}
+
+const { highlight } = Astro.props;
+
+const buildings = [
+  {
+    letter: 'B',
+    label: 'Bâtiment B',
+    color: '#d03d00',
+    floors: ['RDC : Amphi B00, B006-B007', '1er : B105', '2e : B205, B206, B207, B208, B209', '3e : B306, B307, B308'],
+  },
+  {
+    letter: 'A',
+    label: 'Bâtiment A',
+    color: '#64a032',
+    floors: ['RDC : A001, A002, A003', '2e : A201, A202, A203', '3e : A301, A302, A303, A304'],
+  },
+  {
+    letter: 'C',
+    label: 'Bâtiment C',
+    color: '#968282',
+    floors: ['RDC : Hall C (accueil & village associatif)', 'Salles : C002, C101, C102, C103'],
+  },
+];
+---
+
+<div class="venue-plan">
+  <!-- Plan interactif -->
+  <div class="max-w-3xl mx-auto mb-6">
+    <CampusPlan highlight={highlight} />
+  </div>
+
+  <!-- Détail des salles par bâtiment -->
+  {buildings.map((b) => (
+    <div
+      class:list={[
+        'building-detail rounded-xl border p-4 sm:p-6 mb-4 transition-all',
+        highlight === b.letter ? '' : 'hidden',
+      ]}
+      style={`border-color: ${b.color}30; background-color: ${b.color}08`}
+      data-building-detail={b.letter}
+    >
+      <h3 class="font-bold text-sm mb-3" style={`color: ${b.color}`}>{b.label} — Salles</h3>
+      <ul class="space-y-1.5">
+        {b.floors.map((floor) => (
+          <li class="text-sm text-cdl-gray flex items-start gap-2">
+            <svg class="h-4 w-4 flex-shrink-0 mt-0.5" style={`color: ${b.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            {floor}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+<script>
+  // Listen for building-select events from CampusPlan
+  document.querySelectorAll('.venue-plan').forEach((plan) => {
+    plan.addEventListener('building-select', ((e: CustomEvent) => {
+      const letter = e.detail.building;
+      plan.querySelectorAll('[data-building-detail]').forEach((d) => {
+        const isTarget = d.getAttribute('data-building-detail') === letter;
+        d.classList.toggle('hidden', !isTarget);
+      });
+    }) as EventListener);
+  });
+</script>
