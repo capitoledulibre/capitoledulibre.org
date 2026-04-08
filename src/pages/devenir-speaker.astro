@@ -164,6 +164,25 @@ const topics = [
         </div>
       </div>
 
+      {/* Photos de speakers en action */}
+      {speakerPhotos.length > 1 && (
+        <div class="mt-16">
+          <h2 class="text-xl font-bold text-cdl-blue mb-4 text-center">Nos speakers en action</h2>
+          <div class="lightbox-gallery grid grid-cols-2 md:grid-cols-4 gap-3">
+            {speakerPhotos.slice(0, 4).map((photo) => (
+              <div class="relative overflow-hidden rounded-xl">
+                <Picture
+                  src={photo.src}
+                  alt={photo.alt}
+                  class="w-full aspect-[4/3] object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* CTA final */}
       <div class="text-center mt-12">
         <a

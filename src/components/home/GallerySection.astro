@@ -1,17 +1,24 @@
 ---
 import { config } from '../../config';
 import Picture from '../ui/Picture.astro';
+import { getPhotosByTag } from '../../lib/photos';
 
-const photos = [
-  { src: '/static/img/img01.jpg', alt: 'Conférence au Capitole du Libre' },
-  { src: '/static/img/img04.jpg', alt: 'Atelier pratique' },
-  { src: '/static/img/img09.jpg', alt: 'Village associatif' },
-  { src: '/static/img/img11.jpg', alt: 'Échanges entre participants' },
-  { src: '/static/img/img18.jpg', alt: 'Salle de conférence' },
-  { src: '/static/img/img20.jpg', alt: 'Stand associatif' },
-  { src: '/static/img/img30.jpg', alt: 'Keynote d\'ouverture' },
-  { src: '/static/img/img32.jpg', alt: 'Networking' },
+// Mix of different tags for a varied gallery
+const allPhotos = [
+  ...getPhotosByTag('hero'),
+  ...getPhotosByTag('conference'),
+  ...getPhotosByTag('village-associatif'),
+  ...getPhotosByTag('ambiance'),
+  ...getPhotosByTag('cocktail'),
+  ...getPhotosByTag('atelier'),
 ];
+// Deduplicate by src and take 8
+const seen = new Set<string>();
+const photos = allPhotos.filter((p) => {
+  if (seen.has(p.src)) return false;
+  seen.add(p.src);
+  return true;
+}).slice(0, 8);
 ---
 
 <section class="py-16 sm:py-24 bg-white dark:bg-gray-900 section-slant-top relative">
