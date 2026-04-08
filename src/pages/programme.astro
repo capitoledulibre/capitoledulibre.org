@@ -77,6 +77,9 @@ const schedule: DaySchedule[] = days.map((day) => {
   return { day, slots };
 });
 
+// Pass event slug to client for scoped localStorage keys
+const eventSlug = config.pretalx.eventSlug;
+
 // Serialize talks for client-side modal (with room info + rendered markdown)
 const talksJson = JSON.stringify(
   talks.map((t) => ({
@@ -401,12 +404,12 @@ const talksJson = JSON.stringify(
   }
 </style>
 
-<script define:vars={{ talksJson }}>
+<script define:vars={{ talksJson, eventSlug }}>
   const talks = JSON.parse(talksJson);
   const talksMap = new Map(talks.map((t) => [t.code, t]));
 
-  // ── Favorites (localStorage) ──
-  const STORAGE_KEY = 'cdl-favorites';
+  // ── Favorites (localStorage, scoped by event slug) ──
+  const STORAGE_KEY = `cdl-favorites-${eventSlug}`;
 
   function getFavorites() {
     try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')); }
