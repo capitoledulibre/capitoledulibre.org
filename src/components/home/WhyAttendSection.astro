@@ -3,7 +3,7 @@ import OccitanCross from '../ui/OccitanCross.astro';
 import Picture from '../ui/Picture.astro';
 import { getPhotosByTag } from '../../lib/photos';
 
-const conferencePhoto = getPhotosByTag('conference', 'table-ronde')[0];
+const conferencePhoto = getPhotosByTag('table-ronde')[0] || getPhotosByTag('conference')[2];
 const villagePhoto = getPhotosByTag('village-associatif')[0];
 const staffPhoto = getPhotosByTag('staff')[1] || getPhotosByTag('staff')[0];
 

@@ -3,22 +3,28 @@ import { config } from '../../config';
 import Picture from '../ui/Picture.astro';
 import { getPhotosByTag } from '../../lib/photos';
 
-// Mix of different tags for a varied gallery
-const allPhotos = [
-  ...getPhotosByTag('hero'),
-  ...getPhotosByTag('conference'),
-  ...getPhotosByTag('village-associatif'),
-  ...getPhotosByTag('ambiance'),
-  ...getPhotosByTag('cocktail'),
-  ...getPhotosByTag('atelier'),
-];
-// Deduplicate by src and take 8
+// Pick one photo per tag first for maximum variety, then fill up to 8
+const tags = ['hero', 'conference', 'village-associatif', 'cocktail', 'atelier', 'food-trucks', 'initiation-code', 'ambiance'];
 const seen = new Set<string>();
-const photos = allPhotos.filter((p) => {
-  if (seen.has(p.src)) return false;
-  seen.add(p.src);
-  return true;
-}).slice(0, 8);
+const photos: { src: string; alt: string; credit: string; tags: string[] }[] = [];
+
+// Round 1: one per tag
+for (const tag of tags) {
+  const match = getPhotosByTag(tag).find((p) => !seen.has(p.src));
+  if (match) { seen.add(match.src); photos.push(match); }
+  if (photos.length >= 8) break;
+}
+
+// Round 2: fill remaining slots
+if (photos.length < 8) {
+  const allPhotos = tags.flatMap((t) => getPhotosByTag(t));
+  for (const p of allPhotos) {
+    if (seen.has(p.src)) continue;
+    seen.add(p.src);
+    photos.push(p);
+    if (photos.length >= 8) break;
+  }
+}
 ---
 
 <section class="py-16 sm:py-24 bg-white dark:bg-gray-900 section-slant-top relative">

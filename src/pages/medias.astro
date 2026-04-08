@@ -7,7 +7,8 @@ import { config } from '../config';
 import { breadcrumb } from '../lib/jsonld';
 import { getPhotosByTag } from '../lib/photos';
 
-const conferencePhotos = getPhotosByTag('conference');
+// Use a conference photo different from homepage (skip first few)
+const conferencePhotos = getPhotosByTag('conference').slice(2);
 const captationPhotos = getPhotosByTag('captation');
 const ambiance = getPhotosByTag('ambiance');
 ---
