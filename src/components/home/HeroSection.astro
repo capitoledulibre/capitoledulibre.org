@@ -3,9 +3,9 @@ import OccitanCross from '../ui/OccitanCross.astro';
 import { config } from '../../config';
 
 const stats = [
-  { value: '1 400', label: 'visiteurs' },
-  { value: '100+', label: 'conférences' },
-  { value: '30+', label: 'stands' },
+  { value: config.stats.visitors.toLocaleString('fr-FR'), label: 'visiteurs' },
+  { value: config.stats.conferences + '+', label: 'conférences' },
+  { value: config.stats.stands + '+', label: 'stands' },
 ];
 ---
 

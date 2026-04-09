@@ -13,55 +13,107 @@ const sponsorPhotos = getPhotosByTag('sponsor');
 
 const allPartners = await getCollection('partners');
 
-const levels = [
-  { key: 'platine', label: 'Platine', color: 'bg-gray-100' },
-  { key: 'or', label: 'Or', color: 'bg-cdl-gold/10' },
-  { key: 'argent', label: 'Argent', color: 'bg-gray-50' },
-  { key: 'bronze', label: 'Bronze', color: 'bg-orange-50' },
-  { key: 'technique', label: 'Partenaires techniques', color: 'bg-cdl-blue/5' },
-  { key: 'institutionnel', label: 'Partenaires institutionnels', color: 'bg-cdl-blue/5' },
+// Sponsors (niveaux classiques)
+const sponsorLevels = [
+  { key: 'platine', label: 'Platine', logoSize: 'max-h-20', cols: 'sm:grid-cols-2 lg:grid-cols-3' },
+  { key: 'or', label: 'Or', logoSize: 'max-h-16', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
+  { key: 'argent', label: 'Argent', logoSize: 'max-h-14', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
+  { key: 'bronze', label: 'Bronze', logoSize: 'max-h-12', cols: 'sm:grid-cols-4 lg:grid-cols-5' },
 ] as const;
 
-const partnersByLevel = levels
+const sponsors = sponsorLevels
   .map((level) => ({
     ...level,
     partners: allPartners.filter((p) => p.data.level === level.key),
   }))
   .filter((level) => level.partners.length > 0);
+
+// Partenaires techniques
+const techPartners = allPartners.filter((p) => p.data.level === 'technique' || p.data.level === 'institutionnel');
+
+const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
 ---
 
-<BaseLayout title="Partenaires" description="Les partenaires du Capitole du Libre rendent l'événement possible. Découvrez-les et rejoignez-les !">
+<BaseLayout title="Partenaires" description="Les partenaires et sponsors du Capitole du Libre rendent l'événement possible. Découvrez-les et rejoignez-les !">
   <JsonLd slot="head" data={breadcrumb([{ name: 'Partenaires', path: '/partenaires' }])} />
   <PageHeader title="Partenaires" description="Ils rendent le Capitole du Libre possible." />
 
   <section class="py-12 sm:py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-      {partnersByLevel.length > 0 ? (
-        <div class="space-y-16">
-          {partnersByLevel.map((level) => (
-            <div>
-              <h2 class="text-2xl font-bold text-cdl-blue mb-8 text-center">{level.label}</h2>
-              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-                {level.partners.map((partner) => (
+      {hasAnyPartner ? (
+        <>
+          {/* ── Sponsors ── */}
+          {sponsors.length > 0 && (
+            <div class="mb-20">
+              <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-3">Sponsors</h2>
+                <p class="text-cdl-gray max-w-2xl mx-auto">
+                  Ils soutiennent financièrement le Capitole du Libre et rendent l'événement gratuit pour tous.
+                </p>
+              </div>
+              <div class="space-y-12">
+                {sponsors.map((level) => (
+                  <div>
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-cdl-orange mb-6 text-center">{level.label}</h3>
+                    <div class:list={['grid grid-cols-2 gap-6', level.cols]}>
+                      {level.partners.map((partner) => (
+                        <a
+                          href={partner.data.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="flex items-center justify-center p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
+                        >
+                          <img
+                            src={partner.data.logo}
+                            alt={partner.data.name}
+                            class:list={['w-auto object-contain', level.logoSize]}
+                            loading="lazy"
+                          />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Partenaires techniques ── */}
+          {techPartners.length > 0 && (
+            <div class="mb-16">
+              <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-3">Partenaires techniques</h2>
+                <p class="text-cdl-gray max-w-2xl mx-auto">
+                  Ils nous fournissent des services, du matériel ou de l'expertise pour faire vivre l'événement.
+                </p>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {techPartners.map((partner) => (
                   <a
                     href={partner.data.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class={`flex items-center justify-center p-6 rounded-xl border border-cdl-gray-light hover:border-cdl-orange/30 hover:shadow-md transition-all ${level.color}`}
+                    class="flex items-start gap-4 p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
                   >
                     <img
                       src={partner.data.logo}
-                      alt={partner.data.name}
-                      class="max-h-16 w-auto object-contain"
+                      alt=""
+                      class="h-12 w-12 object-contain flex-shrink-0"
                       loading="lazy"
                     />
+                    <div>
+                      <p class="font-bold text-cdl-blue text-sm">{partner.data.name}</p>
+                      {partner.data.description && (
+                        <p class="text-xs text-cdl-gray mt-1">{partner.data.description}</p>
+                      )}
+                    </div>
                   </a>
                 ))}
               </div>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       ) : (
         <div class="text-center py-20">
           <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-cdl-orange/10 mb-6">
@@ -95,22 +147,24 @@ const partnersByLevel = levels
         </div>
       )}
 
-      {/* CTA devenir partenaire */}
-      <div class="mt-16 text-center bg-cdl-blue/5 rounded-2xl p-8 sm:p-12">
-        <h2 class="text-2xl font-bold text-cdl-blue mb-4">Devenir partenaire</h2>
-        <p class="text-cdl-gray max-w-2xl mx-auto mb-8">
-          Vous souhaitez soutenir le logiciel libre et gagner en visibilité auprès d'un public passionné ?
-          Contactez-nous pour recevoir notre dossier de partenariat.
+      {/* CTA devenir sponsor */}
+      <div class="mt-16 bg-cdl-blue-fixed text-white rounded-2xl p-8 sm:p-12 text-center">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4">Devenir sponsor</h2>
+        <p class="text-white/80 mb-8 max-w-2xl mx-auto">
+          Soutenez le logiciel libre et gagnez en visibilité auprès de {config.stats.visitors.toLocaleString('fr-FR')} passionnés.
+          Consultez notre plaquette partenaires pour découvrir les différentes formules.
         </p>
-        <ObfuscatedEmail
-          subject={`Partenariat — Capitole du Libre ${config.edition.year}`}
-          class="inline-flex items-center gap-2 px-6 py-3 text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-lg transition-colors font-medium"
+        <a
+          href="/static/pdf/Capitole-du-Libre-2026-Plaquette-Partenaires.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-8 py-3.5 text-lg font-medium text-cdl-blue-fixed bg-white hover:bg-white/90 rounded-xl transition-colors shadow-lg"
         >
-          Nous contacter
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-        </ObfuscatedEmail>
+          Télécharger la plaquette partenaires
+        </a>
       </div>
 
     </div>
