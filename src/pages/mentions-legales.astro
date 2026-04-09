@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import ObfuscatedEmail from '../components/ui/ObfuscatedEmail.astro';
+import { config } from '../config';
+import { breadcrumb } from '../lib/jsonld';
+
+const sections = [
+  {
+    icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+    title: 'Éditeur du site',
+    id: 'editeur',
+  },
+  {
+    icon: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01',
+    title: 'Hébergement',
+    id: 'hebergement',
+  },
+  {
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    title: 'Propriété intellectuelle',
+    id: 'propriete',
+  },
+  {
+    icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+    title: 'Données personnelles',
+    id: 'donnees',
+  },
+  {
+    icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
+    title: 'Cookies & stockage local',
+    id: 'cookies',
+  },
+  {
+    icon: 'M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z',
+    title: 'Billetterie',
+    id: 'billetterie',
+  },
+];
+---
+
+<BaseLayout title="Mentions légales" description="Mentions légales du site capitoledulibre.org." noindex>
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Mentions légales', path: '/mentions-legales' }])} />
+  <PageHeader title="Mentions légales" />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+
+      {/* Sommaire */}
+      <nav class="mb-12 p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800" aria-label="Sommaire">
+        <p class="text-sm font-semibold text-cdl-blue mb-3">Sommaire</p>
+        <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2" role="list">
+          {sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`} class="flex items-center gap-2 text-sm text-cdl-gray hover:text-cdl-orange transition-colors">
+                <svg class="h-4 w-4 text-cdl-orange/50 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={s.icon} />
+                </svg>
+                {s.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* Sections */}
+      <div class="space-y-10">
+
+        {/* Éditeur */}
+        <div id="editeur" class="p-6 sm:p-8 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-cdl-orange/10 flex items-center justify-center">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={sections[0].icon} />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-cdl-blue">Éditeur du site</h2>
+          </div>
+          <p class="text-cdl-gray leading-relaxed mb-4">
+            Le site <strong class="text-cdl-blue">capitoledulibre.org</strong> est édité par
+            l'association <strong class="text-cdl-blue">Toulibre</strong>.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Statut</p>
+              <p class="text-cdl-gray">Association loi 1901, déclarée le 21/09/2006 à la préfecture de Haute-Garonne sous le n° W313002830</p>
+            </div>
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Siège social</p>
+              <p class="text-cdl-gray">14 avenue Aristide Briand, 31400 Toulouse</p>
+            </div>
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Directeur de la publication</p>
+              <p class="text-cdl-gray">Guillaume Gasnier (Président)</p>
+            </div>
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Contact</p>
+              <ObfuscatedEmail label="contact@capitoledulibre.org" class="text-cdl-orange hover:text-cdl-orange-light transition-colors" />
+            </div>
+          </div>
+        </div>
+
+        {/* Hébergement */}
+        <div id="hebergement" class="p-6 sm:p-8 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-cdl-orange/10 flex items-center justify-center">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={sections[1].icon} />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-cdl-blue">Hébergement</h2>
+          </div>
+          <p class="text-cdl-gray leading-relaxed mb-4">
+            Ce site est hébergé par <strong class="text-cdl-blue">Scaleway</strong>.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Raison sociale</p>
+              <p class="text-cdl-gray">Scaleway SAS</p>
+            </div>
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Adresse</p>
+              <p class="text-cdl-gray">8, rue de la Ville-l'Évêque, 75008 Paris</p>
+            </div>
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">RCS</p>
+              <p class="text-cdl-gray">Paris 433 115 904</p>
+            </div>
+            <div class="p-3 rounded-lg bg-cdl-bg dark:bg-gray-700/50">
+              <p class="text-xs text-cdl-gray/70 mb-1">Capital social</p>
+              <p class="text-cdl-gray">142 050 €</p>
+            </div>
+          </div>
+          <p class="text-sm text-cdl-gray mt-3">
+            <a href="https://www.scaleway.com" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light transition-colors">scaleway.com</a>
+          </p>
+        </div>
+
+        {/* Propriété intellectuelle */}
+        <div id="propriete" class="p-6 sm:p-8 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-cdl-orange/10 flex items-center justify-center">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={sections[2].icon} />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-cdl-blue">Propriété intellectuelle</h2>
+          </div>
+          <div class="space-y-3 text-cdl-gray leading-relaxed">
+            <p>
+              Sauf mention contraire, l'ensemble des contenus de ce site est mis à disposition sous licence
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light transition-colors font-medium">
+                CC BY-SA 4.0</a>.
+            </p>
+            <p>Le logo Capitole du Libre est la propriété de l'association Toulibre.</p>
+            <p>
+              Photos :
+              <a href="https://photo7.inpt.fr/" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light transition-colors">Photo7</a>,
+              Guillaume Poullain. Utilisées avec autorisation.
+            </p>
+            <p>
+              Code source disponible sur
+              <a href={config.links.github} target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light transition-colors">GitHub</a>.
+            </p>
+          </div>
+        </div>
+
+        {/* Données personnelles */}
+        <div id="donnees" class="p-6 sm:p-8 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-cdl-orange/10 flex items-center justify-center">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={sections[3].icon} />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-cdl-blue">Données personnelles</h2>
+          </div>
+          <div class="space-y-3 text-cdl-gray leading-relaxed">
+            <p>
+              Ce site <strong class="text-cdl-blue">ne collecte aucune donnée personnelle</strong>.
+              Aucun cookie, aucun traceur, aucun outil d'analyse n'est utilisé.
+            </p>
+            <p>
+              Les données stockées localement dans votre navigateur (thème clair/sombre, favoris du programme)
+              restent sur votre appareil et ne sont jamais transmises à un serveur.
+            </p>
+          </div>
+        </div>
+
+        {/* Cookies */}
+        <div id="cookies" class="p-6 sm:p-8 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-cdl-orange/10 flex items-center justify-center">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={sections[4].icon} />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-cdl-blue">Cookies & stockage local</h2>
+          </div>
+          <div class="space-y-3 text-cdl-gray leading-relaxed">
+            <p>
+              Ce site n'utilise <strong class="text-cdl-blue">aucun cookie</strong>, ni de suivi, ni technique.
+              Il fonctionne de manière entièrement statique.
+            </p>
+            <p>
+              Le stockage local (<code class="text-xs bg-cdl-gray-light dark:bg-gray-700 px-1.5 py-0.5 rounded">localStorage</code>)
+              est utilisé uniquement pour :
+            </p>
+            <ul class="list-disc list-inside text-sm space-y-1 ml-2">
+              <li>Votre préférence de thème (clair / sombre / système)</li>
+              <li>Vos favoris dans le programme</li>
+            </ul>
+            <p class="text-sm">Ces données ne quittent jamais votre navigateur.</p>
+          </div>
+        </div>
+
+        {/* Billetterie */}
+        <div id="billetterie" class="p-6 sm:p-8 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-cdl-orange/10 flex items-center justify-center">
+              <svg class="h-5 w-5 text-cdl-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={sections[5].icon} />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-cdl-blue">Billetterie</h2>
+          </div>
+          <div class="space-y-3 text-cdl-gray leading-relaxed">
+            <p>
+              L'inscription à l'événement est gérée via
+              <a href={config.tickets.url} target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light transition-colors font-medium">tickets.capitoledulibre.org</a>,
+              une instance auto-hébergée du logiciel open source
+              <a href="https://pretix.eu" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light transition-colors">pretix</a>.
+            </p>
+            <p>
+              Les données collectées lors de l'inscription (nom, email) sont traitées par l'association Toulibre
+              dans le seul but d'organiser l'événement. Elles ne sont ni revendues ni partagées avec des tiers.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
