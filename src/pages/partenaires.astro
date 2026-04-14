@@ -65,9 +65,15 @@ const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
                           class="flex items-center justify-center p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
                         >
                           <img
+                            src={partner.data.logo_light ?? partner.data.logo}
+                            alt={partner.data.name}
+                            class:list={['w-auto object-contain dark:hidden', level.logoSize]}
+                            loading="lazy"
+                          />
+                          <img
                             src={partner.data.logo}
                             alt={partner.data.name}
-                            class:list={['w-auto object-contain', level.logoSize]}
+                            class:list={['w-auto object-contain hidden dark:block', level.logoSize]}
                             loading="lazy"
                           />
                         </a>
@@ -96,10 +102,17 @@ const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
                     rel="noopener noreferrer"
                     class="flex items-start gap-4 p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
                   >
+                  
+                    <img
+                      src={partner.data.logo_light ?? partner.data.logo}
+                      alt=""
+                      class="h-12 w-12 object-contain flex-shrink-0 dark:hidden"
+                      loading="lazy"
+                    />
                     <img
                       src={partner.data.logo}
                       alt=""
-                      class="h-12 w-12 object-contain flex-shrink-0"
+                      class="h-12 w-12 object-contain flex-shrink-0 hidden dark:block"
                       loading="lazy"
                     />
                     <div>
