@@ -33,6 +33,7 @@ const partners = defineCollection({
     name: z.string(),
     level: z.enum(['platine', 'or', 'argent', 'bronze', 'technique', 'institutionnel']),
     logo: z.string(),
+    logo_light: z.string().optional(),
     url: z.string(),
     description: z.string().optional(),
   }),

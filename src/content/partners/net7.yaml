@@ -1,5 +1,6 @@
 name: net7
 level: technique
-logo: /static/img/partners/logo-net7.png
+logo: /static/img/partners/logo-net7-w.png
+logo_light: /static/img/partners/logo-net7.png
 url: https://net7.dev
 description: Assure l'install party et la LAN party
