@@ -69,6 +69,7 @@ const currentPath = Astro.url.pathname;
                   <li>
                     <a
                       href={child.href}
+                      aria-current={currentPath === child.href ? 'page' : undefined}
                       class:list={[
                         'block px-4 py-2 text-sm hover:bg-cdl-orange/5 hover:text-cdl-orange transition-colors',
                         currentPath === child.href ? 'text-cdl-orange font-medium' : 'text-cdl-gray',
@@ -84,6 +85,7 @@ const currentPath = Astro.url.pathname;
             <li>
               <a
                 href={item.href}
+                aria-current={currentPath === item.href ? 'page' : undefined}
                 class:list={[
                   'px-3 py-2 text-sm font-medium transition-colors rounded-md inline-block',
                   currentPath === item.href ? 'text-cdl-orange' : 'text-cdl-gray hover:text-cdl-orange',
@@ -172,6 +174,7 @@ const currentPath = Astro.url.pathname;
                   <li>
                     <a
                       href={child.href}
+                      aria-current={currentPath === child.href ? 'page' : undefined}
                       class:list={[
                         'block px-3 py-2 text-sm rounded-md',
                         currentPath === child.href ? 'text-cdl-orange font-medium bg-cdl-orange/5' : 'text-cdl-gray hover:text-cdl-orange hover:bg-cdl-orange/5',
@@ -187,6 +190,7 @@ const currentPath = Astro.url.pathname;
             <li>
               <a
                 href={item.href}
+                aria-current={currentPath === item.href ? 'page' : undefined}
                 class:list={[
                   'block px-3 py-2 text-sm font-medium rounded-md',
                   currentPath === item.href ? 'text-cdl-orange bg-cdl-orange/5' : 'text-cdl-gray hover:text-cdl-orange hover:bg-cdl-orange/5',
