@@ -19,6 +19,8 @@
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/sitemap": "^3.7.2",
+    "@fontsource/ubuntu": "^5.2.8",
+    "@fontsource/ubuntu-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.6",
     "marked": "^17.0.6",
