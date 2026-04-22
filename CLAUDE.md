@@ -8,7 +8,7 @@ Site web officiel du **Capitole du Libre**, événement annuel dédié au logici
 
 ## Stack technique
 
-- **Framework** : Astro 5
+- **Framework** : Astro 6
 - **CSS** : Tailwind CSS 4
 - **Langage** : TypeScript
 - **Package manager** : pnpm
