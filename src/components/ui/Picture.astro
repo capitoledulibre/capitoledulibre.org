@@ -37,10 +37,7 @@ const {
   lightbox = true,
 } = Astro.props;
 
-// Derive base path and extension
-const lastDot = src.lastIndexOf('.');
-const basePath = src.substring(0, lastDot);
-const ext = src.substring(lastDot);
+const basePath = src.substring(0, src.lastIndexOf('.'));
 
 function srcset(format: string): string {
   return widths

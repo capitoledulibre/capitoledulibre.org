@@ -9,7 +9,6 @@ import { getPhotosByTag } from '../lib/photos';
 
 // Skip img05 (index 0) to avoid duplication with other pages
 const speakerPhotos = getPhotosByTag('speaker').slice(1);
-const conferencePhotos = getPhotosByTag('conference').slice(1);
 
 const formats = [
   { title: 'Lightning talk', duration: '5 min', description: 'Présentation éclair sur un sujet précis. Idéal pour partager une découverte, un outil ou une idée en quelques minutes.' },

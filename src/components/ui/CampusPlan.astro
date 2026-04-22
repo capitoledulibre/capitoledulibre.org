@@ -5,11 +5,10 @@
  */
 interface Props {
   highlight?: string; // 'A', 'B', 'C'
-  compact?: boolean;
   class?: string;
 }
 
-const { highlight, compact = false, class: className } = Astro.props;
+const { highlight, class: className } = Astro.props;
 ---
 
 <div class:list={['campus-plan relative', className]} data-highlight={highlight}>

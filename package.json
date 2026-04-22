@@ -10,6 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "images": "node scripts/optimize-images.mjs",
     "images:force": "node scripts/optimize-images.mjs --force",
     "videos": "bash scripts/optimize-videos.sh",
@@ -28,6 +32,12 @@
     "yaml": "^2.8.3"
   },
   "devDependencies": {
-    "sharp": "^0.34.5"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.1",
+    "eslint-plugin-astro": "^1.7.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.34.5",
+    "typescript-eslint": "^8.59.0"
   }
 }

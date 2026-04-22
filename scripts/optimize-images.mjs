@@ -9,7 +9,7 @@
  */
 
 import sharp from 'sharp';
-import { readdir, stat, mkdir } from 'node:fs/promises';
+import { readdir, stat } from 'node:fs/promises';
 import { join, parse } from 'node:path';
 
 const SRC_DIR = 'public/static/img';
@@ -47,8 +47,7 @@ async function processImage(filePath) {
       if (!force && await fileExists(outPath)) continue;
 
       await sharp(filePath)
-        .resize(width, null, { withoutEnlargement: true })
-        [format]({ quality: QUALITY[format] })
+        .resize(width, null, { withoutEnlargement: true })[format]({ quality: QUALITY[format] })
         .toFile(outPath);
 
       converted++;
@@ -61,8 +60,7 @@ async function processImage(filePath) {
     if (!force && await fileExists(fullPath)) continue;
 
     await sharp(filePath)
-      .resize(1920, null, { withoutEnlargement: true })
-      [format]({ quality: QUALITY[format] })
+      .resize(1920, null, { withoutEnlargement: true })[format]({ quality: QUALITY[format] })
       .toFile(fullPath);
 
     converted++;
@@ -85,7 +83,6 @@ async function main() {
 
   for (const file of images) {
     const filePath = join(SRC_DIR, file);
-    const before = totalConverted;
     const count = await processImage(filePath);
     totalConverted += count || 0;
 

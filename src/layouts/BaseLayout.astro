@@ -34,8 +34,8 @@ const fullTitle = `${title} — Capitole du Libre`;
     <!-- Anti-flash: apply dark class before render -->
     <script is:inline>
       (function() {
-        var s = localStorage.getItem('cdl-theme');
-        var dark = s === 'dark' || (s !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const s = localStorage.getItem('cdl-theme');
+        const dark = s === 'dark' || (s !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         if (dark) document.documentElement.classList.add('dark');
       })();
     </script>
