@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
 import VenuePlan from '../components/ui/VenuePlan.astro';
+import TicketCta from '../components/ui/TicketCta.astro';
 import { config } from '../config';
 import { breadcrumb } from '../lib/jsonld';
 
@@ -185,4 +186,9 @@ const { lat, lng } = config.venue.coordinates;
 
     </div>
   </section>
+
+  <TicketCta
+    title="Vous savez désormais comment venir"
+    description="L'entrée au Capitole du Libre est libre et gratuite, mais l'inscription nous aide à bien dimensionner l'accueil."
+  />
 </BaseLayout>

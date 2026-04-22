@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
+import TicketCta from '../components/ui/TicketCta.astro';
 import { config } from '../config';
 import { breadcrumb } from '../lib/jsonld';
 import { getTalks, type FormattedTalk } from '../lib/pretalx';
@@ -334,6 +335,11 @@ const talksJson = JSON.stringify(
       )}
     </div>
   </section>
+
+  <TicketCta
+    title="Ce programme vous inspire ?"
+    description="L'entrée est libre et gratuite, mais l'inscription nous aide à préparer au mieux votre venue."
+  />
 
   {/* Modal */}
   <dialog

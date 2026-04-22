@@ -1,0 +1,31 @@
+---
+import { config } from '../../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Envie de venir ?',
+  description = `Le Capitole du Libre est entièrement gratuit, mais l'inscription est obligatoire pour nous aider à dimensionner l'événement.`,
+} = Astro.props;
+---
+
+<section class="bg-gradient-to-br from-cdl-orange/5 to-cdl-gold/10 dark:from-cdl-orange/10 dark:to-cdl-gold/5 border-y border-cdl-orange/15">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-14 text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-3">
+      {title}
+    </h2>
+    <p class="text-cdl-gray mb-7 max-w-xl mx-auto">
+      {description}
+    </p>
+    <a
+      href={config.tickets.url}
+      class="inline-flex items-center gap-2 px-7 py-3.5 text-base font-medium text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-xl transition-colors shadow-md shadow-cdl-orange/20 focus:outline-2 focus:outline-offset-2 focus:outline-cdl-orange"
+    >
+      S'inscrire gratuitement
+      <span class="text-white/80 font-normal">— {config.edition.displayDates}</span>
+    </a>
+  </div>
+</section>
