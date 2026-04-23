@@ -8,7 +8,7 @@ Contact: contact@capitoledulibre.org
 /* SITE */
 
 Standards: HTML5, CSS3
-Framework: Astro 5
+Framework: Astro 6
 Styling: Tailwind CSS 4
 Language: TypeScript
 Software: Visual Studio Code, Inkscape
