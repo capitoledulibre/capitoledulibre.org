@@ -222,10 +222,10 @@ const talksJson = JSON.stringify(
 
                 <div class="space-y-10">
                   {daySchedule.slots.map((slot) => (
-                    <div class="time-slot relative" data-slot-time={slot.time}>
+                    <div class="time-slot relative" data-slot-time={slot.time} data-slot-end={slot.timeEnd}>
                       {/* Marqueur horaire */}
                       <div class="flex items-start gap-4 sm:gap-6">
-                        <div class="relative z-10 flex-shrink-0 w-[78px] sm:w-[110px]">
+                        <div class="relative z-10 flex-shrink-0 w-[78px] sm:w-[110px]" data-slot-marker>
                           <div class="inline-flex items-center px-3 py-1.5 bg-cdl-orange text-white text-sm font-bold rounded-lg shadow-sm">
                             {formatTime(slot.time)}
                           </div>
@@ -407,6 +407,12 @@ const talksJson = JSON.stringify(
   @keyframes modal-in {
     from { opacity: 0; transform: translateY(16px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .time-slot.is-current .talk-card {
+    border-color: rgb(220 38 38 / 0.5);
+  }
+  .time-slot.is-next .talk-card {
+    border-color: rgb(26 54 93 / 0.4);
   }
 </style>
 
@@ -747,7 +753,103 @@ const talksJson = JSON.stringify(
     if (e.target === modal) modal.close();
   });
 
+  // ── Now indicator (during event) ──
+  const NOW_REFRESH_MS = 60_000;
+
+  function getNow() {
+    const debug = new URL(window.location.href).searchParams.get('now');
+    if (debug) {
+      const d = new Date(debug);
+      if (!isNaN(d.getTime())) return d;
+    }
+    return new Date();
+  }
+
+  function localDateStr(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  function clearNowMarkers() {
+    document.querySelectorAll('.time-slot').forEach((slot) => {
+      slot.classList.remove('is-current', 'is-next');
+      slot.querySelector('.now-badge')?.remove();
+    });
+  }
+
+  function addNowBadge(slot, kind) {
+    const marker = slot.querySelector('[data-slot-marker]');
+    if (!marker || marker.querySelector('.now-badge')) return;
+    const badge = document.createElement('div');
+    badge.className =
+      'now-badge mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold rounded uppercase tracking-wide ' +
+      (kind === 'current' ? 'bg-red-600 text-white' : 'bg-cdl-blue text-white');
+    badge.innerHTML = kind === 'current'
+      ? '<span class="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></span>En cours'
+      : 'Prochain';
+    marker.appendChild(badge);
+  }
+
+  function updateNowIndicator() {
+    clearNowMarkers();
+    const now = getNow();
+    const nowMs = now.getTime();
+    const todayPanel = document.querySelector(`[data-day-panel="${localDateStr(now)}"]`);
+    if (!todayPanel) return;
+
+    let current = null;
+    let next = null;
+    let nextStartMs = Infinity;
+
+    todayPanel.querySelectorAll('.time-slot').forEach((slot) => {
+      const startStr = slot.getAttribute('data-slot-time');
+      const endStr = slot.getAttribute('data-slot-end');
+      if (!startStr) return;
+      const startMs = new Date(startStr).getTime();
+      const endMs = endStr ? new Date(endStr).getTime() : startMs;
+      if (nowMs >= startMs && nowMs < endMs) {
+        current = slot;
+      } else if (nowMs < startMs && startMs < nextStartMs) {
+        next = slot;
+        nextStartMs = startMs;
+      }
+    });
+
+    if (current) {
+      current.classList.add('is-current');
+      addNowBadge(current, 'current');
+    } else if (next) {
+      next.classList.add('is-next');
+      addNowBadge(next, 'next');
+    }
+  }
+
+  function selectTodayTabIfPresent() {
+    const todayTab = document.querySelector(`.day-tab[data-tab-day="${localDateStr(getNow())}"]`);
+    if (todayTab && todayTab.getAttribute('aria-selected') !== 'true') {
+      todayTab.click();
+    }
+  }
+
+  function scrollToCurrentOnce() {
+    if (window.scrollY > 100) return;
+    const target = document.querySelector('.time-slot.is-current') || document.querySelector('.time-slot.is-next');
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const offset = window.scrollY + rect.top - 180;
+    window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
+  }
+
   // ── Init ──
   syncFavUI();
+  selectTodayTabIfPresent();
   applyFilters();
+  updateNowIndicator();
+  setTimeout(scrollToCurrentOnce, 150);
+  setInterval(updateNowIndicator, NOW_REFRESH_MS);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') updateNowIndicator();
+  });
 </script>
