@@ -80,6 +80,7 @@ const schedule: DaySchedule[] = days.map((day) => {
 
 // Pass event slug to client for scoped localStorage keys
 const eventSlug = config.pretalx.eventSlug;
+const cfpRoot = config.pretalx.baseUrl.replace(/\/api\/?$/, '');
 
 // Serialize talks for client-side modal (with room info + rendered markdown)
 const talksJson = JSON.stringify(
@@ -201,6 +202,19 @@ const talksJson = JSON.stringify(
                 </svg>
                 Mes favoris
                 <span id="fav-count" class="hidden text-xs bg-cdl-orange text-white rounded-full px-1.5 py-0.5 leading-none"></span>
+              </button>
+
+              {/* Export .ics */}
+              <button
+                id="export-favs"
+                class="hidden inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray hover:border-cdl-orange/30 hover:text-cdl-orange transition-colors"
+                title="Télécharger mes favoris au format calendrier (.ics)"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                <span class="hidden sm:inline">Exporter</span>
+                <span class="text-[11px] text-cdl-gray/70">.ics</span>
               </button>
             </div>
           </div>
@@ -416,7 +430,7 @@ const talksJson = JSON.stringify(
   }
 </style>
 
-<script define:vars={{ talksJson, eventSlug }}>
+<script define:vars={{ talksJson, eventSlug, cfpRoot }}>
   const talks = JSON.parse(talksJson);
   const talksMap = new Map(talks.map((t) => [t.code, t]));
 
@@ -462,6 +476,9 @@ const talksJson = JSON.stringify(
       countEl.textContent = String(count);
       countEl.classList.toggle('hidden', count === 0);
     }
+    // Export button visibility
+    const exportBtn = document.getElementById('export-favs');
+    if (exportBtn) exportBtn.classList.toggle('hidden', count === 0);
     // Modal fav button
     const modalFavBtn = document.getElementById('modal-fav');
     if (modalFavBtn) {
@@ -752,6 +769,90 @@ const talksJson = JSON.stringify(
   modal?.addEventListener('click', (e) => {
     if (e.target === modal) modal.close();
   });
+
+  // ── Export favorites as .ics ──
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function formatIcsDate(iso) {
+    const d = new Date(iso);
+    return d.getUTCFullYear() +
+      pad2(d.getUTCMonth() + 1) +
+      pad2(d.getUTCDate()) + 'T' +
+      pad2(d.getUTCHours()) +
+      pad2(d.getUTCMinutes()) +
+      pad2(d.getUTCSeconds()) + 'Z';
+  }
+
+  function escapeIcs(text) {
+    return String(text || '')
+      .replace(/\\/g, '\\\\')
+      .replace(/;/g, '\\;')
+      .replace(/,/g, '\\,')
+      .replace(/\r?\n/g, '\\n');
+  }
+
+  function foldIcsLine(line) {
+    if (line.length <= 75) return line;
+    const parts = [line.slice(0, 75)];
+    let i = 75;
+    while (i < line.length) {
+      parts.push(' ' + line.slice(i, i + 74));
+      i += 74;
+    }
+    return parts.join('\r\n');
+  }
+
+  function buildIcs(favTalks) {
+    const stamp = formatIcsDate(new Date().toISOString());
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Capitole du Libre//Programme//FR',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+    ];
+    for (const t of favTalks) {
+      if (!t.start || !t.end) continue;
+      const speakers = t.speakers.map((s) => s.name).join(', ');
+      const summary = speakers ? `${t.title} — ${speakers}` : t.title;
+      const descParts = [];
+      if (t.track) descParts.push(`Track : ${t.track}`);
+      if (t.type) descParts.push(`Format : ${t.type}`);
+      if (t.description) { descParts.push(''); descParts.push(t.description); }
+      lines.push(
+        'BEGIN:VEVENT',
+        `UID:${t.code}@capitoledulibre.org`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART:${formatIcsDate(t.start)}`,
+        `DTEND:${formatIcsDate(t.end)}`,
+        `SUMMARY:${escapeIcs(summary)}`,
+        ...(t.room ? [`LOCATION:${escapeIcs(t.room)}`] : []),
+        `DESCRIPTION:${escapeIcs(descParts.join('\n'))}`,
+        `URL:${cfpRoot}/${eventSlug}/talk/${t.code}/`,
+        'END:VEVENT',
+      );
+    }
+    lines.push('END:VCALENDAR');
+    return lines.map(foldIcsLine).join('\r\n');
+  }
+
+  function downloadFavoritesIcs() {
+    const favs = getFavorites();
+    const favTalks = talks.filter((t) => favs.has(t.code));
+    if (favTalks.length === 0) return;
+    const ics = buildIcs(favTalks);
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cdl-${eventSlug}-favoris.ics`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
+  document.getElementById('export-favs')?.addEventListener('click', downloadFavoritesIcs);
 
   // ── Now indicator (during event) ──
   const NOW_REFRESH_MS = 60_000;
