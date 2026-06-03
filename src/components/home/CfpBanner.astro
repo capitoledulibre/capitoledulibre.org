@@ -15,7 +15,11 @@ const deadlineFormatted = config.cfp.deadline.toLocaleDateString('fr-FR', {
 ---
 
 {isOpen && (
-  <section class="relative bg-gradient-to-r from-cdl-orange-dark via-cdl-orange to-cdl-orange-light overflow-hidden">
+  <section
+    id="cfp-banner"
+    data-cfp-deadline={config.cfp.deadline.toISOString()}
+    class="relative bg-gradient-to-r from-cdl-orange-dark via-cdl-orange to-cdl-orange-light overflow-hidden"
+  >
     <!-- Motif de fond -->
     <div class="absolute inset-0 opacity-10" aria-hidden="true">
       <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, white 20px, white 21px);"></div>
@@ -34,7 +38,7 @@ const deadlineFormatted = config.cfp.deadline.toLocaleDateString('fr-FR', {
               Appel à propositions ouvert !
             </p>
             <p class="text-sm text-white/80">
-              Jusqu'au {deadlineFormatted} — Plus que <strong class="text-white">{diffDays} jours</strong>
+              Jusqu'au {deadlineFormatted} — Plus que <strong class="text-white" data-cfp-countdown>{diffDays} {diffDays > 1 ? 'jours' : 'jour'}</strong>
             </p>
           </div>
         </div>
@@ -52,3 +56,41 @@ const deadlineFormatted = config.cfp.deadline.toLocaleDateString('fr-FR', {
     </div>
   </section>
 )}
+
+<script>
+  // The banner is rendered at build time, so the countdown and the
+  // "is the CFP still open?" check are frozen to the build date. Recompute
+  // them in the browser so the value stays accurate and the banner hides
+  // itself once the deadline has actually passed.
+  function updateCfpBanner() {
+    const banner = document.getElementById('cfp-banner');
+    if (!banner) return;
+
+    const deadlineAttr = banner.getAttribute('data-cfp-deadline');
+    if (!deadlineAttr) return;
+
+    const deadline = new Date(deadlineAttr).getTime();
+    const diffMs = deadline - Date.now();
+
+    if (diffMs <= 0) {
+      banner.remove();
+      return;
+    }
+
+    const countdown = banner.querySelector('[data-cfp-countdown]');
+    if (!countdown) return;
+
+    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    if (diffDays > 1) {
+      countdown.textContent = `${diffDays} jours`;
+    } else {
+      // Last day: count down in hours to keep a sense of urgency.
+      const diffHours = Math.ceil(diffMs / (1000 * 60 * 60));
+      countdown.textContent = diffHours > 1 ? `${diffHours} heures` : 'quelques minutes';
+    }
+  }
+
+  updateCfpBanner();
+  // Refresh periodically so a long-lived tab eventually hides the banner.
+  setInterval(updateCfpBanner, 60 * 1000);
+</script>
