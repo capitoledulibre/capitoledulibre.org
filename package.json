@@ -22,22 +22,22 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource/ubuntu": "^5.2.8",
     "@fontsource/ubuntu-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.5",
+    "astro": "^6.4.3",
     "marked": "^17.0.6",
     "tailwindcss": "^4.3.0",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.4.0",
+    "eslint": "^10.4.1",
     "eslint-plugin-astro": "^1.7.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.34.5",
-    "typescript-eslint": "^8.59.4"
+    "typescript-eslint": "^8.60.1"
   }
 }
