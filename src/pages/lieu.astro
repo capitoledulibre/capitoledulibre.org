@@ -21,7 +21,7 @@ const transports = [
   {
     icon: 'M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2.7-5.4A1 1 0 0014.4 4H9.6a1 1 0 00-.9.6L6 10l-2.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2M7 17a2 2 0 104 0 2 2 0 00-4 0zM13 17a2 2 0 104 0 2 2 0 00-4 0z',
     title: 'Voiture',
-    description: 'Nous recommandons de se garer dans un parking relais du métro et de venir en métro (station François Verdier). Parkings à proximité : Indigo Saint-Georges, Saint-Aubin, Jean Jaurès, Carnot.',
+    description: 'Nous recommandons un parc relais en périphérie suivi du métro (ligne A ou B). Parkings couverts à proximité : voir « Stationnement » ci-dessous.',
   },
   {
     icon: 'M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7',
@@ -93,6 +93,28 @@ const { lat, lng } = config.venue.coordinates;
               <p class="text-sm text-cdl-gray leading-relaxed">{t.description}</p>
             </div>
           ))}
+        </div>
+
+        {/* Stationnement */}
+        <div class="mt-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 p-6 sm:p-8">
+          <h3 class="font-bold text-cdl-blue mb-3">Stationnement</h3>
+          <p class="text-sm text-cdl-gray leading-relaxed mb-4">
+            Nous vous recommandons de vous garer dans un
+            <a href="https://www.tisseo.fr/page-standard/les-parcs-relais" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">parc relais</a>
+            en périphérie et de finir le trajet en métro : le stationnement y est gratuit avec un titre de transport Tisséo validé,
+            et vous évitez la recherche d'une place en centre-ville.
+          </p>
+          <p class="text-sm text-cdl-gray leading-relaxed mb-3">
+            Si vous préférez venir jusqu'au centre, plusieurs parkings
+            <a href="https://www.indigoneo.fr/fr/parking-cities/toulouse-140" target="_blank" rel="noopener noreferrer" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">Indigo</a>
+            couverts se trouvent à proximité de l'ENSEEIHT :
+          </p>
+          <ul class="text-sm text-cdl-gray space-y-1 list-disc pl-5">
+            <li>Saint-Aubin — 2 min à pied</li>
+            <li>Saint-Georges — 5 min à pied</li>
+            <li>Carnot — 5 min à pied</li>
+            <li>Jean Jaurès — 10 min à pied</li>
+          </ul>
         </div>
       </div>
 
