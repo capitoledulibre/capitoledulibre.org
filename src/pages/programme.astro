@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
 import TicketCta from '../components/ui/TicketCta.astro';
+import CampusPlan from '../components/ui/CampusPlan.astro';
 import { config } from '../config';
 import { breadcrumb } from '../lib/jsonld';
 import { getTalks, type FormattedTalk } from '../lib/pretalx';
@@ -408,6 +409,11 @@ const talksJson = JSON.stringify(
       </div>
     </div>
   </dialog>
+
+  {/* Static plan cloned into the talk modal to highlight the room's building */}
+  <template id="campus-plan-template">
+    <CampusPlan interactive={false} showLegend={false} />
+  </template>
 </BaseLayout>
 
 <style>
@@ -664,26 +670,22 @@ const talksJson = JSON.stringify(
             </div>
           </div>
         `;
-        // Mini campus plan with highlighted building zone
-        if (modalRoomPlan) {
-          // Same positions as CampusPlan.astro hotspots
-          const zones = {
-            B: { top: '24%', left: '28%', width: '44%', height: '20%', bg: 'rgb(208 61 0 / 0.25)', border: 'rgb(208 61 0 / 0.7)' },
-            A: { top: '30%', left: '5%', width: '25%', height: '30%', bg: 'rgb(100 160 50 / 0.25)', border: 'rgb(100 160 50 / 0.7)' },
-            C: { top: '62%', left: '5%', width: '20%', height: '25%', bg: 'rgb(150 130 130 / 0.3)', border: 'rgb(150 130 130 / 0.7)' },
-          };
-          const z = zones[ri.buildingLetter] || zones.B;
-          modalRoomPlan.innerHTML = `
-            <a href="/lieu" class="block relative rounded-xl overflow-hidden border border-cdl-gray-light hover:border-cdl-orange/30 transition-colors" title="Voir le plan complet">
-              <img src="/static/img/plan-n7-cdl.svg" alt="Plan du campus" class="w-full h-auto" />
-              <div class="absolute rounded-md border-2 flex items-center justify-center"
-                   style="top:${z.top}; left:${z.left}; width:${z.width}; height:${z.height}; background:${z.bg}; border-color:${z.border};">
-                <span class="px-2 py-0.5 rounded text-white text-xs font-bold shadow" style="background-color: ${ri.color}">
-                  ${ri.buildingLetter}
-                </span>
-              </div>
-            </a>
-          `;
+        // Mini campus plan: clone the static CampusPlan and highlight the building
+        const planTemplate = document.getElementById('campus-plan-template') as HTMLTemplateElement | null;
+        if (modalRoomPlan && planTemplate) {
+          const link = document.createElement('a');
+          link.href = '/lieu';
+          link.title = 'Voir le plan complet';
+          link.className = 'block rounded-xl overflow-hidden border border-cdl-gray-light hover:border-cdl-orange/30 transition-colors p-3';
+
+          const clone = planTemplate.content.cloneNode(true) as DocumentFragment;
+          clone.querySelectorAll('.cp-bld').forEach((b) => {
+            const letter = b.getAttribute('data-building');
+            b.classList.add(letter === ri.buildingLetter ? 'is-active' : 'is-dimmed');
+          });
+          link.appendChild(clone);
+
+          modalRoomPlan.replaceChildren(link);
           modalRoomPlan.classList.remove('hidden');
         }
         modalRoomInfo.classList.remove('hidden');

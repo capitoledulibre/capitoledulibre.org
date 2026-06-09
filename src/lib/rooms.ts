@@ -14,10 +14,11 @@ const SPECIAL_ROOMS: Record<string, Partial<RoomInfo>> = {
   'B006-B007': { building: 'Bâtiment B', buildingLetter: 'B', floor: 0, floorLabel: 'Rez-de-chaussée', directions: 'Salles B006 et B007, au fond du rez-de-chaussée du bâtiment B.' },
 };
 
+// Keep in sync with the building colours in CampusPlan.astro.
 const BUILDING_COLORS: Record<string, string> = {
-  A: '#d03d00',
-  B: '#1a365d',
-  C: '#2c5282',
+  A: '#6ca939',
+  B: '#d03d00',
+  C: '#957e7e',
 };
 
 const FLOOR_LABELS: Record<number, string> = {

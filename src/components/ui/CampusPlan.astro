@@ -1,162 +1,460 @@
 ---
 /**
- * Interactive campus plan using the real SVG plan.
- * Overlays clickable hotspots on each building for highlighting.
+ * Schematic, theme-aware campus plan of the ENSEEIHT.
+ *
+ * Hand-drawn inline SVG (no external image) so it matches the site's
+ * palette, adapts to dark mode, stays crisp at any size and can be made
+ * interactive. Buildings A/B/C are clickable hotspots that highlight and
+ * emit a `building-select` event; points of interest are informational.
+ *
+ * Reused on /lieu (interactive, with legend) and inside the /programme
+ * talk modal (static, no legend).
  */
 interface Props {
-  highlight?: string; // 'A', 'B', 'C'
+  highlight?: string; // 'A' | 'B' | 'C'
+  interactive?: boolean;
+  showLegend?: boolean;
   class?: string;
 }
 
-const { highlight, class: className } = Astro.props;
+const { highlight, interactive = true, showLegend = true, class: className } = Astro.props;
+
+type Building = {
+  letter: string;
+  name: string;
+  desc: string;
+  // Rectangular footprint…
+  x?: number;
+  y?: number;
+  w?: number;
+  h?: number;
+  // …or a free-form rounded outline (takes precedence over x/y/w/h).
+  shape?: string;
+  // Optional overrides for the letter label anchor (defaults to the bbox centre).
+  labelX?: number;
+  labelY?: number;
+};
+
+const buildings: Building[] = [
+  {
+    letter: 'A',
+    name: 'Bât A',
+    desc: 'Conférences',
+    // L-shaped footprint: top bar with a leg running down towards Bât C.
+    shape:
+      'M71 100 L254 100 A16 16 0 0 1 270 116 L270 204 A16 16 0 0 1 254 220 L135 220 L135 274 A16 16 0 0 1 119 290 L71 290 A16 16 0 0 1 55 274 L55 116 A16 16 0 0 1 71 100 Z',
+    labelX: 163,
+    labelY: 160,
+  },
+  { letter: 'B', name: 'Bât B', desc: 'Amphi B00 · Atelier installation', x: 410, y: 88, w: 305, h: 150 },
+  {
+    letter: 'C',
+    name: 'Bât C',
+    desc: 'Accueil · Village associatif',
+    x: 55,
+    y: 300,
+    w: 195,
+    h: 150,
+    labelY: 418,
+  },
+];
+
+// Stroke-based icons (24×24 viewBox), drawn white inside the markers.
+const icons: Record<string, string[]> = {
+  coffee: [
+    'M5 8h12v3a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5V8Z',
+    'M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17',
+    'M8 3.4c-.6.8-.6 1.7 0 2.5M11.5 3.4c-.6.8-.6 1.7 0 2.5',
+    'M4 20h14',
+  ],
+  people: [
+    'M9 10.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+    'M3.5 20a5.5 5.5 0 0 1 11 0',
+    'M16 6a2.8 2.8 0 0 1 0 5.4',
+    'M16.5 14.5a5.5 5.5 0 0 1 4 5.5',
+  ],
+  fork: [
+    'M5.5 3v4M8.5 3v4',
+    'M7 7v14',
+    'M4.6 7h4.8',
+    'M16 3c-1.4.6-2.2 2.4-2.2 4.6 0 1.7.7 2.7 2.2 3.1V21',
+  ],
+  screen: [
+    'M3 4.5h18',
+    'M4.5 4.5v10h15v-10',
+    'M12 14.5v4M8.5 18.5h7',
+    'M8.5 11l2.5-2.5 2 2 3-3.5',
+  ],
+  laptop: [
+    'M5.5 6.5h13v8h-13z',
+    'M3 18.5h18l-1.2-2.5H4.2L3 18.5Z',
+    'M10.5 10l1.8 1.8 3.2-3.6',
+  ],
+};
+
+// Points of interest. `x`,`y` is the pin tip (its anchor on the map).
+const pois = [
+  { id: 'accueil', label: 'Accueil & Buvette', icon: 'coffee', x: 105, y: 362 },
+  { id: 'village', label: 'Village associatif', icon: 'people', x: 200, y: 362 },
+  { id: 'food', label: 'Food trucks', icon: 'fork', x: 462, y: 290 },
+  { id: 'amphi', label: 'Amphi B00', icon: 'screen', x: 490, y: 150 },
+  { id: 'install', label: 'Atelier installation', icon: 'laptop', x: 650, y: 195 },
+];
+
+// Teardrop pin: tip at (0,0), round head centred at (0,-42), radius 18.
+const PIN_PATH = 'M0 0C-10-20-18-28-18-42A18 18 0 1 1 18-42C18-28 10-20 0 0Z';
 ---
 
-<div class:list={['campus-plan relative', className]} data-highlight={highlight}>
-  <!-- Real SVG plan as background image -->
-  <img
-    src="/static/img/plan-n7-cdl.svg"
-    alt="Plan du campus ENSEEIHT avec les bâtiments A, B et C"
-    class="w-full h-auto rounded-xl"
-    loading="lazy"
-  />
-
-  <!-- Interactive overlays for each building -->
-  <!-- Coordinates are % based, matching the SVG viewBox layout -->
-  <button
-    type="button"
-    class="building-zone absolute rounded-lg transition-all duration-300"
-    data-building="B"
-    aria-label="Bâtiment B — Amphi, Install Party"
-    style="top: 24%; left: 28%; width: 44%; height: 20%;"
+<div
+  class:list={['campus-plan', className]}
+  data-highlight={highlight}
+  data-interactive={interactive ? 'true' : 'false'}
+>
+  <svg
+    class="cp-svg"
+    viewBox="0 0 760 480"
+    role="img"
+    aria-label="Plan schématique du campus de l'ENSEEIHT : bâtiments A, B et C, parc central, accueil, village associatif, food trucks et entrée/sortie."
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <span class="building-label">B</span>
-  </button>
+    <defs>
+      <filter id="cp-shadow" x="-20%" y="-20%" width="140%" height="160%">
+        <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#1a365d" flood-opacity="0.22" />
+      </filter>
+      <filter id="cp-pin-shadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#1a365d" flood-opacity="0.35" />
+      </filter>
+      <linearGradient id="cp-sheen" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.18" />
+        <stop offset="0.5" stop-color="#ffffff" stop-opacity="0" />
+      </linearGradient>
+    </defs>
 
-  <button
-    type="button"
-    class="building-zone absolute rounded-lg transition-all duration-300"
-    data-building="A"
-    aria-label="Bâtiment A — Conférences"
-    style="top: 30%; left: 5%; width: 25%; height: 30%;"
-  >
-    <span class="building-label">A</span>
-  </button>
+    {/* Campus base plate */}
+    <rect class="cp-plate" x="12" y="12" width="736" height="456" rx="28" />
 
-  <button
-    type="button"
-    class="building-zone absolute rounded-lg transition-all duration-300"
-    data-building="C"
-    aria-label="Bâtiment C — Accueil, Village associatif"
-    style="top: 62%; left: 5%; width: 20%; height: 25%;"
-  >
-    <span class="building-label">C</span>
-  </button>
+    {/* Central park */}
+    <g class="cp-park-group">
+      <rect class="cp-park" x="295" y="250" width="345" height="200" rx="46" filter="url(#cp-shadow)" />
+      <path class="cp-allee" d="M335 300 L600 425" />
+      <path class="cp-allee" d="M575 268 L360 440" />
+      <circle class="cp-tree" cx="322" cy="276" r="7" />
+      <circle class="cp-tree" cx="470" cy="262" r="7" />
+      <circle class="cp-tree" cx="612" cy="292" r="7" />
+      <circle class="cp-tree" cx="335" cy="432" r="7" />
+      <circle class="cp-tree" cx="608" cy="428" r="7" />
+    </g>
+
+    {/* Entrance / exit */}
+    <g class="cp-flow">
+      <text class="cp-flow-label" x="300" y="40" text-anchor="middle">Entrée</text>
+      <text class="cp-flow-label" x="396" y="40" text-anchor="middle">Sortie</text>
+      <path class="cp-arrow cp-arrow--in" d="M295 52h10v28h7l-12 16-12-16h7z" />
+      <path class="cp-arrow cp-arrow--out" d="M391 96h10V68h7l-12-16-12 16h7z" />
+    </g>
+
+    {/* Buildings (interactive hotspots) */}
+    {buildings.map((b) => {
+      const cx = b.labelX ?? b.x! + b.w! / 2;
+      const cy = b.labelY ?? b.y! + b.h! / 2;
+      return (
+        <g
+          class:list={['cp-bld', `cp-bld--${b.letter.toLowerCase()}`]}
+          data-building={b.letter}
+          role={interactive ? 'button' : undefined}
+          tabindex={interactive ? 0 : undefined}
+          aria-label={interactive ? `Bâtiment ${b.letter} — ${b.desc}` : undefined}
+        >
+          {b.shape ? (
+            <>
+              <path class="cp-bld-rect" d={b.shape} filter="url(#cp-shadow)" />
+              <path class="cp-bld-sheen" d={b.shape} />
+            </>
+          ) : (
+            <>
+              <rect class="cp-bld-rect" x={b.x} y={b.y} width={b.w} height={b.h} rx="16" filter="url(#cp-shadow)" />
+              <rect class="cp-bld-sheen" x={b.x} y={b.y} width={b.w} height={b.h} rx="16" />
+            </>
+          )}
+          <text class="cp-bld-letter" x={cx} y={cy} text-anchor="middle" dominant-baseline="central">{b.letter}</text>
+        </g>
+      );
+    })}
+
+    {/* Points of interest */}
+    {pois.map((p) => (
+      <g class="cp-pin" transform={`translate(${p.x} ${p.y})`}>
+        <title>{p.label}</title>
+        <path class="cp-pin-body" d={PIN_PATH} filter="url(#cp-pin-shadow)" />
+        <g class="cp-pin-icon" transform="translate(0 -42) scale(0.83) translate(-12 -12)">
+          {icons[p.icon].map((d) => <path d={d} />)}
+        </g>
+      </g>
+    ))}
+  </svg>
+
+  {showLegend && (
+    <ul class="cp-legend">
+      {pois.map((p) => (
+        <li class="cp-legend-item">
+          <span class="cp-legend-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">{icons[p.icon].map((d) => <path d={d} />)}</svg>
+          </span>
+          <span class="cp-legend-label">{p.label}</span>
+        </li>
+      ))}
+    </ul>
+  )}
 </div>
 
 <style>
-  .building-zone {
-    background: transparent;
-    border: 2px solid transparent;
-    cursor: pointer;
+  .campus-plan {
+    container-type: inline-size;
   }
-  .building-zone .building-label {
+  .cp-svg {
     display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: white;
-    text-shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-sans, 'Ubuntu', system-ui, sans-serif);
+  }
+
+  /* ── Base plate & park ── */
+  .cp-plate {
+    fill: #ece9e4;
+    stroke: #ddd8d0;
+    stroke-width: 2;
+  }
+  .cp-park {
+    fill: #d3e9b4;
+  }
+  .cp-allee {
+    stroke: #f4f7ee;
+    stroke-width: 13;
+    stroke-linecap: round;
+    fill: none;
+  }
+  .cp-tree {
+    fill: #82b94c;
+  }
+
+  /* ── Entrance / exit ── */
+  .cp-flow-label {
+    fill: var(--color-cdl-blue, #1a365d);
+    font-size: 19px;
+    font-weight: 500;
+  }
+  .cp-arrow {
+    filter: url(#cp-pin-shadow);
+  }
+  .cp-arrow--in {
+    fill: #2f855a;
+  }
+  .cp-arrow--out {
+    fill: #c05621;
+  }
+
+  /* ── Buildings ── */
+  .cp-bld-rect {
+    transition:
+      fill 0.25s ease,
+      opacity 0.25s ease;
+  }
+  .cp-bld-sheen {
+    fill: url(#cp-sheen);
     pointer-events: none;
   }
-
-
-  /* Hover */
-  .building-zone:hover {
-    background: rgb(208 61 0 / 0.08);
-    border-color: rgb(208 61 0 / 0.4);
+  .cp-bld-letter {
+    fill: #ffffff;
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    pointer-events: none;
   }
-  .building-zone[data-building="A"]:hover {
-    background: rgb(170 222 135 / 0.15);
-    border-color: rgb(100 160 50 / 0.5);
+  .cp-bld--a .cp-bld-rect {
+    fill: #6ca939;
   }
-  .building-zone[data-building="C"]:hover {
-    background: rgb(200 183 183 / 0.2);
-    border-color: rgb(150 130 130 / 0.5);
+  .cp-bld--b .cp-bld-rect {
+    fill: #d03d00;
   }
-
-  /* Active/highlighted state */
-  .building-zone.active {
-    border-width: 3px;
-    animation: zone-pulse 2s ease-in-out infinite;
-  }
-  .building-zone.active[data-building="B"] {
-    background: rgb(208 61 0 / 0.12);
-    border-color: rgb(208 61 0 / 0.6);
-  }
-  .building-zone.active[data-building="A"] {
-    background: rgb(170 222 135 / 0.2);
-    border-color: rgb(100 160 50 / 0.6);
-  }
-  .building-zone.active[data-building="C"] {
-    background: rgb(200 183 183 / 0.25);
-    border-color: rgb(150 130 130 / 0.6);
+  .cp-bld--c .cp-bld-rect {
+    fill: #957e7e;
   }
 
-  /* Dimmed */
-  .building-zone.dimmed {
-    opacity: 0.3;
+  /* Interactive states (only when the plan is interactive) */
+  .campus-plan[data-interactive='true'] .cp-bld {
+    cursor: pointer;
+  }
+  .campus-plan[data-interactive='true'] .cp-bld:focus-visible {
+    outline: none;
+  }
+  .campus-plan[data-interactive='true'] .cp-bld:focus-visible .cp-bld-rect {
+    stroke: var(--color-cdl-orange, #d03d00);
+    stroke-width: 4;
+  }
+  .campus-plan[data-interactive='true'] .cp-bld:hover .cp-bld-rect {
+    filter: url(#cp-shadow) brightness(1.07);
+  }
+  .cp-bld.is-dimmed {
+    opacity: 0.45;
+  }
+  .cp-bld.is-active .cp-bld-rect {
+    stroke: #ffffff;
+    stroke-width: 4;
+  }
+  .cp-bld.is-active {
+    animation: cp-pop 0.35s ease;
+  }
+  @keyframes cp-pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.025);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  /* Scale around each building's own centre */
+  .cp-bld.is-active {
+    transform-box: fill-box;
+    transform-origin: center;
   }
 
-  @keyframes zone-pulse {
-    0%, 100% { border-opacity: 1; }
-    50% { opacity: 0.7; }
+  /* ── Pins ── */
+  .cp-pin-body {
+    fill: #1f3f6b;
+  }
+  .cp-pin-icon path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ── Legend ── */
+  .cp-legend {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+  @container (min-width: 30rem) {
+    .cp-legend {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .cp-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .cp-legend-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background: #1f3f6b;
+  }
+  .cp-legend-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cp-legend-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-cdl-blue, #1a365d);
+  }
+
+  /* ── Dark mode ── */
+  :global(html.dark) .cp-plate {
+    fill: #1b2433;
+    stroke: #2d3748;
+  }
+  :global(html.dark) .cp-park {
+    fill: #33502c;
+  }
+  :global(html.dark) .cp-allee {
+    stroke: #243049;
+  }
+  :global(html.dark) .cp-tree {
+    fill: #5c8a39;
+  }
+  :global(html.dark) .cp-bld--a .cp-bld-rect {
+    fill: #5e9433;
+  }
+  :global(html.dark) .cp-bld--b .cp-bld-rect {
+    fill: #d84a12;
+  }
+  :global(html.dark) .cp-bld--c .cp-bld-rect {
+    fill: #7e6b6b;
+  }
+  :global(html.dark) .cp-pin-body {
+    fill: #3a5a86;
+  }
+  :global(html.dark) .cp-legend-icon {
+    background: #3a5a86;
+  }
+  :global(html.dark) .cp-arrow--in {
+    fill: #48bb78;
+  }
+  :global(html.dark) .cp-arrow--out {
+    fill: #ed8936;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .building-zone.active { animation: none; }
+    .cp-bld.is-active {
+      animation: none;
+    }
+    .cp-bld-rect {
+      transition: none;
+    }
   }
 </style>
 
 <script>
-  // Apply initial highlight from data attribute
-  document.querySelectorAll('.campus-plan').forEach((plan) => {
-    const hl = plan.getAttribute('data-highlight');
-    if (hl) {
-      plan.querySelectorAll('.building-zone').forEach((zone) => {
-        const letter = zone.getAttribute('data-building');
-        zone.classList.toggle('active', letter === hl);
-        zone.classList.toggle('dimmed', letter !== hl);
+  document.querySelectorAll<HTMLElement>('.campus-plan').forEach((plan) => {
+    if (plan.dataset.interactive !== 'true') return;
+
+    const buildings = Array.from(plan.querySelectorAll<SVGGElement>('.cp-bld'));
+
+    const setState = (active: string | null) => {
+      buildings.forEach((b) => {
+        const letter = b.getAttribute('data-building');
+        b.classList.toggle('is-active', active != null && letter === active);
+        b.classList.toggle('is-dimmed', active != null && letter !== active);
       });
-    }
-  });
+    };
 
-  // Click to toggle
-  document.querySelectorAll('.building-zone').forEach((zone) => {
-    zone.addEventListener('click', () => {
-      const plan = zone.closest('.campus-plan');
-      if (!plan) return;
-      const letter = zone.getAttribute('data-building');
-      const isActive = zone.classList.contains('active');
+    // Apply initial highlight, if any.
+    const initial = plan.getAttribute('data-highlight');
+    if (initial) setState(initial);
 
-      plan.querySelectorAll('.building-zone').forEach((z) => {
-        if (isActive) {
-          // Deselect all
-          z.classList.remove('active', 'dimmed');
-        } else {
-          const zLetter = z.getAttribute('data-building');
-          z.classList.toggle('active', zLetter === letter);
-          z.classList.toggle('dimmed', zLetter !== letter);
+    const toggle = (letter: string | null) => {
+      const isActive = letter != null && buildings.some((b) => b.getAttribute('data-building') === letter && b.classList.contains('is-active'));
+      const next = isActive ? null : letter;
+      setState(next);
+      plan.dispatchEvent(new CustomEvent('building-select', { detail: { building: next }, bubbles: true }));
+    };
+
+    buildings.forEach((b) => {
+      const letter = b.getAttribute('data-building');
+      b.addEventListener('click', () => toggle(letter));
+      b.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle(letter);
         }
       });
-
-      // Dispatch event for parent components
-      plan.dispatchEvent(new CustomEvent('building-select', {
-        detail: { building: isActive ? null : letter },
-        bubbles: true,
-      }));
     });
   });
 </script>
