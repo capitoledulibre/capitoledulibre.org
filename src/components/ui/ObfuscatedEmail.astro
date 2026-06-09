@@ -1,14 +1,15 @@
 ---
 interface Props {
+  user?: string;
   subject?: string;
   label?: string;
   class?: string;
   'aria-label'?: string;
 }
 
-const { subject, label, class: className, 'aria-label': ariaLabel } = Astro.props;
+const { user: userProp = 'contact', subject, label, class: className, 'aria-label': ariaLabel } = Astro.props;
 
-const user = Buffer.from('contact').toString('base64');
+const user = Buffer.from(userProp).toString('base64');
 const domain = Buffer.from('capitoledulibre.org').toString('base64');
 ---
 
