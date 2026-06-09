@@ -10,7 +10,7 @@ export interface RoomInfo {
 
 const SPECIAL_ROOMS: Record<string, Partial<RoomInfo>> = {
   'B00': { building: 'Bâtiment B', buildingLetter: 'B', floor: 0, floorLabel: 'Rez-de-chaussée', directions: 'Amphi B00, entrée principale du bâtiment B.' },
-  'Hall C': { building: 'Bâtiment C', buildingLetter: 'C', floor: 0, floorLabel: 'Rez-de-chaussée', directions: 'Hall d\'accueil et village associatif.' },
+  'Hall C': { building: 'Bâtiment C', buildingLetter: 'C', floor: 0, floorLabel: 'Rez-de-chaussée', directions: 'Hall d\'accueil, buvette et village associatif.' },
   'B006-B007': { building: 'Bâtiment B', buildingLetter: 'B', floor: 0, floorLabel: 'Rez-de-chaussée', directions: 'Salles B006 et B007, au fond du rez-de-chaussée du bâtiment B.' },
 };
 
