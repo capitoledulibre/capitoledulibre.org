@@ -21,23 +21,23 @@
     "optimize": "pnpm images && pnpm videos"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.0",
+    "@astrojs/mdx": "^7.0.2",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/ubuntu": "^5.2.8",
     "@fontsource/ubuntu-mono": "^5.2.8",
-    "@tailwindcss/vite": "^4.3.1",
-    "astro": "^7.0.3",
+    "@tailwindcss/vite": "^4.3.2",
+    "astro": "^7.0.6",
     "marked": "^18.0.5",
-    "tailwindcss": "^4.3.1",
+    "tailwindcss": "^4.3.2",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.6.0",
     "eslint-plugin-astro": "^2.1.1",
-    "prettier": "^3.9.0",
+    "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
-    "sharp": "^0.35.2",
-    "typescript-eslint": "^8.62.0"
+    "sharp": "^0.35.3",
+    "typescript-eslint": "^8.62.1"
   }
 }
