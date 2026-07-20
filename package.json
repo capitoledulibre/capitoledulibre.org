@@ -23,12 +23,12 @@
   "dependencies": {
     "@astrojs/mdx": "^7.0.3",
     "@astrojs/sitemap": "^3.7.3",
-    "@fontsource/ubuntu": "^5.2.8",
-    "@fontsource/ubuntu-mono": "^5.2.8",
-    "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.0.8",
+    "@fontsource/ubuntu": "^5.3.0",
+    "@fontsource/ubuntu-mono": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.1.1",
     "marked": "^18.0.6",
-    "tailwindcss": "^4.3.2",
+    "tailwindcss": "^4.3.3",
     "yaml": "^2.9.0"
   },
   "devDependencies": {
