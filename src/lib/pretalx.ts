@@ -15,21 +15,29 @@ interface CacheData {
   talks: FormattedTalk[];
 }
 
-function readCache(): FormattedTalk[] | null {
+/** Raised when Pretalx is unreachable and there is no cache to fall back on. */
+export class PretalxUnavailableError extends Error {
+  constructor(cause: unknown) {
+    super(
+      `Pretalx is unreachable and no cached schedule exists for "${eventSlug}". ` +
+        `Refusing to report an empty programme, which would be indistinguishable ` +
+        `from "no talks published yet".`,
+    );
+    this.name = 'PretalxUnavailableError';
+    this.cause = cause;
+  }
+}
+
+/** Reads the cache regardless of age; the caller decides whether stale is acceptable. */
+function readCache(): { talks: FormattedTalk[]; age: number } | null {
   try {
     const raw = readFileSync(CACHE_FILE, 'utf-8');
     const data: CacheData = JSON.parse(raw);
-    const age = Date.now() - data.timestamp;
-    if (age < CACHE_TTL) {
-      const ageSec = Math.round(age / 1000);
-      console.log(`[pretalx] Using cached data (${data.talks.length} talks, ${ageSec}s old, TTL ${CACHE_TTL / 1000}s)`);
-      return data.talks;
-    }
-    console.log(`[pretalx] Cache expired (${Math.round(age / 1000)}s old, TTL ${CACHE_TTL / 1000}s)`);
+    return { talks: data.talks, age: Date.now() - data.timestamp };
   } catch {
-    // No cache or invalid
+    // No cache, or it is unreadable/corrupt.
+    return null;
   }
-  return null;
 }
 
 function writeCache(talks: FormattedTalk[]): void {
@@ -179,12 +187,36 @@ async function fetchTalksFromApi(): Promise<FormattedTalk[]> {
 }
 
 export async function getTalks(): Promise<FormattedTalk[]> {
-  // Try cache first
   const cached = readCache();
-  if (cached) return cached;
 
-  // Fetch from API
-  const talks = await fetchTalksFromApi();
-  writeCache(talks);
-  return talks;
+  if (cached && cached.age < CACHE_TTL) {
+    console.log(
+      `[pretalx] Using cached data (${cached.talks.length} talks, ${Math.round(cached.age / 1000)}s old, TTL ${CACHE_TTL / 1000}s)`,
+    );
+    return cached.talks;
+  }
+
+  if (cached) {
+    console.log(
+      `[pretalx] Cache expired (${Math.round(cached.age / 1000)}s old, TTL ${CACHE_TTL / 1000}s)`,
+    );
+  }
+
+  try {
+    const talks = await fetchTalksFromApi();
+    writeCache(talks);
+    return talks;
+  } catch (err) {
+    // An expired cache still beats shipping /programme with no schedule at all:
+    // a transient Pretalx outage during a deploy used to silently strip the
+    // page of ~2400 words and all of its subEvent structured data.
+    if (cached) {
+      console.warn(
+        `[pretalx] Fetch failed (${err instanceof Error ? err.message : String(err)}). ` +
+          `Falling back to STALE cache (${cached.talks.length} talks, ${Math.round(cached.age / 1000)}s old).`,
+      );
+      return cached.talks;
+    }
+    throw new PretalxUnavailableError(err);
+  }
 }

@@ -5,7 +5,7 @@ import JsonLd from '../components/ui/JsonLd.astro';
 import TicketCta from '../components/ui/TicketCta.astro';
 import CampusPlan from '../components/ui/CampusPlan.astro';
 import { config } from '../config';
-import { breadcrumb } from '../lib/jsonld';
+import { breadcrumb, eventNode, sessionEvents } from '../lib/jsonld';
 import { getTalks, type FormattedTalk } from '../lib/pretalx';
 import { parseRoom } from '../lib/rooms';
 import { marked } from 'marked';
@@ -28,7 +28,14 @@ try {
     return new Date(a.start).getTime() - new Date(b.start).getTime();
   });
 } catch (e) {
-  console.error('Pretalx fetch error:', e);
+  // getTalks() already falls back to a stale cache, so reaching here means we
+  // have no schedule data at all. Swallowing that in a production build would
+  // deploy /programme stripped of its schedule while the build still exits 0,
+  // so fail loudly instead. Dev keeps rendering the empty state, and
+  // PRETALX_ALLOW_EMPTY=1 unblocks a deliberate build without Pretalx.
+  const allowEmpty = import.meta.env.DEV || process.env.PRETALX_ALLOW_EMPTY === '1';
+  if (!allowEmpty) throw e;
+  console.error('[programme] Pretalx unavailable, rendering empty state:', e);
   fetchError = true;
 }
 
@@ -82,25 +89,58 @@ const schedule: DaySchedule[] = days.map((day) => {
 // Pass event slug to client for scoped localStorage keys
 const eventSlug = config.pretalx.eventSlug;
 const cfpRoot = config.pretalx.baseUrl.replace(/\/api\/?$/, '');
+const talkUrl = (code: string) => `${cfpRoot}/${eventSlug}/talk/${code}/`;
 
-// Serialize talks for client-side modal (with room info + rendered markdown)
-const talksJson = JSON.stringify(
-  talks.map((t) => ({
-    ...t,
-    startFormatted: formatTime(t.start),
-    endFormatted: formatTime(t.end),
-    roomInfo: t.room ? parseRoom(t.room) : null,
-    descriptionHtml: renderMd(t.description),
-    speakers: t.speakers.map((s) => ({
-      ...s,
-      biographyHtml: renderMd(s.biography),
-    })),
-  }))
-);
+/**
+ * True once the Pretalx event matches the edition the site advertises. Until
+ * then the page falls back to the previous programme, which must not be
+ * described as this edition's schedule in structured data.
+ */
+const isCurrentEdition = eventSlug === `cdl-${config.edition.year}`;
+
+const scheduleJsonLd =
+  isCurrentEdition && talks.length > 0
+    ? eventNode({
+        subEvents: sessionEvents(talks, talkUrl),
+        performers: [...new Map(
+          talks.flatMap((t) => t.speakers).map((s) => [s.name, { name: s.name }]),
+        ).values()],
+      })
+    : null;
+
+/**
+ * Client payload for the modal, search and .ics export. Only what the client
+ * actually reads: shipping `...t` also sent the raw markdown alongside the
+ * rendered HTML, doubling the weight of the single heaviest page on the site.
+ */
+const talksPayload = talks.map((t) => ({
+  code: t.code,
+  title: t.title,
+  type: t.type,
+  track: t.track,
+  duration: t.duration,
+  room: t.room,
+  start: t.start,
+  end: t.end,
+  startFormatted: formatTime(t.start),
+  endFormatted: formatTime(t.end),
+  roomInfo: t.room ? parseRoom(t.room) : null,
+  descriptionHtml: renderMd(t.description),
+  speakers: t.speakers.map((s) => ({
+    name: s.name,
+    avatar: s.avatar,
+    biographyHtml: renderMd(s.biography),
+  })),
+  resources: t.resources,
+}));
+
+// Escaping `<` keeps a description containing "</script>" from closing the tag.
+const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
 ---
 
 <BaseLayout title="Programme" description="Découvrez le programme complet du Capitole du Libre : conférences, ateliers, keynotes.">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Programme', path: '/programme' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Programme', path: '/programme/' }])} />
+  {scheduleJsonLd && <JsonLd slot="head" data={scheduleJsonLd} />}
   <PageHeader title="Programme" description="Conférences, ateliers et keynotes sur deux jours." />
 
   {/* Bandeau programme 2025 */}
@@ -160,14 +200,14 @@ const talksJson = JSON.stringify(
 
               {/* Recherche */}
               <div class="relative flex-1 min-w-[200px] max-w-sm">
-                <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-cdl-gray/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-cdl-gray/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
                   id="search"
                   type="search"
                   placeholder="Rechercher un talk, un speaker..."
-                  class="w-full pl-10 pr-4 py-2 text-sm border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange placeholder:text-cdl-gray/40"
+                  class="w-full pl-10 pr-4 py-2 text-sm border border-cdl-gray-light rounded-lg bg-white dark:bg-gray-800 text-cdl-gray focus:outline-2 focus:outline-cdl-orange placeholder:text-cdl-gray/80"
                 />
               </div>
 
@@ -215,13 +255,18 @@ const talksJson = JSON.stringify(
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
                 </svg>
                 <span class="hidden sm:inline">Exporter</span>
-                <span class="text-[11px] text-cdl-gray/70">.ics</span>
+                <span class="text-[11px] text-cdl-gray/85">.ics</span>
               </button>
             </div>
           </div>
 
-          {/* Compteur résultats */}
-          <p id="results-count" class="text-sm text-cdl-gray mb-6"></p>
+          {/* Compteur résultats — annoncé aux lecteurs d'écran quand les filtres changent */}
+          <p
+            id="results-count"
+            role="status"
+            aria-live="polite"
+            class="text-sm text-cdl-gray mb-6"
+          ></p>
 
           {/* Timeline par jour */}
           {schedule.map((daySchedule, dayIdx) => (
@@ -256,7 +301,6 @@ const talksJson = JSON.stringify(
                               data-code={talk.code}
                               data-track={talk.track}
                               data-type={talk.type}
-                              data-search={`${talk.title} ${talk.speakers.map((s) => s.name).join(' ')} ${talk.track} ${talk.description}`.toLowerCase()}
                             >
                               {/* En-tête compact */}
                               <div class="flex items-center gap-1.5 mb-2 flex-wrap">
@@ -296,7 +340,7 @@ const talksJson = JSON.stringify(
                                   {talk.speakers.map((speaker) => (
                                     <span class="inline-flex items-center gap-1 text-xs text-cdl-gray">
                                       {speaker.avatar ? (
-                                        <img src={speaker.avatar} alt="" class="h-4 w-4 rounded-full object-cover" loading="lazy" />
+                                        <img src={speaker.avatar} alt="" class="h-4 w-4 rounded-full object-cover" loading="lazy" width="16" height="16" />
                                       ) : (
                                         <span class="h-4 w-4 rounded-full bg-cdl-orange/10 flex items-center justify-center text-[9px] font-bold text-cdl-orange">{speaker.name.charAt(0)}</span>
                                       )}
@@ -436,9 +480,45 @@ const talksJson = JSON.stringify(
   }
 </style>
 
-<script define:vars={{ talksJson, eventSlug, cfpRoot }}>
-  const talks = JSON.parse(talksJson);
+{/*
+  The payload rides in a JSON island rather than `define:vars`: define:vars
+  forces the script inline (so Astro never compiles its TypeScript) and
+  re-escapes the whole JSON as a JS string literal, inflating it.
+*/}
+<script
+  type="application/json"
+  id="talks-data"
+  data-event-slug={eventSlug}
+  data-cfp-root={cfpRoot}
+  set:html={talksJson}
+/>
+
+<script>
+  const dataEl = document.getElementById('talks-data');
+  const talks = dataEl ? JSON.parse(dataEl.textContent || '[]') : [];
+  const eventSlug = dataEl?.dataset.eventSlug || '';
+  const cfpRoot = dataEl?.dataset.cfpRoot || '';
   const talksMap = new Map(talks.map((t) => [t.code, t]));
+
+  /** Strips tags from pre-rendered markdown, for search and .ics text. */
+  function toPlainText(html) {
+    if (!html) return '';
+    const el = document.createElement('div');
+    el.innerHTML = html;
+    return (el.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  // Search index, built once from the payload. Previously each card carried a
+  // `data-search` attribute holding its full description — the single biggest
+  // chunk of duplicated markup on the page.
+  const searchIndex = new Map(
+    talks.map((t) => [
+      t.code,
+      [t.title, t.speakers.map((s) => s.name).join(' '), t.track, toPlainText(t.descriptionHtml)]
+        .join(' ')
+        .toLowerCase(),
+    ]),
+  );
 
   // ── Favorites (localStorage, scoped by event slug) ──
   const STORAGE_KEY = `cdl-favorites-${eventSlug}`;
@@ -585,7 +665,7 @@ const talksJson = JSON.stringify(
     activePanel.querySelectorAll('.talk-card').forEach((card) => {
       total++;
       const code = card.getAttribute('data-code');
-      const matchSearch = !query || card.getAttribute('data-search')?.includes(query);
+      const matchSearch = !query || (searchIndex.get(code) || '').includes(query);
       const matchTrack = track === 'all' || card.getAttribute('data-track') === track;
       const matchType = type === 'all' || card.getAttribute('data-type') === type;
       const matchFav = !favs || favs.has(code);
@@ -674,7 +754,7 @@ const talksJson = JSON.stringify(
         const planTemplate = document.getElementById('campus-plan-template') as HTMLTemplateElement | null;
         if (modalRoomPlan && planTemplate) {
           const link = document.createElement('a');
-          link.href = '/lieu';
+          link.href = '/lieu/';
           link.title = 'Voir le plan complet';
           link.className = 'block rounded-xl overflow-hidden border border-cdl-gray-light hover:border-cdl-orange/30 transition-colors p-3';
 
@@ -702,7 +782,7 @@ const talksJson = JSON.stringify(
         <div class="space-y-3">
           ${talk.speakers.map((speaker) => {
             const avatarHtml = speaker.avatar
-              ? `<img src="${speaker.avatar}" alt="" class="h-10 w-10 rounded-full object-cover flex-shrink-0" />`
+              ? `<img src="${speaker.avatar}" alt="" class="h-10 w-10 rounded-full object-cover flex-shrink-0" width="40" height="40" loading="lazy" />`
               : `<span class="h-10 w-10 rounded-full bg-cdl-orange/10 flex items-center justify-center text-sm font-bold text-cdl-orange flex-shrink-0">${speaker.name.charAt(0)}</span>`;
             const bioHtml = speaker.biographyHtml
               ? `<div class="text-xs text-cdl-gray mt-1 leading-relaxed prose prose-xs max-w-none">${speaker.biographyHtml}</div>`
@@ -820,7 +900,8 @@ const talksJson = JSON.stringify(
       const descParts = [];
       if (t.track) descParts.push(`Track : ${t.track}`);
       if (t.type) descParts.push(`Format : ${t.type}`);
-      if (t.description) { descParts.push(''); descParts.push(t.description); }
+      const summaryText = toPlainText(t.descriptionHtml);
+      if (summaryText) { descParts.push(''); descParts.push(summaryText); }
       lines.push(
         'BEGIN:VEVENT',
         `UID:${t.code}@capitoledulibre.org`,
