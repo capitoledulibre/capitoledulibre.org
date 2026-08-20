@@ -11,7 +11,7 @@ const posts = (await getCollection('blog')).sort(
 ---
 
 <BaseLayout title="Blog" description="Actualités, annonces et récaps du Capitole du Libre.">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Blog', path: '/blog' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Blog', path: '/blog/' }])} />
   <PageHeader title="Blog" description="Actualités et annonces du Capitole du Libre." />
 
   <section class="py-12 sm:py-16">

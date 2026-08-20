@@ -11,4 +11,4 @@ Rejoignez-nous sur nos réseaux et espaces de discussion :
 - **Bluesky** : [capitoledulibre.org](https://bsky.app/profile/capitoledulibre.org)
 - **X (Twitter)** : [@capitoledulibre](https://x.com/capitoledulibre)
 
-Utilisez le hashtag **#cdl2026** pour partager vos impressions pendant l'événement ! Consultez également notre [blog](/blog) pour les annonces importantes.
+Utilisez le hashtag **#cdl2026** pour partager vos impressions pendant l'événement ! Consultez également notre [blog](/blog/) pour les annonces importantes.

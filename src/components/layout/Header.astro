@@ -1,34 +1,35 @@
 ---
+import { imgSize } from '../../lib/imageDimensions';
 import { config } from '../../config';
 
 const navItems = [
-  { label: 'Programme', href: '/programme' },
+  { label: 'Programme', href: '/programme/' },
   {
     label: 'Infos pratiques',
     children: [
-      { label: 'Lieu & accès', href: '/lieu' },
-      { label: 'Se restaurer', href: '/se-restaurer' },
-      { label: 'FAQ', href: '/faq' },
+      { label: 'Lieu & accès', href: '/lieu/' },
+      { label: 'Se restaurer', href: '/se-restaurer/' },
+      { label: 'FAQ', href: '/faq/' },
     ],
   },
   {
     label: 'Activités',
     children: [
-      { label: 'Village associatif', href: '/village-associatif' },
-      { label: 'Install Party', href: '/install-party' },
-      { label: 'LAN Party', href: '/lan-party' },
-      { label: 'Initiation au code', href: '/initiation-code' },
+      { label: 'Village associatif', href: '/village-associatif/' },
+      { label: 'Install Party', href: '/install-party/' },
+      { label: 'LAN Party', href: '/lan-party/' },
+      { label: 'Initiation au code', href: '/initiation-code/' },
     ],
   },
-  { label: 'Partenaires', href: '/partenaires' },
+  { label: 'Partenaires', href: '/partenaires/' },
   {
     label: 'Contribuer',
     children: [
-      { label: 'Devenir speaker', href: '/devenir-speaker' },
-      { label: 'L\'équipe', href: '/equipe' },
+      { label: 'Devenir speaker', href: '/devenir-speaker/' },
+      { label: 'L\'équipe', href: '/equipe/' },
     ],
   },
-  { label: 'Médias', href: '/medias' },
+  { label: 'Médias', href: '/medias/' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -43,6 +44,7 @@ const currentPath = Astro.url.pathname;
           src="/static/img/logo-capitoledulibre-horizontal.svg"
           alt="Capitole du Libre"
           class="h-8 sm:h-10 w-auto"
+          {...imgSize('/static/img/logo-capitoledulibre-horizontal.svg')}
         />
       </a>
 

@@ -20,7 +20,7 @@ const subjects = [
 ---
 
 <BaseLayout title="Contact" description="Contactez l'équipe d'organisation du Capitole du Libre.">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Contact', path: '/contact' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Contact', path: '/contact/' }])} />
   <PageHeader title="Nous contacter" description="Une question ? Une proposition ? Écrivez-nous !" />
 
   <section class="py-12 sm:py-16">
@@ -123,7 +123,7 @@ const subjects = [
           Signalement &amp; bienveillance
         </h2>
         <p class="text-sm text-cdl-gray leading-relaxed">
-          Le Capitole du Libre applique un <a href="/code-de-conduite" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">code de conduite</a>.
+          Le Capitole du Libre applique un <a href="/code-de-conduite/" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">code de conduite</a>.
           Pour signaler un comportement inapproprié, avant, pendant ou après l'événement, écrivez à
           <ObfuscatedEmail user="conduite" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors" aria-label="Contacter l'équipe en charge du code de conduite">conduite@capitoledulibre.org</ObfuscatedEmail>.
           Sur place, vous pouvez aussi vous adresser à un membre de l'équipe (t-shirt rouge « STAFF »).

@@ -41,7 +41,7 @@ const { lat, lng } = config.venue.coordinates;
 ---
 
 <BaseLayout title="Lieu & accès" description={`Le Capitole du Libre se déroule à l'${config.venue.name}, ${config.venue.address}.`}>
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Lieu & accès', path: '/lieu' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Lieu & accès', path: '/lieu/' }])} />
   <PageHeader title="Lieu & accès" description={`${config.venue.name} — ${config.venue.address}`} />
 
   <section class="py-12 sm:py-16">
@@ -148,7 +148,7 @@ const { lat, lng } = config.venue.coordinates;
           Signalement &amp; bienveillance
         </h2>
         <p class="text-sm text-cdl-gray leading-relaxed">
-          L'événement applique un <a href="/code-de-conduite" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">code de conduite</a>.
+          L'événement applique un <a href="/code-de-conduite/" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors">code de conduite</a>.
           En cas de problème sur place, adressez-vous à un membre de l'équipe (t-shirt rouge « STAFF ») ou écrivez à
           <ObfuscatedEmail user="conduite" class="text-cdl-orange hover:text-cdl-orange-light font-medium transition-colors" aria-label="Contacter l'équipe en charge du code de conduite">conduite@capitoledulibre.org</ObfuscatedEmail>.
         </p>
