@@ -73,3 +73,33 @@
     radial-gradient(ellipse 60% 50% at 10% 50%, rgb(208 61 0 / 0.06), transparent),
     radial-gradient(ellipse 50% 60% at 90% 30%, rgb(246 173 85 / 0.04), transparent);
 }
+
+/* ── Focus visible ── */
+/*
+ * Consistent focus ring for everything keyboard-reachable. Interactive cards
+ * (.talk-card, partner tiles) only carried `hover:` styles, so keyboard users
+ * were left with the browser default. `:focus-visible` keeps mouse clicks clean.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-cdl-orange);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Reduced motion ── */
+/*
+ * Honours the OS "reduce motion" setting across the site: the hero halos and
+ * entrance animation, the lightbox and modal transitions, the campus-plan pop
+ * and Tailwind's animate-* utilities. Animations are collapsed rather than
+ * removed so anything relying on an animation completing still settles.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

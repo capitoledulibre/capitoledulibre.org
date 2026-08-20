@@ -14,11 +14,18 @@ const stats = [
   <picture>
     <source type="image/avif" srcset="/static/img/img01-960w.avif 960w, /static/img/img01-1440w.avif 1440w, /static/img/img01.avif 1920w" sizes="100vw" />
     <source type="image/webp" srcset="/static/img/img01-960w.webp 960w, /static/img/img01-1440w.webp 1440w, /static/img/img01.webp 1920w" sizes="100vw" />
+    <!--
+      Stays JPEG: this is the fallback for browsers that support neither AVIF
+      nor WebP, which the <source> elements above already cover.
+      width/height are the LCP element's aspect ratio, to avoid layout shift.
+    -->
     <img
       src="/static/img/img01.jpg"
       alt=""
       class="absolute inset-0 h-full w-full object-cover object-center"
       fetchpriority="high"
+      width="1440"
+      height="960"
     />
   </picture>
 
@@ -60,7 +67,9 @@ const stats = [
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           {config.edition.displayDates}
-          <span class="mx-2 text-white/30">|</span>
+          {/* Purely decorative divider: hidden from assistive tech, so its low
+              contrast is incidental rather than a contrast failure. */}
+          <span class="mx-2 text-white/30" aria-hidden="true">|</span>
           <svg class="inline-block h-5 w-5 mr-1 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -79,7 +88,7 @@ const stats = [
             </svg>
           </a>
           <a
-            href="/programme"
+            href="/programme/"
             class="inline-flex items-center px-8 py-4 text-lg font-medium text-white border-2 border-white/30 hover:border-white/60 hover:bg-white/10 rounded-xl transition-all duration-300 backdrop-blur-sm"
           >
             Voir le programme
