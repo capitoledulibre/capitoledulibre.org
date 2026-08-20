@@ -22,11 +22,14 @@ export default [
     },
   },
   {
-    files: ['scripts/**/*.mjs', 'scripts/**/*.js'],
+    // Node-side files: build config and the image/OG generation scripts.
+    files: ['scripts/**/*.mjs', 'scripts/**/*.js', '*.config.mjs'],
     languageOptions: {
       globals: {
         process: 'readonly',
         console: 'readonly',
+        Buffer: 'readonly',
+        URL: 'readonly',
       },
     },
   },
