@@ -1,0 +1,878 @@
+{
+  "/static/icon-capitoledulibre.svg": {
+    "width": 1000,
+    "height": 1000
+  },
+  "/static/img/img01.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img01.jpg": {
+    "width": 3889,
+    "height": 2593
+  },
+  "/static/img/img01.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img02.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img02.jpg": {
+    "width": 5184,
+    "height": 3456
+  },
+  "/static/img/img02.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img03.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img03.jpg": {
+    "width": 4370,
+    "height": 2913
+  },
+  "/static/img/img03.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img04.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img04.jpg": {
+    "width": 4813,
+    "height": 3209
+  },
+  "/static/img/img04.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img05.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img05.jpg": {
+    "width": 4858,
+    "height": 3239
+  },
+  "/static/img/img05.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img06.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img06.jpg": {
+    "width": 6960,
+    "height": 4640
+  },
+  "/static/img/img06.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img07.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img07.jpg": {
+    "width": 5921,
+    "height": 3947
+  },
+  "/static/img/img07.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img08.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img08.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img08.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img09.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img09.jpg": {
+    "width": 5712,
+    "height": 3808
+  },
+  "/static/img/img09.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img10.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img10.jpg": {
+    "width": 6799,
+    "height": 4533
+  },
+  "/static/img/img10.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img11.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img11.jpg": {
+    "width": 6870,
+    "height": 4580
+  },
+  "/static/img/img11.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img12.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img12.jpg": {
+    "width": 6611,
+    "height": 4407
+  },
+  "/static/img/img12.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img14.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img14.jpg": {
+    "width": 5972,
+    "height": 3981
+  },
+  "/static/img/img14.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img15.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img15.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img15.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img16.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img16.jpg": {
+    "width": 6668,
+    "height": 4445
+  },
+  "/static/img/img16.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img17.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img17.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img17.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img18.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img18.jpg": {
+    "width": 6804,
+    "height": 4536
+  },
+  "/static/img/img18.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img19.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img19.jpg": {
+    "width": 6678,
+    "height": 4452
+  },
+  "/static/img/img19.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img20.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img20.jpg": {
+    "width": 6865,
+    "height": 4577
+  },
+  "/static/img/img20.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img21.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img21.jpg": {
+    "width": 6795,
+    "height": 4530
+  },
+  "/static/img/img21.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img22.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img22.jpg": {
+    "width": 6960,
+    "height": 4640
+  },
+  "/static/img/img22.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img23.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img23.jpg": {
+    "width": 4313,
+    "height": 2875
+  },
+  "/static/img/img23.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img24.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img24.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img24.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img25.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img25.jpg": {
+    "width": 6438,
+    "height": 4292
+  },
+  "/static/img/img25.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img26.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img26.jpg": {
+    "width": 6960,
+    "height": 4640
+  },
+  "/static/img/img26.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img27.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img27.jpg": {
+    "width": 6240,
+    "height": 4160
+  },
+  "/static/img/img27.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img28.avif": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img28.jpg": {
+    "width": 4000,
+    "height": 6000
+  },
+  "/static/img/img28.webp": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img29.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img29.jpg": {
+    "width": 6644,
+    "height": 4429
+  },
+  "/static/img/img29.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img30.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img30.jpg": {
+    "width": 6960,
+    "height": 4640
+  },
+  "/static/img/img30.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img31.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img31.jpg": {
+    "width": 6960,
+    "height": 4640
+  },
+  "/static/img/img31.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img32.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img32.jpg": {
+    "width": 6764,
+    "height": 4509
+  },
+  "/static/img/img32.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img33.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img33.jpg": {
+    "width": 4749,
+    "height": 3166
+  },
+  "/static/img/img33.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img34.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img34.jpg": {
+    "width": 6674,
+    "height": 4449
+  },
+  "/static/img/img34.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img35.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img35.jpg": {
+    "width": 6048,
+    "height": 4032
+  },
+  "/static/img/img35.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img36.avif": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img36.jpg": {
+    "width": 3494,
+    "height": 5241
+  },
+  "/static/img/img36.webp": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img37.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img37.jpg": {
+    "width": 5252,
+    "height": 3501
+  },
+  "/static/img/img37.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img38.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img38.jpg": {
+    "width": 5547,
+    "height": 3698
+  },
+  "/static/img/img38.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img39.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img39.jpg": {
+    "width": 6864,
+    "height": 4576
+  },
+  "/static/img/img39.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img40.avif": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img40.jpg": {
+    "width": 5504,
+    "height": 8256
+  },
+  "/static/img/img40.webp": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img41.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img41.jpg": {
+    "width": 5835,
+    "height": 3890
+  },
+  "/static/img/img41.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img42.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img42.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img42.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img43.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img43.jpg": {
+    "width": 6960,
+    "height": 4640
+  },
+  "/static/img/img43.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img44.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img44.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img44.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img45.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img45.jpg": {
+    "width": 5540,
+    "height": 3693
+  },
+  "/static/img/img45.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img46.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img46.jpg": {
+    "width": 5760,
+    "height": 3840
+  },
+  "/static/img/img46.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img47.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img47.jpg": {
+    "width": 5760,
+    "height": 3840
+  },
+  "/static/img/img47.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img48.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img48.jpg": {
+    "width": 4313,
+    "height": 2875
+  },
+  "/static/img/img48.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img49.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img49.jpg": {
+    "width": 5885,
+    "height": 3923
+  },
+  "/static/img/img49.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img50.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img50.jpg": {
+    "width": 5485,
+    "height": 3657
+  },
+  "/static/img/img50.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img51.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img51.jpg": {
+    "width": 5356,
+    "height": 3571
+  },
+  "/static/img/img51.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img52.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img52.jpg": {
+    "width": 6816,
+    "height": 4544
+  },
+  "/static/img/img52.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img53.avif": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img53.jpg": {
+    "width": 4003,
+    "height": 6005
+  },
+  "/static/img/img53.webp": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img54.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img54.jpg": {
+    "width": 4778,
+    "height": 3185
+  },
+  "/static/img/img54.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img55.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img55.jpg": {
+    "width": 4660,
+    "height": 3107
+  },
+  "/static/img/img55.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img56.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img56.jpg": {
+    "width": 5184,
+    "height": 3456
+  },
+  "/static/img/img56.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img57.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img57.jpg": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img57.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img58.avif": {
+    "width": 1838,
+    "height": 1225
+  },
+  "/static/img/img58.jpg": {
+    "width": 1838,
+    "height": 1225
+  },
+  "/static/img/img58.webp": {
+    "width": 1838,
+    "height": 1225
+  },
+  "/static/img/img59.avif": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img59.jpg": {
+    "width": 3897,
+    "height": 5846
+  },
+  "/static/img/img59.webp": {
+    "width": 1920,
+    "height": 2880
+  },
+  "/static/img/img60.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img60.jpg": {
+    "width": 6724,
+    "height": 4483
+  },
+  "/static/img/img60.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img61.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img61.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img61.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img62.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img62.jpg": {
+    "width": 4037,
+    "height": 2691
+  },
+  "/static/img/img62.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img63.avif": {
+    "width": 1920,
+    "height": 1148
+  },
+  "/static/img/img63.jpg": {
+    "width": 4214,
+    "height": 2519
+  },
+  "/static/img/img63.webp": {
+    "width": 1920,
+    "height": 1148
+  },
+  "/static/img/img64.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img64.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img64.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img65.avif": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/img65.jpg": {
+    "width": 6000,
+    "height": 4000
+  },
+  "/static/img/img65.webp": {
+    "width": 1920,
+    "height": 1280
+  },
+  "/static/img/logo-capitoledulibre-horizontal.svg": {
+    "width": 1727,
+    "height": 211
+  },
+  "/static/img/logo-capitoledulibre.svg": {
+    "width": 840,
+    "height": 370
+  },
+  "/static/img/partners/logo-bleemeo.svg": {
+    "width": 829,
+    "height": 273
+  },
+  "/static/img/partners/logo-can7-w.png": {
+    "width": 95,
+    "height": 57
+  },
+  "/static/img/partners/logo-can7.png": {
+    "width": 99,
+    "height": 57
+  },
+  "/static/img/partners/logo-epitech.png": {
+    "width": 2133,
+    "height": 516
+  },
+  "/static/img/partners/logo-etincelle-coworking.png": {
+    "width": 300,
+    "height": 63
+  },
+  "/static/img/partners/logo-inp-net.png": {
+    "width": 200,
+    "height": 200
+  },
+  "/static/img/partners/logo-net7-w.png": {
+    "width": 603,
+    "height": 227
+  },
+  "/static/img/partners/logo-net7.png": {
+    "width": 603,
+    "height": 227
+  },
+  "/static/img/partners/logo-photo7-w.png": {
+    "width": 153,
+    "height": 44
+  },
+  "/static/img/partners/logo-photo7.png": {
+    "width": 153,
+    "height": 44
+  },
+  "/static/img/partners/logo-scaleway.svg": {
+    "width": 410,
+    "height": 80
+  },
+  "/static/img/partners/logo-tetaneutral.png": {
+    "width": 726,
+    "height": 134
+  },
+  "/static/img/partners/logo-toulouse-inp-n7.png": {
+    "width": 565,
+    "height": 205
+  },
+  "/static/img/partners/logo-toulouse-tech-hub.svg": {
+    "width": 1280,
+    "height": 1280
+  },
+  "/static/img/partners/logo-tvn7-w.png": {
+    "width": 299,
+    "height": 258
+  },
+  "/static/img/partners/logo-tvn7.png": {
+    "width": 299,
+    "height": 258
+  },
+  "/static/og/card.jpg": {
+    "width": 1200,
+    "height": 630
+  },
+  "/static/og/event-16x9.jpg": {
+    "width": 1200,
+    "height": 675
+  },
+  "/static/og/event-1x1.jpg": {
+    "width": 1200,
+    "height": 1200
+  },
+  "/static/og/event-4x3.jpg": {
+    "width": 1200,
+    "height": 900
+  },
+  "/static/videos/itw-isabella-2024-poster.jpg": {
+    "width": 1280,
+    "height": 720
+  },
+  "/static/videos/itw-jbkempf-2024-poster.jpg": {
+    "width": 1280,
+    "height": 720
+  },
+  "/static/videos/itw-khrys-2024-poster.jpg": {
+    "width": 1280,
+    "height": 720
+  },
+  "/static/videos/itw-sebastien-2024-poster.jpg": {
+    "width": 1280,
+    "height": 720
+  }
+}
