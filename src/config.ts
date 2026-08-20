@@ -22,6 +22,9 @@ export const config = {
   },
   tickets: {
     url: 'https://tickets.capitoledulibre.org/cdl/2026/',
+    // Date registration opened. Feeds Event.offers.validFrom in the JSON-LD;
+    // left null on purpose so we never publish a guessed date.
+    validFrom: null as Date | null,
   },
   links: {
     photos: 'https://photos.capitoledulibre.org',

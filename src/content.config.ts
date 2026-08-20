@@ -6,7 +6,11 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.date(),
+    // Set when the post is edited after publication; feeds dateModified.
+    updated: z.date().optional(),
     author: z.string(),
+    // Drives whether the JSON-LD author is a Person or an Organization.
+    authorType: z.enum(['person', 'organization']).default('person'),
     excerpt: z.string(),
     image: z.string().optional(),
   }),

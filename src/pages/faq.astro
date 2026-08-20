@@ -8,6 +8,9 @@ import { breadcrumb } from '../lib/jsonld';
 const allFaq = await getCollection('faq');
 allFaq.sort((a, b) => a.data.order - b.data.order);
 
+// Kept deliberately: Google restricted FAQ rich results to government and
+// health sites in August 2023, so this no longer earns SERP accordions — but it
+// is still what AI answers and other consumers read the Q&A from.
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -36,7 +39,7 @@ const faqByCategory = categories
 ---
 
 <BaseLayout title="FAQ" description="Questions fréquentes sur le Capitole du Libre : inscription, accès, programme, accessibilité.">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'FAQ', path: '/faq' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'FAQ', path: '/faq/' }])} />
   <JsonLd slot="head" data={faqJsonLd} />
   <PageHeader title="Questions fréquentes" description="Tout ce que vous devez savoir avant de venir." />
 

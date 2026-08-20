@@ -1,10 +1,11 @@
 ---
+import { imgSize } from '../lib/imageDimensions';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
 import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
-import { breadcrumb } from '../lib/jsonld';
+import { activityEvent, breadcrumb } from '../lib/jsonld';
 
 const photos = getPhotosByTag('initiation-code');
 
@@ -13,6 +14,21 @@ const audiences = [
   { title: 'Ados & adultes', description: 'Premiers pas en Python ou en développement web. Aucune connaissance préalable requise.', icon: '🧑‍💻' },
   { title: 'Familles', description: 'Venez en famille ! Les ateliers sont pensés pour être partagés entre parents et enfants.', icon: '👨‍👩‍👧‍👦' },
 ];
+
+// Two sessions per day, as advertised in the "Horaires" block below.
+const initiationCodeEvent = activityEvent({
+  name: 'Initiation au code',
+  description:
+    "Ateliers d'initiation à la programmation pour grands débutants : Scratch pour les enfants dès 8 ans, premiers pas en Python et développement web pour ados et adultes.",
+  path: '/initiation-code/',
+  hours: [
+    { startTime: '10:00', endTime: '12:00' },
+    { startTime: '14:00', endTime: '17:00' },
+  ],
+  typicalAgeRange: '8-',
+  audienceType: 'Enfants dès 8 ans, ados, adultes et familles — aucun prérequis',
+  contributor: { name: 'Epitech Toulouse', url: 'https://www.epitech.eu/ecole-informatique-toulouse/' },
+});
 
 const learnings = [
   'Les bases de la logique et de l\'algorithmique',
@@ -24,7 +40,8 @@ const learnings = [
 ---
 
 <BaseLayout title="Initiation au code" description="Atelier d'initiation à la programmation pour débutants au Capitole du Libre. Enfants et adultes, aucun prérequis !">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Initiation au code', path: '/initiation-code' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Initiation au code', path: '/initiation-code/' }])} />
+  <JsonLd slot="head" data={initiationCodeEvent} />
   <PageHeader title="Initiation au code" description="Découvrez la programmation, quel que soit votre âge ou votre niveau." />
 
   <section class="py-12 sm:py-16">
@@ -94,7 +111,9 @@ const learnings = [
       {/* Partenaire */}
       <div class="max-w-3xl mx-auto mt-12 p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 flex items-center gap-5">
         <a href="https://www.epitech.eu/ecole-informatique-toulouse/" target="_blank" rel="noopener noreferrer" class="flex-shrink-0">
-          <img src="/static/img/partners/logo-epitech.png" alt="Epitech" class="h-16 w-auto" loading="lazy" />
+          <img src="/static/img/partners/logo-epitech.png" alt="Epitech" class="h-16 w-auto" loading="lazy"
+            {...imgSize('/static/img/partners/logo-epitech.png')}
+          />
         </a>
         <div>
           <p class="text-sm text-cdl-gray leading-relaxed">

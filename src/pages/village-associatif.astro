@@ -5,9 +5,41 @@ import JsonLd from '../components/ui/JsonLd.astro';
 import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
 import { config } from '../config';
-import { breadcrumb } from '../lib/jsonld';
+import { activityEvent, breadcrumb } from '../lib/jsonld';
 
 const photos = getPhotosByTag('village-associatif');
+
+// Open continuously across both days, so it inherits the edition's own hours.
+const villageEvent = activityEvent({
+  name: 'Village associatif',
+  description:
+    "Une trentaine de stands d'associations, communautés et projets du logiciel libre : démos en direct, échanges avec les contributeurs, documentation et goodies.",
+  path: '/village-associatif/',
+  hours: [{ startTime: '09:30', endTime: '18:00' }],
+  audienceType: 'Curieux, contributeurs, associations',
+});
+
+// Every fact here is already established elsewhere in the repo: the village
+// shares the Bâtiment C hall with the welcome desk and the bar
+// (src/lib/rooms.ts), and the edition runs 9h30-18h on both days.
+const practicalInfo = [
+  {
+    label: 'Où',
+    value: `Hall du bâtiment C de l'${config.venue.name}, au rez-de-chaussée — le même hall que l'accueil et la buvette. <a href="/lieu/" class="text-cdl-orange hover:text-cdl-orange-light underline">Voir le plan du campus</a>.`,
+  },
+  {
+    label: 'Quand',
+    value: 'Samedi et dimanche, en continu de 9h30 à 18h. Aucun créneau à réserver.',
+  },
+  {
+    label: 'Combien',
+    value: `Accès libre, compris dans l'inscription gratuite à l'événement.`,
+  },
+  {
+    label: 'Combien de stands',
+    value: `Une trentaine d'associations, communautés et projets du libre.`,
+  },
+];
 
 const highlights = [
   { title: 'Rencontrer des communautés', description: 'Échangez directement avec les acteurs du logiciel libre : distributions Linux, associations, projets communautaires.', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z' },
@@ -17,7 +49,8 @@ const highlights = [
 ---
 
 <BaseLayout title="Village associatif" description="Rencontrez les communautés du logiciel libre au village associatif du Capitole du Libre.">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Village associatif', path: '/village-associatif' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Village associatif', path: '/village-associatif/' }])} />
+  <JsonLd slot="head" data={villageEvent} />
   <PageHeader title="Village associatif" description="Le cœur battant du Capitole du Libre : rencontrez les communautés du libre." />
 
   <section class="py-12 sm:py-16">
@@ -64,6 +97,26 @@ const highlights = [
           </div>
         </div>
       )}
+
+      {/* Où et quand */}
+      <div class="max-w-3xl mx-auto mb-16">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-6 text-center">Où et quand</h2>
+        <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {practicalInfo.map((info) => (
+            <div class="p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+              <dt class="text-xs font-semibold uppercase tracking-wider text-cdl-orange mb-1.5">
+                {info.label}
+              </dt>
+              <dd class="text-sm text-cdl-gray leading-relaxed" set:html={info.value} />
+            </div>
+          ))}
+        </dl>
+        <p class="text-sm text-cdl-gray text-center mt-6">
+          Le village se visite librement, sans réservation : entrez, regardez les démos, posez
+          vos questions. Beaucoup de visiteurs y passent entre deux conférences — c'est aussi
+          l'endroit le plus simple pour engager la discussion quand on découvre l'événement.
+        </p>
+      </div>
 
       {/* Liste des stands — placeholder */}
       <div class="bg-white dark:bg-gray-800 rounded-2xl border border-cdl-gray-light p-8 sm:p-12 text-center mb-12">

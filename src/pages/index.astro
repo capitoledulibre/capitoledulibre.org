@@ -13,71 +13,28 @@ import VideoSection from '../components/home/VideoSection.astro';
 import PartnersPreview from '../components/home/PartnersPreview.astro';
 import CtaSection from '../components/home/CtaSection.astro';
 import { config } from '../config';
+import { getCollection } from 'astro:content';
+import { eventNode } from '../lib/jsonld';
 
-const eventJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Event',
-  name: 'Capitole du Libre 2026',
-  description: 'L\'événement du Logiciel Libre en Occitanie. Conférences, ateliers, village associatif, install party.',
-  startDate: '2026-11-14T09:30:00+01:00',
-  endDate: '2026-11-15T18:00:00+01:00',
-  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  eventStatus: 'https://schema.org/EventScheduled',
-  location: {
-    '@type': 'Place',
-    name: config.venue.name,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '2 rue Charles Camichel',
-      addressLocality: 'Toulouse',
-      postalCode: '31000',
-      addressCountry: 'FR',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: config.venue.coordinates.lat,
-      longitude: config.venue.coordinates.lng,
-    },
-  },
-  organizer: {
-    '@type': 'Organization',
-    name: 'Toulibre',
-    url: config.links.toulibre,
-  },
-  image: 'https://capitoledulibre.org/static/img/img01.jpg',
-  url: 'https://capitoledulibre.org',
-  isAccessibleForFree: true,
-  inLanguage: 'fr',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'EUR',
-    url: config.tickets.url,
-    availability: 'https://schema.org/InStock',
-  },
-};
+const partners = await getCollection('partners');
 
-const orgJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Capitole du Libre',
-  url: 'https://capitoledulibre.org',
-  logo: 'https://capitoledulibre.org/static/img/logo-capitoledulibre.svg',
-  sameAs: [
-    config.social.mastodon,
-    config.social.twitter,
-    config.social.facebook,
-    config.social.linkedin,
-    config.social.instagram,
-    config.social.bluesky,
-    config.links.github,
-  ],
-};
+// "14 & 15 novembre 2026" would repeat the year already in the title.
+const datesWithoutYear = config.edition.displayDates
+  .replace(String(config.edition.year), '')
+  .trim();
+const homeTitle = `Capitole du Libre ${config.edition.year} — ${datesWithoutYear}, Toulouse`;
+
+// The partner list doubles as the edition's sponsor list in structured data.
+const sponsors = partners
+  .map((partner) => ({ name: partner.data.name, url: partner.data.url }))
+  .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
 ---
 
-<BaseLayout title="Accueil">
-  <JsonLd slot="head" data={eventJsonLd} />
-  <JsonLd slot="head" data={orgJsonLd} />
+<BaseLayout
+  title="Accueil"
+  fullTitle={homeTitle}
+>
+  <JsonLd slot="head" data={eventNode({ sponsors })} />
 
   <!-- 1. Impact immédiat (stats intégrées au hero) -->
   <HeroSection />

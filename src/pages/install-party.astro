@@ -1,10 +1,11 @@
 ---
+import { imgSize } from '../lib/imageDimensions';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
 import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
-import { breadcrumb } from '../lib/jsonld';
+import { activityEvent, breadcrumb } from '../lib/jsonld';
 
 const photos = getPhotosByTag('install-party');
 
@@ -13,6 +14,17 @@ const services = [
   { title: 'Résoudre un problème', description: 'Un souci avec votre installation Linux ? Des bénévoles expérimentés sont là pour vous aider.' },
   { title: 'Découvrir le libre', description: 'Venez poser vos questions sur le logiciel libre, les alternatives aux logiciels propriétaires, la vie privée numérique.' },
 ];
+
+// Hours as advertised in the "Horaires" block below; Net7 co-runs the workshop.
+const installPartyEvent = activityEvent({
+  name: 'Install Party Linux',
+  description:
+    "Atelier permanent d'installation et de dépannage Linux. Apportez votre ordinateur, des bénévoles vous accompagnent de A à Z, sans prérequis technique.",
+  path: '/install-party/',
+  hours: [{ startTime: '09:00', endTime: '18:00' }],
+  audienceType: 'Débutants et utilisateurs Linux, tous niveaux',
+  contributor: { name: 'Net7', url: 'https://net7.dev' },
+});
 
 const tips = [
   'Sauvegardez vos données importantes avant de venir.',
@@ -23,8 +35,9 @@ const tips = [
 ];
 ---
 
-<BaseLayout title="Install Party" description="Atelier permanent d'installation Linux au Capitole du Libre. Venez avec votre PC, repartez avec Linux !">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Install Party', path: '/install-party' }])} />
+<BaseLayout title="Install Party Linux" description="Atelier permanent d'installation Linux au Capitole du Libre. Venez avec votre PC, repartez avec Linux !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Install Party', path: '/install-party/' }])} />
+  <JsonLd slot="head" data={installPartyEvent} />
   <PageHeader title="Install Party" description="Repartez avec Linux installé sur votre machine !" />
 
   <section class="py-12 sm:py-16">
@@ -99,8 +112,12 @@ const tips = [
       {/* Partenaire */}
       <div class="max-w-3xl mx-auto mt-12 p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 flex items-center gap-5">
         <a href="https://net7.dev" target="_blank" rel="noopener noreferrer" class="flex-shrink-0">
-          <img src="/static/img/partners/logo-net7.png" alt="Net7" class="h-16 w-auto dark:hidden" loading="lazy" />
-          <img src="/static/img/partners/logo-net7-w.png" alt="Net7" class="h-16 w-auto hidden dark:block" loading="lazy" />
+          <img src="/static/img/partners/logo-net7.png" alt="Net7" class="h-16 w-auto dark:hidden" loading="lazy"
+            {...imgSize('/static/img/partners/logo-net7.png')}
+          />
+          <img src="/static/img/partners/logo-net7-w.png" alt="Net7" class="h-16 w-auto hidden dark:block" loading="lazy"
+            {...imgSize('/static/img/partners/logo-net7-w.png')}
+          />
         </a>
         <div>
           <p class="text-sm text-cdl-gray leading-relaxed">

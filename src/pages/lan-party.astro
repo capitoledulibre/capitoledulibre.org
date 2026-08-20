@@ -3,10 +3,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
 import Picture from '../components/ui/Picture.astro';
-import { breadcrumb } from '../lib/jsonld';
+import { activityEvent, breadcrumb } from '../lib/jsonld';
 import { getPhotosByTag } from '../lib/photos';
 
 const photos = getPhotosByTag('lan-party');
+
+// Hours as advertised in the "Horaires" block below.
+const lanPartyEvent = activityEvent({
+  name: 'LAN Party jeux libres',
+  description:
+    'Parties multijoueurs sur des jeux entièrement libres (SuperTuxKart, 0 A.D., Xonotic, Minetest, OpenArena). Apportez votre PC et rejoignez la partie.',
+  path: '/lan-party/',
+  hours: [{ startTime: '10:00', endTime: '18:00' }],
+  audienceType: 'Joueurs de tous niveaux',
+});
 
 const games = [
   { name: 'SuperTuxKart', description: 'Course de karts fun et accessible, façon Mario Kart.' },
@@ -18,8 +28,9 @@ const games = [
 ];
 ---
 
-<BaseLayout title="LAN Party" description="Événement gaming avec des jeux libres au Capitole du Libre. Apportez votre PC et rejoignez la partie !">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'LAN Party', path: '/lan-party' }])} />
+<BaseLayout title="LAN Party jeux libres" description="Événement gaming avec des jeux libres au Capitole du Libre. Apportez votre PC et rejoignez la partie !">
+  <JsonLd slot="head" data={breadcrumb([{ name: 'LAN Party', path: '/lan-party/' }])} />
+  <JsonLd slot="head" data={lanPartyEvent} />
   <PageHeader title="LAN Party" description="Du gaming 100% libre !" />
 
   <section class="py-12 sm:py-16">

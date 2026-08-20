@@ -1,4 +1,5 @@
 ---
+import { imgSize } from '../lib/imageDimensions';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
@@ -6,7 +7,7 @@ import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
 import { getCollection } from 'astro:content';
 import { config } from '../config';
-import { breadcrumb } from '../lib/jsonld';
+import { breadcrumb, partnerList } from '../lib/jsonld';
 
 const sponsorPhotos = getPhotosByTag('sponsor');
 
@@ -31,10 +32,16 @@ const sponsors = sponsorLevels
 const techPartners = allPartners.filter((p) => p.data.level === 'technique' || p.data.level === 'institutionnel');
 
 const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
+
+const partnersJsonLd = partnerList(
+  allPartners.map((partner) => partner.data),
+  '/partenaires/',
+);
 ---
 
 <BaseLayout title="Partenaires" description="Les partenaires et sponsors du Capitole du Libre rendent l'événement possible. Découvrez-les et rejoignez-les !">
-  <JsonLd slot="head" data={breadcrumb([{ name: 'Partenaires', path: '/partenaires' }])} />
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Partenaires', path: '/partenaires/' }])} />
+  <JsonLd slot="head" data={partnersJsonLd} />
   <PageHeader title="Partenaires" description="Ils rendent le Capitole du Libre possible." />
 
   <section class="py-12 sm:py-16">
@@ -68,12 +75,14 @@ const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
                             alt={partner.data.name}
                             class:list={['w-auto object-contain dark:hidden', level.logoSize]}
                             loading="lazy"
+                            {...imgSize(partner.data.logo_light ?? partner.data.logo)}
                           />
                           <img
                             src={partner.data.logo}
                             alt={partner.data.name}
                             class:list={['w-auto object-contain hidden dark:block', level.logoSize]}
                             loading="lazy"
+                            {...imgSize(partner.data.logo)}
                           />
                         </a>
                       ))}
@@ -107,12 +116,14 @@ const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
                       alt=""
                       class="h-12 w-12 object-contain flex-shrink-0 dark:hidden"
                       loading="lazy"
+                      {...imgSize(partner.data.logo_light ?? partner.data.logo)}
                     />
                     <img
                       src={partner.data.logo}
                       alt=""
                       class="h-12 w-12 object-contain flex-shrink-0 hidden dark:block"
                       loading="lazy"
+                      {...imgSize(partner.data.logo)}
                     />
                     <div>
                       <p class="font-bold text-cdl-blue text-sm">{partner.data.name}</p>

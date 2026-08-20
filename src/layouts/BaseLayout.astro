@@ -2,29 +2,58 @@
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Lightbox from '../components/ui/Lightbox.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import { OG_CARD, siteGraph } from '../lib/jsonld';
+import { getImageDimensions } from '../lib/imageDimensions';
+import { config } from '../config';
 import '../styles/global.css';
+
+// Preload the two faces used above the fold. Without this they are only
+// discovered after the stylesheet parses, which delays the largest text paint.
+import ubuntuRegular from '@fontsource/ubuntu/files/ubuntu-latin-400-normal.woff2';
+import ubuntuBold from '@fontsource/ubuntu/files/ubuntu-latin-700-normal.woff2';
 
 interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: string;
   noindex?: boolean;
+  /**
+   * Replaces the whole `<title>` instead of appending " — Capitole du Libre".
+   * For the home page, where a "Accueil — …" prefix would waste the most
+   * valuable slot in the SERP.
+   */
+  fullTitle?: string;
 }
 
-const defaultDescription = 'Capitole du Libre — L\'événement du Logiciel Libre en Occitanie. 14 & 15 novembre 2026 à l\'ENSEEIHT, Toulouse. Gratuit sur inscription.';
+const defaultDescription = `Capitole du Libre — L'événement du Logiciel Libre en Occitanie. ${config.edition.displayDates} à l'${config.venue.name}, Toulouse. Gratuit sur inscription.`;
+
+const defaultOgImageAlt = `Capitole du Libre ${config.edition.year} — ${config.edition.displayDates}, ${config.venue.name} Toulouse`;
 
 const {
   title,
   description = defaultDescription,
-  ogImage = '/static/img/img01.jpg',
+  ogImage = OG_CARD,
+  ogImageAlt = defaultOgImageAlt,
   ogType = 'website',
   noindex = false,
+  fullTitle: fullTitleProp,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
-const fullTitle = `${title} — Capitole du Libre`;
+const ogImageSize = getImageDimensions(ogImage);
+// The edition year belongs in the title: people search "capitole du libre 2026",
+// and page titles were short enough to have room for it.
+const fullTitle = fullTitleProp ?? `${title} — Capitole du Libre ${config.edition.year}`;
+
+// max-image-preview:large earns full-size thumbnails in results, which matters
+// on a site this photo-heavy; the max-* directives lift the default caps.
+const robots = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 ---
 
 <!doctype html>
@@ -41,10 +70,13 @@ const fullTitle = `${title} — Capitole du Libre`;
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="robots" content={robots} />
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Blog du Capitole du Libre" href={new URL('/rss.xml', Astro.site)} />
+    <link rel="preload" href={ubuntuRegular} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={ubuntuBold} as="font" type="font/woff2" crossorigin="anonymous" />
     <meta name="theme-color" content="#d03d00" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
 
@@ -54,6 +86,9 @@ const fullTitle = `${title} — Capitole du Libre`;
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {ogImageSize && <meta property="og:image:width" content={String(ogImageSize.width)} />}
+    {ogImageSize && <meta property="og:image:height" content={String(ogImageSize.height)} />}
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="Capitole du Libre" />
 
@@ -62,9 +97,11 @@ const fullTitle = `${title} — Capitole du Libre`;
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <meta name="twitter:site" content="@capitoledulibre" />
 
-    <!-- JSON-LD -->
+    <!-- JSON-LD: site-wide entities, referenced by @id from page-level nodes -->
+    <JsonLd data={siteGraph()} />
     <slot name="head" />
 
     <title>{fullTitle}</title>
