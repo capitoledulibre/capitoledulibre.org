@@ -38,13 +38,19 @@ pnpm images
 # Convertir les vidéos en WebM/VP9 + MP4 720p (nécessite ffmpeg)
 pnpm videos
 
-# Les deux d'un coup
+# Enregistrer les dimensions des images (width/height, anti-CLS)
+pnpm images:manifest
+
+# Régénérer la carte de partage social + les images Event schema.org
+pnpm og
+
+# Images, vidéos et manifeste d'un coup
 pnpm optimize
 ```
 
 ## Stack technique
 
-- **[Astro 5](https://astro.build)** — Site statique
+- **[Astro 7](https://astro.build)** — Site statique
 - **[Tailwind CSS 4](https://tailwindcss.com)** — Styles
 - **TypeScript**
 - **[Pretalx](https://cfp.capitoledulibre.org)** — Programme (API REST)
@@ -76,6 +82,79 @@ public/
 La configuration de l'édition est centralisée dans `src/config.ts` : dates, lieu, slug Pretalx, liens, réseaux sociaux, stats.
 
 Pour passer à une nouvelle édition, modifier ce fichier et mettre à jour le contenu des collections.
+
+## SEO notes
+
+<!-- Written in English per the repo-wide documentation language rule. -->
+
+**Canonical origin.** `site` in `astro.config.mjs` reads `SITE_URL`, defaulting to
+the apex domain. When this edition is archived under its own hostname, rebuild
+with the override so canonical URLs, `og:url`, the sitemap and every JSON-LD
+`@id` stay self-consistent instead of pointing at whatever edition then owns the
+apex:
+
+```bash
+SITE_URL=https://2026.capitoledulibre.org pnpm build
+```
+
+**Structured data.** `src/lib/jsonld.ts` emits one connected graph. `BaseLayout`
+declares the site-wide entities (`WebSite`, the two `Organization`s, the venue
+`Place`) once, and page-level nodes reference them by `@id`. Never hardcode the
+domain in a node — derive it from `SITE_URL`.
+
+**Programme schedule.** `/programme` only emits the edition `Event` with its
+`subEvent` sessions once `config.pretalx.eventSlug` matches the configured
+edition year. While the page falls back to the previous edition's programme, it
+deliberately publishes no schedule markup: describing last year's talks as this
+year's schedule would be false structured data.
+
+**Social card.** `og:image` is a committed 1200x630 card, regenerated with
+`pnpm og` (needs the Ubuntu font installed system-wide). Re-run it after
+changing the edition dates or venue in `src/config.ts`.
+
+**Image dimensions.** `Picture.astro` and the raw `<img>` tags take their
+`width`/`height` from `src/content/image-dimensions.json`. Run
+`pnpm images:manifest` after adding or replacing an image, otherwise the new file
+ships without dimensions.
+
+**Trailing slashes.** `trailingSlash: 'always'`. Internal links must include the
+trailing slash — without it nginx 301-redirects every click.
+
+**HTTP caching (nginx, not in this repo).** Production currently sends no
+`Cache-Control` at all, so every visit revalidates with a conditional request
+even though `/_astro/` filenames are content-hashed and therefore immutable.
+Merge into the server block — keep whatever `try_files` the `location /` already
+has, and note that a nested `add_header` replaces the inherited set rather than
+adding to it:
+
+```nginx
+# Content-hashed build output: the filename changes when the bytes change.
+location /_astro/ {
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+
+# Committed media. Not content-hashed, so keep the window short enough that
+# replacing a file under the same name is picked up reasonably fast.
+location /static/ {
+    add_header Cache-Control "public, max-age=604800";
+}
+
+# HTML, robots.txt, sitemap, RSS: must revalidate so a deploy takes effect now.
+location / {
+    add_header Cache-Control "public, max-age=0, must-revalidate";
+}
+```
+
+**Pending infrastructure item.** `www.capitoledulibre.org` does not resolve
+(NXDOMAIN), so anyone typing `www` gets a browser error and any inbound link
+using it is dead. Add the DNS record and a redirect to the apex:
+
+```nginx
+server {
+    server_name www.capitoledulibre.org;
+    return 301 https://capitoledulibre.org$request_uri;
+}
+```
 
 ## Signaler un problème
 
