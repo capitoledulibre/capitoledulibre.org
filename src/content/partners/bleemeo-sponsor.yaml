@@ -1,0 +1,6 @@
+# Bleemeo sponsors the edition and is also a technical partner (bleemeo.yaml);
+# the schema holds one level per file, hence the two entries.
+name: Bleemeo
+level: bronze
+logo: /static/img/partners/logo-bleemeo.svg
+url: https://bleemeo.com

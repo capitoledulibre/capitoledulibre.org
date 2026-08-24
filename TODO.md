@@ -145,6 +145,22 @@ which are blocked on facts or on infrastructure access.
   or WebP, and the lightbox's full-size target. Generating downscaled JPEG
   derivatives would remove that cliff.
 
+## Partner assets follow-ups (2026-08-24)
+
+- **Bootlin logo is only 240x70** (`public/static/img/partners/logo-bootlin.png`),
+  the largest asset the old site had. It is shown at the platine size
+  (`max-h-20` = 80px), so it is soft on high-density screens. Ask Bootlin for an
+  SVG or a 2x PNG.
+- **JSON-LD advertises the dark-mode logo variant.** `partnerList()` in
+  `src/lib/jsonld.ts` emits `partner.logo`, which for CAn7/Net7/Photo7/TVn7 is
+  the white-ink `-w` file — invisible on the white background a crawler or rich
+  result assumes. The page itself now renders `logo_light ?? logo`; the
+  structured data should do the same.
+- **Bleemeo is listed twice** (sponsor bronze + technical partner), by choice:
+  the content schema holds one level per entry. It therefore appears twice in
+  the partners `ItemList`. If that becomes a problem, the schema would need a
+  `levels` array instead of a single `level`.
+
 ## Explicitly ruled out (do not re-suggest)
 
 - Public call for volunteers — staffed via ENSEEIHT student partnership, already saturated.

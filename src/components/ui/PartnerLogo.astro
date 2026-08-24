@@ -1,0 +1,35 @@
+---
+import { imgSize } from '../../lib/imageDimensions';
+import type { Partner } from '../../lib/partners';
+
+interface Props {
+  partner: Partner;
+  /** Tailwind max-height class capping the logo, e.g. 'max-h-16'. */
+  logoSize: string;
+  class?: string;
+}
+
+const { partner, logoSize, class: className } = Astro.props;
+
+// Brand logos are mostly dark ink, and the plate below stays light in both
+// themes, so the `-w` variant in `logo` is never the one to display here.
+const src = partner.logo_light ?? partner.logo;
+---
+
+<a
+  href={partner.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    'flex items-center justify-center p-6 rounded-xl border border-gray-200 bg-white hover:border-cdl-orange/30 hover:shadow-md transition-all',
+    className,
+  ]}
+>
+  <img
+    src={src}
+    alt={partner.name}
+    class:list={['w-auto object-contain', logoSize]}
+    loading="lazy"
+    {...imgSize(src)}
+  />
+</a>

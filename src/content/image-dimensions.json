@@ -779,9 +779,21 @@
     "width": 840,
     "height": 370
   },
+  "/static/img/partners/logo-airbus.png": {
+    "width": 2392,
+    "height": 886
+  },
   "/static/img/partners/logo-bleemeo.svg": {
     "width": 829,
     "height": 273
+  },
+  "/static/img/partners/logo-bluemind.png": {
+    "width": 1000,
+    "height": 360
+  },
+  "/static/img/partners/logo-bootlin.png": {
+    "width": 240,
+    "height": 70
   },
   "/static/img/partners/logo-can7-w.png": {
     "width": 95,
@@ -790,6 +802,10 @@
   "/static/img/partners/logo-can7.png": {
     "width": 99,
     "height": 57
+  },
+  "/static/img/partners/logo-cs-group.svg": {
+    "width": 108,
+    "height": 48
   },
   "/static/img/partners/logo-epitech.png": {
     "width": 2133,
@@ -827,6 +843,10 @@
     "width": 726,
     "height": 134
   },
+  "/static/img/partners/logo-thales.svg": {
+    "width": 484,
+    "height": 57
+  },
   "/static/img/partners/logo-toulouse-inp-n7.png": {
     "width": 565,
     "height": 205
@@ -842,6 +862,14 @@
   "/static/img/partners/logo-tvn7.png": {
     "width": 299,
     "height": 258
+  },
+  "/static/img/partners/logo-worteks.png": {
+    "width": 387,
+    "height": 130
+  },
+  "/static/img/partners/logo-xwiki.svg": {
+    "width": 699,
+    "height": 193
   },
   "/static/og/card.jpg": {
     "width": 1200,

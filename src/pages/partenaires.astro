@@ -6,6 +6,8 @@ import JsonLd from '../components/ui/JsonLd.astro';
 import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
 import { getCollection } from 'astro:content';
+import PartnerLogo from '../components/ui/PartnerLogo.astro';
+import { getSponsorGroups, getTechnicalPartners } from '../lib/partners';
 import { config } from '../config';
 import { breadcrumb, partnerList } from '../lib/jsonld';
 
@@ -13,23 +15,17 @@ const sponsorPhotos = getPhotosByTag('sponsor');
 
 const allPartners = await getCollection('partners');
 
-// Sponsors (niveaux classiques)
-const sponsorLevels = [
-  { key: 'platine', label: 'Platine', logoSize: 'max-h-20', cols: 'sm:grid-cols-2 lg:grid-cols-3' },
-  { key: 'or', label: 'Or', logoSize: 'max-h-16', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
-  { key: 'argent', label: 'Argent', logoSize: 'max-h-14', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
-  { key: 'bronze', label: 'Bronze', logoSize: 'max-h-12', cols: 'sm:grid-cols-4 lg:grid-cols-5' },
-] as const;
+// Logo size and grid density taper with the tier; the tier order and grouping
+// live in lib/partners so the homepage preview cannot drift from this page.
+const tierLayout: Record<string, { logoSize: string; cols: string }> = {
+  platine: { logoSize: 'max-h-20', cols: 'sm:grid-cols-2 lg:grid-cols-3' },
+  or: { logoSize: 'max-h-16', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
+  argent: { logoSize: 'max-h-14', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
+  bronze: { logoSize: 'max-h-12', cols: 'sm:grid-cols-4 lg:grid-cols-5' },
+};
 
-const sponsors = sponsorLevels
-  .map((level) => ({
-    ...level,
-    partners: allPartners.filter((p) => p.data.level === level.key),
-  }))
-  .filter((level) => level.partners.length > 0);
-
-// Partenaires techniques
-const techPartners = allPartners.filter((p) => p.data.level === 'technique' || p.data.level === 'institutionnel');
+const sponsors = await getSponsorGroups();
+const techPartners = await getTechnicalPartners();
 
 const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
 
@@ -62,29 +58,9 @@ const partnersJsonLd = partnerList(
                 {sponsors.map((level) => (
                   <div>
                     <h3 class="text-sm font-semibold uppercase tracking-wider text-cdl-orange mb-6 text-center">{level.label}</h3>
-                    <div class:list={['grid grid-cols-2 gap-6', level.cols]}>
+                    <div class:list={['grid grid-cols-2 gap-6', tierLayout[level.key].cols]}>
                       {level.partners.map((partner) => (
-                        <a
-                          href={partner.data.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="flex items-center justify-center p-6 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
-                        >
-                          <img
-                            src={partner.data.logo_light ?? partner.data.logo}
-                            alt={partner.data.name}
-                            class:list={['w-auto object-contain dark:hidden', level.logoSize]}
-                            loading="lazy"
-                            {...imgSize(partner.data.logo_light ?? partner.data.logo)}
-                          />
-                          <img
-                            src={partner.data.logo}
-                            alt={partner.data.name}
-                            class:list={['w-auto object-contain hidden dark:block', level.logoSize]}
-                            loading="lazy"
-                            {...imgSize(partner.data.logo)}
-                          />
-                        </a>
+                        <PartnerLogo partner={partner} logoSize={tierLayout[level.key].logoSize} />
                       ))}
                     </div>
                   </div>
@@ -105,30 +81,22 @@ const partnersJsonLd = partnerList(
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {techPartners.map((partner) => (
                   <a
-                    href={partner.data.url}
+                    href={partner.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-start gap-4 p-5 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 hover:border-cdl-orange/30 hover:shadow-md transition-all"
+                    class="flex items-start gap-4 p-5 rounded-xl border border-gray-200 bg-white hover:border-cdl-orange/30 hover:shadow-md transition-all"
                   >
-                  
                     <img
-                      src={partner.data.logo_light ?? partner.data.logo}
+                      src={partner.logo_light ?? partner.logo}
                       alt=""
-                      class="h-12 w-12 object-contain flex-shrink-0 dark:hidden"
+                      class="h-12 w-12 object-contain flex-shrink-0"
                       loading="lazy"
-                      {...imgSize(partner.data.logo_light ?? partner.data.logo)}
-                    />
-                    <img
-                      src={partner.data.logo}
-                      alt=""
-                      class="h-12 w-12 object-contain flex-shrink-0 hidden dark:block"
-                      loading="lazy"
-                      {...imgSize(partner.data.logo)}
+                      {...imgSize(partner.logo_light ?? partner.logo)}
                     />
                     <div>
-                      <p class="font-bold text-cdl-blue text-sm">{partner.data.name}</p>
-                      {partner.data.description && (
-                        <p class="text-xs text-cdl-gray mt-1">{partner.data.description}</p>
+                      <p class="font-bold text-cdl-blue-fixed text-sm">{partner.name}</p>
+                      {partner.description && (
+                        <p class="text-xs text-gray-600 mt-1">{partner.description}</p>
                       )}
                     </div>
                   </a>

@@ -1,6 +1,23 @@
 ---
 import { config } from '../../config';
 import ObfuscatedEmail from '../ui/ObfuscatedEmail.astro';
+import PartnerLogo from '../ui/PartnerLogo.astro';
+import { getSponsorGroups } from '../../lib/partners';
+
+// Sponsors only: the technical partners need the explanatory copy /partenaires
+// gives them, which does not fit a logo strip.
+const sponsorGroups = await getSponsorGroups();
+
+// Same tapering as /partenaires, one notch smaller — this is a preview, and the
+// tiers carry no headings here, so size is what conveys the hierarchy. Cards are
+// a centred flex row rather than a grid: a tier holding two sponsors would sit
+// off to the left in a five-column grid.
+const tierLayout: Record<string, { logoSize: string; width: string }> = {
+  platine: { logoSize: 'max-h-16', width: 'w-[calc(50%-0.5rem)] sm:w-52' },
+  or: { logoSize: 'max-h-14', width: 'w-[calc(50%-0.5rem)] sm:w-44' },
+  argent: { logoSize: 'max-h-12', width: 'w-[calc(50%-0.5rem)] sm:w-40' },
+  bronze: { logoSize: 'max-h-10', width: 'w-[calc(50%-0.5rem)] sm:w-36' },
+};
 ---
 
 <section class="py-16 sm:py-24 bg-white dark:bg-gray-900">
@@ -14,10 +31,21 @@ import ObfuscatedEmail from '../ui/ObfuscatedEmail.astro';
       </p>
     </div>
 
-    <!-- Placeholder — les logos seront ajoutés via content collections -->
-    <div class="text-center py-12 border-2 border-dashed border-cdl-gray-light rounded-2xl">
-      <p class="text-cdl-gray">Logos des partenaires à venir</p>
-    </div>
+    {sponsorGroups.length > 0 && (
+      <div class="space-y-6">
+        {sponsorGroups.map((tier) => (
+          <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+            {tier.partners.map((partner) => (
+              <PartnerLogo
+                partner={partner}
+                logoSize={tierLayout[tier.key].logoSize}
+                class={`p-4 sm:p-5 ${tierLayout[tier.key].width}`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    )}
 
     <div class="text-center mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
       <a
