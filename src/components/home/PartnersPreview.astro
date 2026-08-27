@@ -8,10 +8,11 @@ import { getSponsorGroups } from '../../lib/partners';
 // gives them, which does not fit a logo strip.
 const sponsorGroups = await getSponsorGroups();
 
-// Same tapering as /partenaires, one notch smaller — this is a preview, and the
-// tiers carry no headings here, so size is what conveys the hierarchy. Cards are
-// a centred flex row rather than a grid: a tier holding two sponsors would sit
-// off to the left in a five-column grid.
+// Same centred rows and tapering as /partenaires, one notch smaller — this is a
+// preview. The tier is named here too: sponsors buy the tier, and a 14px versus
+// 12px difference in logo height is not something a visitor can read as "Or
+// rather than Argent". Labels are muted grey, not the page's orange, so they
+// stay subordinate to the section heading.
 const tierLayout: Record<string, { logoSize: string; width: string }> = {
   platine: { logoSize: 'max-h-16', width: 'w-[calc(50%-0.5rem)] sm:w-52' },
   or: { logoSize: 'max-h-14', width: 'w-[calc(50%-0.5rem)] sm:w-44' },
@@ -32,16 +33,20 @@ const tierLayout: Record<string, { logoSize: string; width: string }> = {
     </div>
 
     {sponsorGroups.length > 0 && (
-      <div class="space-y-6">
+      <div class="space-y-8">
         {sponsorGroups.map((tier) => (
-          <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-            {tier.partners.map((partner) => (
-              <PartnerLogo
-                partner={partner}
-                logoSize={tierLayout[tier.key].logoSize}
-                class={`p-4 sm:p-5 ${tierLayout[tier.key].width}`}
-              />
-            ))}
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-cdl-gray mb-3 text-center">{tier.label}</h3>
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+              {tier.partners.map((partner) => (
+                <PartnerLogo
+                  partner={partner}
+                  logoSize={tierLayout[tier.key].logoSize}
+                  padding="p-4 sm:p-5"
+                  class={tierLayout[tier.key].width}
+                />
+              ))}
+            </div>
           </div>
         ))}
       </div>

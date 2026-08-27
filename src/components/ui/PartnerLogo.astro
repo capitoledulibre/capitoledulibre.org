@@ -6,10 +6,17 @@ interface Props {
   partner: Partner;
   /** Tailwind max-height class capping the logo, e.g. 'max-h-16'. */
   logoSize: string;
+  /**
+   * Tailwind padding class for the plate. Its own prop rather than something a
+   * caller passes through `class`: both would land on the same element, and
+   * Tailwind emits the padding utilities in ascending order, so the base `p-6`
+   * would win the cascade over a caller's `p-4` whatever the class order.
+   */
+  padding?: string;
   class?: string;
 }
 
-const { partner, logoSize, class: className } = Astro.props;
+const { partner, logoSize, padding = 'p-6', class: className } = Astro.props;
 
 // Brand logos are mostly dark ink, and the plate below stays light in both
 // themes, so the `-w` variant in `logo` is never the one to display here.
@@ -21,7 +28,8 @@ const src = partner.logo_light ?? partner.logo;
   target="_blank"
   rel="noopener noreferrer"
   class:list={[
-    'flex items-center justify-center p-6 rounded-xl border border-gray-200 bg-white hover:border-cdl-orange/30 hover:shadow-md transition-all',
+    'flex items-center justify-center rounded-xl border border-gray-200 bg-white hover:border-cdl-orange/30 hover:shadow-md transition-all',
+    padding,
     className,
   ]}
 >

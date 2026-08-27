@@ -15,13 +15,18 @@ const sponsorPhotos = getPhotosByTag('sponsor');
 
 const allPartners = await getCollection('partners');
 
-// Logo size and grid density taper with the tier; the tier order and grouping
-// live in lib/partners so the homepage preview cannot drift from this page.
-const tierLayout: Record<string, { logoSize: string; cols: string }> = {
-  platine: { logoSize: 'max-h-20', cols: 'sm:grid-cols-2 lg:grid-cols-3' },
-  or: { logoSize: 'max-h-16', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
-  argent: { logoSize: 'max-h-14', cols: 'sm:grid-cols-3 lg:grid-cols-4' },
-  bronze: { logoSize: 'max-h-12', cols: 'sm:grid-cols-4 lg:grid-cols-5' },
+// Logo and card size taper with the tier; the tier order and grouping live in
+// lib/partners so the homepage preview cannot drift from this page.
+//
+// Centred flex rows rather than a grid: a tier holds however many sponsors it
+// holds, so most tiers leave a grid's last row part-empty and ragged left — a
+// lone Or sponsor would sit in a quarter-width cell pinned to the far edge.
+// Fixed card widths keep the plates uniform, which is what the grid bought us.
+const tierLayout: Record<string, { logoSize: string; width: string }> = {
+  platine: { logoSize: 'max-h-20', width: 'w-[calc(50%-0.75rem)] sm:w-64' },
+  or: { logoSize: 'max-h-16', width: 'w-[calc(50%-0.75rem)] sm:w-56' },
+  argent: { logoSize: 'max-h-14', width: 'w-[calc(50%-0.75rem)] sm:w-48' },
+  bronze: { logoSize: 'max-h-12', width: 'w-[calc(50%-0.75rem)] sm:w-44' },
 };
 
 const sponsors = await getSponsorGroups();
@@ -58,9 +63,13 @@ const partnersJsonLd = partnerList(
                 {sponsors.map((level) => (
                   <div>
                     <h3 class="text-sm font-semibold uppercase tracking-wider text-cdl-orange mb-6 text-center">{level.label}</h3>
-                    <div class:list={['grid grid-cols-2 gap-6', tierLayout[level.key].cols]}>
+                    <div class="flex flex-wrap justify-center gap-6">
                       {level.partners.map((partner) => (
-                        <PartnerLogo partner={partner} logoSize={tierLayout[level.key].logoSize} />
+                        <PartnerLogo
+                          partner={partner}
+                          logoSize={tierLayout[level.key].logoSize}
+                          class={tierLayout[level.key].width}
+                        />
                       ))}
                     </div>
                   </div>
