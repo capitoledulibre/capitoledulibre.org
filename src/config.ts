@@ -31,6 +31,9 @@ export const config = {
     videos: 'https://videos.capitoledulibre.org',
     toulibre: 'https://toulibre.org',
     github: 'https://github.com/capitoledulibre',
+    // Sponsorship kit: tiers, prices and audience figures. Lives in
+    // public/static/pdf/ and is linked from /partenaires and the home preview.
+    partnersBrochure: '/static/pdf/Capitole-du-Libre-2026-Plaquette-Partenaires.pdf',
   },
   social: {
     mastodon: 'https://framapiaf.org/@capitoledulibre',

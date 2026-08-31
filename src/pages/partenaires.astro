@@ -9,6 +9,7 @@ import { getCollection } from 'astro:content';
 import PartnerLogo from '../components/ui/PartnerLogo.astro';
 import { getSponsorGroups, getTechnicalPartners } from '../lib/partners';
 import { config } from '../config';
+import ObfuscatedEmail from '../components/ui/ObfuscatedEmail.astro';
 import { breadcrumb, partnerList } from '../lib/jsonld';
 
 const sponsorPhotos = getPhotosByTag('sponsor');
@@ -154,17 +155,25 @@ const partnersJsonLd = partnerList(
           Soutenez le logiciel libre et gagnez en visibilité auprès de {config.stats.visitors.toLocaleString('fr-FR')} passionnés.
           Consultez notre plaquette partenaires pour découvrir les différentes formules.
         </p>
-        <a
-          href="/static/pdf/Capitole-du-Libre-2026-Plaquette-Partenaires.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-8 py-3.5 text-lg font-medium text-cdl-blue-fixed bg-white hover:bg-white/90 rounded-xl transition-colors shadow-lg"
-        >
-          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          Télécharger la plaquette partenaires
-        </a>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href={config.links.partnersBrochure}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-8 py-3.5 text-lg font-medium text-cdl-blue-fixed bg-white hover:bg-white/90 rounded-xl transition-colors shadow-lg"
+          >
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Télécharger la plaquette partenaires
+          </a>
+          <ObfuscatedEmail
+            subject={`Partenariat — Capitole du Libre ${config.edition.year}`}
+            class="inline-flex items-center gap-2 px-8 py-3.5 text-lg font-medium text-white border border-white/40 hover:bg-white/10 rounded-xl transition-colors"
+          >
+            Nous écrire
+          </ObfuscatedEmail>
+        </div>
       </div>
 
     </div>
