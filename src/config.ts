@@ -14,7 +14,7 @@ export const config = {
   },
   pretalx: {
     baseUrl: 'https://cfp.capitoledulibre.org/api',
-    eventSlug: 'cdl-2025', // TODO: changer en 'cdl-2026' quand le programme sera prêt
+    eventSlug: 'cdl-2026',
   },
   cfp: {
     url: 'https://cfp.capitoledulibre.org/cdl-2026/cfp',

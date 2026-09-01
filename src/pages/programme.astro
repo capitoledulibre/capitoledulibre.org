@@ -143,16 +143,6 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
   {scheduleJsonLd && <JsonLd slot="head" data={scheduleJsonLd} />}
   <PageHeader title="Programme" description="Conférences, ateliers et keynotes sur deux jours." />
 
-  {/* Bandeau programme 2025 */}
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8">
-    <div class="p-4 rounded-xl bg-cdl-gold/10 dark:bg-cdl-gold/5 border border-cdl-gold/20 text-center">
-      <p class="text-sm text-cdl-gray">
-        <strong class="text-cdl-blue">Le programme 2026 sera publié prochainement.</strong>
-        En attendant, vous pouvez consulter ci-dessous le programme de l'édition 2025 pour vous donner un aperçu.
-      </p>
-    </div>
-  </div>
-
   <section class="py-8 sm:py-12">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       {fetchError || talks.length === 0 ? (
