@@ -114,8 +114,9 @@ which are blocked on facts or on infrastructure access.
   associatif expansion: blog 178, contact 239, equipe 245, partenaires 273,
   lan-party 276, se-restaurer 288, medias 295. Each needs specific missing
   information rather than more prose:
-  - `/village-associatif` — the confirmed stand list (page still shows a
-    placeholder). This is the content that would actually rank.
+  - `/village-associatif` — the 33 confirmed stands are now listed from
+    `src/content/stands.yaml`. Still missing: a link per exhibitor (their site
+    or project page), which none of the Pretalx submissions carried.
   - `/lan-party` — the confirmed game list and whether registration is required.
   - `/se-restaurer` — food truck names/menus once known; nearby options.
   - `/medias`, `/temoignages` — a sentence of context per video.

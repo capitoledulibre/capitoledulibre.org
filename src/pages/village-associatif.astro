@@ -4,16 +4,18 @@ import PageHeader from '../components/ui/PageHeader.astro';
 import JsonLd from '../components/ui/JsonLd.astro';
 import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
+import { getStands } from '../lib/stands';
 import { config } from '../config';
 import { activityEvent, breadcrumb } from '../lib/jsonld';
 
 const photos = getPhotosByTag('village-associatif');
+const stands = getStands();
 
 // Open continuously across both days, so it inherits the edition's own hours.
 const villageEvent = activityEvent({
   name: 'Village associatif',
   description:
-    "Une trentaine de stands d'associations, communautés et projets du logiciel libre : démos en direct, échanges avec les contributeurs, documentation et goodies.",
+    `${stands.length} stands d'associations, communautés et projets du logiciel libre : démos en direct, échanges avec les contributeurs, documentation et goodies.`,
   path: '/village-associatif/',
   hours: [{ startTime: '09:30', endTime: '18:00' }],
   audienceType: 'Curieux, contributeurs, associations',
@@ -37,7 +39,7 @@ const practicalInfo = [
   },
   {
     label: 'Combien de stands',
-    value: `Une trentaine d'associations, communautés et projets du libre.`,
+    value: `${stands.length} associations, communautés et projets du libre, tous confirmés.`,
   },
 ];
 
@@ -59,7 +61,7 @@ const highlights = [
       {/* Intro */}
       <div class="max-w-3xl mx-auto text-center mb-16">
         <p class="text-lg text-cdl-gray leading-relaxed">
-          Le village associatif rassemble des dizaines d'associations, communautés et projets du logiciel libre.
+          Le village associatif rassemble {stands.length} associations, communautés et projets du logiciel libre.
           C'est l'endroit idéal pour découvrir, échanger et s'impliquer. Ouvert en continu pendant les deux jours de l'événement.
         </p>
       </div>
@@ -118,10 +120,22 @@ const highlights = [
         </p>
       </div>
 
-      {/* Liste des stands — placeholder */}
-      <div class="bg-white dark:bg-gray-800 rounded-2xl border border-cdl-gray-light p-8 sm:p-12 text-center mb-12">
-        <h2 class="text-2xl font-bold text-cdl-blue mb-4">Stands confirmés</h2>
-        <p class="text-cdl-gray mb-6">La liste des stands sera publiée prochainement.</p>
+      {/* Liste des stands */}
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-2 text-center">Stands confirmés</h2>
+        <p class="text-sm text-cdl-gray text-center mb-8">
+          {stands.length} stands, par ordre alphabétique. La liste peut encore évoluer d'ici novembre.
+        </p>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {stands.map((stand) => (
+            <li class="p-4 rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800">
+              <p class="font-semibold text-cdl-blue">{stand.name}</p>
+              {stand.tagline && (
+                <p class="text-sm text-cdl-gray leading-relaxed mt-1">{stand.tagline}</p>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* CTA proposer un stand */}

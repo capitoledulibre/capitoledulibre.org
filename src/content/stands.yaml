@@ -1,0 +1,55 @@
+# Stands confirmés du village associatif.
+#
+# Source: the "Stand Espace Associatif" submissions accepted in Pretalx. They
+# carry no schedule slot, so the public Pretalx API does not expose them and the
+# list has to be maintained here by hand.
+#
+# `name` is the exhibitor as it should read on the site: the redundant "Stand"
+# prefix is dropped, and so is "Association" when the organisation has a proper
+# name of its own. Everything descriptive in the original submission title moves
+# to `tagline`, which is optional.
+
+- name: April
+- name: Bareos
+  tagline: "100 % logiciel libre : l'écosystème et les nouveautés 2026"
+- name: Borsalinux-fr
+  tagline: L'association de la communauté francophone de Fedora
+- name: Coopérative Code Commun
+  tagline: TiBillet, la billetterie libre et coopérative
+- name: Debian France
+- name: Ergo-L
+  tagline: Ergonomique avant tout
+- name: FDN / FFDN
+- name: Framasoft
+- name: GNOME
+- name: GNU Guix
+- name: Haiku
+- name: JabberFR
+- name: Les sans pagEs
+- name: Libre en Communs
+- name: Linux et la musique
+- name: Linuxedu
+  tagline: Le libre dans l'éducation, la démarche Nird
+- name: Mageia
+- name: Modernisation du clavier français
+  tagline: L'association pour un clavier français adapté à tous les usages
+- name: Mozilla
+- name: OpenStreetMap
+- name: PURR
+- name: QuackMatrix
+- name: RoseLab
+  tagline: L'espace du faire de la Cité
+- name: RxLaboratorio
+- name: Silex Labs
+  tagline: Silex, éditeur de sites web libre
+- name: Skeptikon
+- name: tetaneutral.net
+- name: Vikidia
+  tagline: L'encyclopédie libre des 8-13 ans
+- name: Wikilibriste
+- name: WOCSA
+- name: WordPress Toulouse
+  tagline: "Partage, accessibilité et web ouvert"
+- name: XWiki / CryptPad
+- name: Zeste de Savoir
+  tagline: La connaissance pour tous et sans pépins !
