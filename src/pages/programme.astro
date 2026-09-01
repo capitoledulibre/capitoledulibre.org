@@ -297,8 +297,8 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
                                 {talk.room && (() => {
                                   const ri = parseRoom(talk.room);
                                   return (
-                                    <span class="text-[11px] font-medium text-cdl-blue-light bg-cdl-blue/5 px-2 py-0.5 rounded" title={ri?.directions}>
-                                      {talk.room}{ri ? ` · ${ri.buildingLetter}${ri.floor}` : ''}
+                                    <span class="text-[11px] font-medium text-cdl-blue-light bg-cdl-blue/5 px-2 py-0.5 rounded" title={ri?.label}>
+                                      {talk.room}
                                     </span>
                                   );
                                 })()}
@@ -735,8 +735,8 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
               ${ri.buildingLetter}
             </div>
             <div>
-              <p class="font-medium text-cdl-blue text-sm">${ri.building} — Salle ${ri.name}</p>
-              <p class="text-xs text-cdl-gray mt-0.5">${ri.directions}</p>
+              <p class="font-medium text-cdl-blue text-sm">${ri.label}</p>
+              ${ri.directions ? `<p class="text-xs text-cdl-gray mt-0.5">${ri.directions}</p>` : ''}
             </div>
           </div>
         `;
