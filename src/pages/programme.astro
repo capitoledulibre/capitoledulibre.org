@@ -126,6 +126,7 @@ const talksPayload = talks.map((t) => ({
   endFormatted: formatTime(t.end),
   roomInfo: t.room ? parseRoom(t.room) : null,
   descriptionHtml: renderMd(t.description),
+  audience: t.audience,
   speakers: t.speakers.map((s) => ({
     name: s.name,
     avatar: s.avatar,
@@ -340,6 +341,13 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
                                 </div>
                               )}
 
+                              {/* Public visé — free text from the CfP, so clamped to one line */}
+                              {talk.audience && (
+                                <p class="mt-2 text-[11px] text-cdl-gray/90 line-clamp-1" title={talk.audience}>
+                                  <span class="font-medium">Public :</span> {talk.audience}
+                                </p>
+                              )}
+
                               {/* Track badge */}
                               {talk.track && (
                                 <div class="mt-2 pt-2 border-t border-cdl-gray-light/50">
@@ -432,6 +440,11 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
           <div id="modal-room-plan" class="hidden sm:block"></div>
         </div>
 
+        <div id="modal-audience" class="hidden mb-6">
+          <h3 class="text-sm font-semibold text-cdl-blue uppercase tracking-wider mb-2">Public visé</h3>
+          <p id="modal-audience-text" class="text-sm text-cdl-gray leading-relaxed"></p>
+        </div>
+
         <div id="modal-speakers" class="mb-6"></div>
 
         <div id="modal-resources" class="hidden mb-6"></div>
@@ -504,7 +517,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
   const searchIndex = new Map(
     talks.map((t) => [
       t.code,
-      [t.title, t.speakers.map((s) => s.name).join(' '), t.track, toPlainText(t.descriptionHtml)]
+      [t.title, t.speakers.map((s) => s.name).join(' '), t.track, t.audience, toPlainText(t.descriptionHtml)]
         .join(' ')
         .toLowerCase(),
     ]),
@@ -722,6 +735,14 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     metaParts.push(`<span>${talk.duration} min</span>`);
     modalMeta.innerHTML = metaParts.join('<span class="text-cdl-gray-light">·</span>');
 
+    // Public visé
+    const modalAudience = document.getElementById('modal-audience');
+    const modalAudienceText = document.getElementById('modal-audience-text');
+    if (modalAudience && modalAudienceText) {
+      modalAudienceText.textContent = talk.audience || '';
+      modalAudience.classList.toggle('hidden', !talk.audience);
+    }
+
     // Room info with mini plan
     const modalRoomInfo = document.getElementById('modal-room-info');
     const modalRoomText = document.getElementById('modal-room-text');
@@ -890,6 +911,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
       const descParts = [];
       if (t.track) descParts.push(`Track : ${t.track}`);
       if (t.type) descParts.push(`Format : ${t.type}`);
+      if (t.audience) descParts.push(`Public visé : ${t.audience}`);
       const summaryText = toPlainText(t.descriptionHtml);
       if (summaryText) { descParts.push(''); descParts.push(summaryText); }
       lines.push(

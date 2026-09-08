@@ -10,7 +10,16 @@ const CACHE_TTL = (parseInt(process.env.PRETALX_CACHE_TTL || '3600', 10)) * 1000
 const CACHE_DIR = join(process.cwd(), '.cache');
 const CACHE_FILE = join(CACHE_DIR, `pretalx-${eventSlug}.json`);
 
+/**
+ * Bumped whenever FormattedTalk gains a field, so a cache written by an older
+ * build is refetched instead of silently serving talks missing the new data.
+ * A stale-schema cache is still kept as the last-resort fallback when Pretalx
+ * is down — half the fields beats an empty programme.
+ */
+const CACHE_SCHEMA = 2;
+
 interface CacheData {
+  schema?: number;
   timestamp: number;
   talks: FormattedTalk[];
 }
@@ -29,11 +38,11 @@ export class PretalxUnavailableError extends Error {
 }
 
 /** Reads the cache regardless of age; the caller decides whether stale is acceptable. */
-function readCache(): { talks: FormattedTalk[]; age: number } | null {
+function readCache(): { talks: FormattedTalk[]; age: number; schema: number } | null {
   try {
     const raw = readFileSync(CACHE_FILE, 'utf-8');
     const data: CacheData = JSON.parse(raw);
-    return { talks: data.talks, age: Date.now() - data.timestamp };
+    return { talks: data.talks, age: Date.now() - data.timestamp, schema: data.schema ?? 1 };
   } catch {
     // No cache, or it is unreadable/corrupt.
     return null;
@@ -43,7 +52,7 @@ function readCache(): { talks: FormattedTalk[]; age: number } | null {
 function writeCache(talks: FormattedTalk[]): void {
   try {
     mkdirSync(CACHE_DIR, { recursive: true });
-    const data: CacheData = { timestamp: Date.now(), talks };
+    const data: CacheData = { schema: CACHE_SCHEMA, timestamp: Date.now(), talks };
     writeFileSync(CACHE_FILE, JSON.stringify(data));
     console.log(`[pretalx] Cached ${talks.length} talks to ${CACHE_FILE}`);
   } catch (err) {
@@ -68,6 +77,18 @@ interface PretalxResource {
   description: string;
 }
 
+/** A speaker's answer to one of the event's CfP questions. */
+interface PretalxAnswer {
+  question: number;
+  answer: string | null;
+}
+
+interface PretalxQuestion {
+  id: number;
+  question: { fr: string } | string;
+  target: string;
+}
+
 interface PretalxSubmission {
   code: string;
   title: string;
@@ -79,6 +100,7 @@ interface PretalxSubmission {
   speakers: { code: string; name: string; biography: string | null; avatar_url: string }[];
   track: { id: number; name: { fr: string } } | null;
   resources: PretalxResource[];
+  answers: PretalxAnswer[];
 }
 
 interface PretalxRoom {
@@ -109,6 +131,8 @@ export interface FormattedTalk {
   start: string | null;
   end: string | null;
   resources: Resource[];
+  /** Speaker's own answer to the "Quel est le public visé ?" CfP question. */
+  audience: string | null;
 }
 
 function getLocalizedString(value: { fr: string } | string | null | undefined): string {
@@ -132,12 +156,43 @@ async function fetchAllPages<T>(url: string): Promise<T[]> {
   return results;
 }
 
+/**
+ * The answer is free text typed by the speaker, so casing is all over the place
+ * ("Tout public", "tout public", "débutant·es"). Only the first letter is
+ * normalised: rewriting more would mangle names like "opentofu" or "GNOME".
+ */
+function findAudience(submission: PretalxSubmission, questionId: number): string | null {
+  const answer = (submission.answers || []).find((a) => a.question === questionId)?.answer?.trim();
+  if (!answer) return null;
+  return answer.charAt(0).toUpperCase() + answer.slice(1);
+}
+
+/**
+ * Id of the "Quel est le public visé ?" CfP question, resolved by wording
+ * rather than hardcoded: the numeric id and the `identifier` are both minted
+ * per question, so a new edition gets new ones. Returns null when the question
+ * is absent (an edition that dropped it), which just leaves `audience` unset.
+ */
+async function fetchAudienceQuestionId(): Promise<number | null> {
+  const questions = await fetchAllPages<PretalxQuestion>(
+    `${baseUrl}/events/${eventSlug}/questions/?limit=100`,
+  );
+  const match = questions.find(
+    (q) => q.target === 'submission' && /public\s+vis/i.test(getLocalizedString(q.question)),
+  );
+  if (!match) {
+    console.warn('[pretalx] No "public visé" question on this event; talks will have no audience.');
+    return null;
+  }
+  return match.id;
+}
+
 async function fetchTalksFromApi(): Promise<FormattedTalk[]> {
   console.log(`[pretalx] Fetching from API: ${baseUrl}/events/${eventSlug}/...`);
 
-  const [submissions, slots, rooms] = await Promise.all([
+  const [submissions, slots, rooms, audienceQuestionId] = await Promise.all([
     fetchAllPages<PretalxSubmission>(
-      `${baseUrl}/events/${eventSlug}/submissions/?limit=100&state=confirmed&expand=submission_type,track,speakers,resources`
+      `${baseUrl}/events/${eventSlug}/submissions/?limit=100&state=confirmed&expand=submission_type,track,speakers,resources,answers`
     ),
     fetchAllPages<PretalxSlot>(
       `${baseUrl}/events/${eventSlug}/slots/?limit=200`
@@ -145,6 +200,7 @@ async function fetchTalksFromApi(): Promise<FormattedTalk[]> {
     fetchAllPages<PretalxRoom>(
       `${baseUrl}/events/${eventSlug}/rooms/?limit=100`
     ),
+    fetchAudienceQuestionId(),
   ]);
 
   const roomMap = new Map<number, string>();
@@ -182,6 +238,7 @@ async function fetchTalksFromApi(): Promise<FormattedTalk[]> {
           url: r.resource,
           description: r.description,
         })),
+        audience: audienceQuestionId === null ? null : findAudience(s, audienceQuestionId),
       };
     });
 }
@@ -189,14 +246,18 @@ async function fetchTalksFromApi(): Promise<FormattedTalk[]> {
 export async function getTalks(): Promise<FormattedTalk[]> {
   const cached = readCache();
 
-  if (cached && cached.age < CACHE_TTL) {
+  if (cached && cached.schema === CACHE_SCHEMA && cached.age < CACHE_TTL) {
     console.log(
       `[pretalx] Using cached data (${cached.talks.length} talks, ${Math.round(cached.age / 1000)}s old, TTL ${CACHE_TTL / 1000}s)`,
     );
     return cached.talks;
   }
 
-  if (cached) {
+  if (cached && cached.schema !== CACHE_SCHEMA) {
+    console.log(
+      `[pretalx] Cache schema ${cached.schema} predates ${CACHE_SCHEMA}; refetching.`,
+    );
+  } else if (cached) {
     console.log(
       `[pretalx] Cache expired (${Math.round(cached.age / 1000)}s old, TTL ${CACHE_TTL / 1000}s)`,
     );
