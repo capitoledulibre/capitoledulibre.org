@@ -2,11 +2,12 @@
 import { config } from '../../config';
 import ObfuscatedEmail from '../ui/ObfuscatedEmail.astro';
 import PartnerLogo from '../ui/PartnerLogo.astro';
-import { getSponsorGroups } from '../../lib/partners';
+import { getMediaPartners, getSponsorGroups } from '../../lib/partners';
 
-// Sponsors only: the technical partners need the explanatory copy /partenaires
-// gives them, which does not fit a logo strip.
+// Sponsors and media partners: the technical partners need the explanatory copy
+// /partenaires gives them, which does not fit a logo strip.
 const sponsorGroups = await getSponsorGroups();
+const mediaPartners = await getMediaPartners();
 
 // Same centred rows and tapering as /partenaires, one notch smaller — this is a
 // preview. The tier is named here too: sponsors buy the tier, and a 14px versus
@@ -49,6 +50,25 @@ const tierLayout: Record<string, { logoSize: string; width: string }> = {
             </div>
           </div>
         ))}
+      </div>
+    )}
+
+    {mediaPartners.length > 0 && (
+      <div class="mt-8">
+        {/* Spelt out rather than shortened to "Média": the row sits under the
+            Platine/Or/Argent/Bronze labels, and a one-word label there would
+            read as one more rung of the sponsor ladder. */}
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-cdl-gray mb-3 text-center">Partenaires média</h3>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+          {mediaPartners.map((partner) => (
+            <PartnerLogo
+              partner={partner}
+              logoSize="max-h-12"
+              padding="p-4 sm:p-5"
+              class="w-[calc(50%-0.5rem)] sm:w-40"
+            />
+          ))}
+        </div>
       </div>
     )}
 

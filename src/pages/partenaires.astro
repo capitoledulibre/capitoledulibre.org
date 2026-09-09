@@ -7,7 +7,7 @@ import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
 import { getCollection } from 'astro:content';
 import PartnerLogo from '../components/ui/PartnerLogo.astro';
-import { getSponsorGroups, getTechnicalPartners } from '../lib/partners';
+import { getMediaPartners, getSponsorGroups, getTechnicalPartners } from '../lib/partners';
 import { config } from '../config';
 import ObfuscatedEmail from '../components/ui/ObfuscatedEmail.astro';
 import { breadcrumb, partnerList } from '../lib/jsonld';
@@ -31,9 +31,10 @@ const tierLayout: Record<string, { logoSize: string; width: string }> = {
 };
 
 const sponsors = await getSponsorGroups();
+const mediaPartners = await getMediaPartners();
 const techPartners = await getTechnicalPartners();
 
-const hasAnyPartner = sponsors.length > 0 || techPartners.length > 0;
+const hasAnyPartner = sponsors.length > 0 || mediaPartners.length > 0 || techPartners.length > 0;
 
 const partnersJsonLd = partnerList(
   allPartners.map((partner) => partner.data),
@@ -74,6 +75,30 @@ const partnersJsonLd = partnerList(
                       ))}
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Partenaires média ── */}
+          {mediaPartners.length > 0 && (
+            <div class="mb-20">
+              <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-3">Partenaires média</h2>
+                <p class="text-cdl-gray max-w-2xl mx-auto">
+                  Ils relaient l'événement auprès de leurs lecteurs et font connaître le programme au-delà de Toulouse.
+                </p>
+              </div>
+              {/* Plates like the sponsor tiers rather than the technical partners'
+                  cards: media logos are wordmarks, and the 48px square icon those
+                  cards use would shrink one to an unreadable strip. */}
+              <div class="flex flex-wrap justify-center gap-6">
+                {mediaPartners.map((partner) => (
+                  <PartnerLogo
+                    partner={partner}
+                    logoSize="max-h-14"
+                    class="w-[calc(50%-0.75rem)] sm:w-48"
+                  />
                 ))}
               </div>
             </div>

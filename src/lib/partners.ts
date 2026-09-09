@@ -3,8 +3,9 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 export type Partner = CollectionEntry<'partners'>['data'];
 
 /**
- * Sponsor tiers, richest first. `technique` and `institutionnel` are partners
- * too, but they are not sponsors and are listed separately on /partenaires.
+ * Sponsor tiers, richest first. `media`, `technique` and `institutionnel` are
+ * partners too, but they are not sponsors and are listed separately on
+ * /partenaires.
  */
 export const SPONSOR_TIERS = [
   { key: 'platine', label: 'Platine' },
@@ -33,6 +34,17 @@ export async function getSponsorGroups(): Promise<SponsorGroup[]> {
       .filter((partner) => partner.level === tier.key)
       .sort((a, b) => a.name.localeCompare(b.name, 'fr')),
   })).filter((tier) => tier.partners.length > 0);
+}
+
+/**
+ * Press and community media who cover the event and carry our announcements to
+ * their readers, in exchange for visibility rather than money.
+ */
+export async function getMediaPartners(): Promise<Partner[]> {
+  const all = (await getCollection('partners')).map((entry) => entry.data);
+  return all
+    .filter((partner) => partner.level === 'media')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
 }
 
 /** Partners who provide services, hardware or expertise rather than money. */

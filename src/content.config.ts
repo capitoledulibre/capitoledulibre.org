@@ -35,7 +35,7 @@ const partners = defineCollection({
   loader: glob({ pattern: '**/*.{json,yaml}', base: './src/content/partners' }),
   schema: z.object({
     name: z.string(),
-    level: z.enum(['platine', 'or', 'argent', 'bronze', 'technique', 'institutionnel']),
+    level: z.enum(['platine', 'or', 'argent', 'bronze', 'media', 'technique', 'institutionnel']),
     logo: z.string(),
     logo_light: z.string().optional(),
     url: z.string(),
