@@ -243,7 +243,30 @@ async function fetchTalksFromApi(): Promise<FormattedTalk[]> {
     });
 }
 
-export async function getTalks(): Promise<FormattedTalk[]> {
+/**
+ * Per-process memo. `getTalks()` is now called by several routes (the
+ * programme, one page per talk, one OG card per talk) and `deploy` builds with
+ * PRETALX_CACHE_TTL=0, which makes the on-disk cache expire instantly — without
+ * this, every caller would re-fetch the whole API. One build is one process, so
+ * memoising for its duration is safe; dev re-checks after MEMO_TTL so a
+ * schedule change still shows up without restarting the server.
+ */
+const MEMO_TTL = import.meta.env.DEV ? 30_000 : Infinity;
+let memo: { at: number; promise: Promise<FormattedTalk[]> } | null = null;
+
+export function getTalks(): Promise<FormattedTalk[]> {
+  if (memo && Date.now() - memo.at < MEMO_TTL) return memo.promise;
+  const promise = fetchTalks();
+  memo = { at: Date.now(), promise };
+  // A rejected promise must not be memoised, or the whole build inherits one
+  // transient failure.
+  promise.catch(() => {
+    if (memo?.promise === promise) memo = null;
+  });
+  return promise;
+}
+
+async function fetchTalks(): Promise<FormattedTalk[]> {
   const cached = readCache();
 
   if (cached && cached.schema === CACHE_SCHEMA && cached.age < CACHE_TTL) {
