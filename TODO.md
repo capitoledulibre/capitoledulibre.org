@@ -162,6 +162,37 @@ which are blocked on facts or on infrastructure access.
   the partners `ItemList`. If that becomes a problem, the schema would need a
   `levels` array instead of a single `level`.
 
+## Programme — follow-ups to the shareable session pages (2026-09-10)
+
+Each session now has its own page (`/programme/talk/<code>/`), its own social
+card and its own `.ics`; the modal shares that URL and pushes it into the
+address bar. Ideas that came up while building it, none of them started:
+
+- **Speaker pages.** `/programme/speaker/<code>/` listing everything a speaker
+  gives, with their bio and links, cross-linked from each session page. Pretalx
+  already exposes `/speakers/`, and it is the one entity the site references
+  everywhere (JSON-LD `performer`, avatars, bios) without ever giving it a home.
+  Also the natural landing page when a speaker shares "I'm speaking at CdL".
+- **Share to Mastodon / Bluesky / LinkedIn from the modal.** Today "Partager"
+  copies the link (or opens the native sheet on mobile). Prefilled intents with
+  the talk title and `#cdl2026` would cost one popover and would measurably help
+  reach — speakers relay their own session far more readily than the event does.
+- **Filters in the URL.** `?jour=`, `?track=`, `?format=`, `?q=` so a filtered
+  view is shareable ("all the sysadmin talks on Sunday") and survives a reload.
+  The state already exists in the page; it is just never written to the URL.
+- **Favourite conflicts.** Two favourites in the same slot are currently
+  invisible. Flagging them ("3 favoris en même temps") in the favourites view,
+  and offering the same-slot alternatives, is the single most useful thing the
+  favourites feature is missing.
+- **Post-event enrichment.** Once videos are published, surface the recording on
+  the session page (Pretalx `resources` already carries slides links, and the
+  page renders them). That turns 120 session pages into 120 durable, indexable
+  landing pages instead of a schedule that expires the Monday after.
+- **`prefers-reduced-data` / weight.** `/programme` still ships every abstract
+  in a JSON island (see "Known residual weight"). Now that each talk has its own
+  page, the modal could fetch the abstract from that page on demand instead of
+  inlining all 120 — the biggest single saving left on the heaviest page.
+
 ## Explicitly ruled out (do not re-suggest)
 
 - Public call for volunteers — staffed via ENSEEIHT student partnership, already saturated.
