@@ -876,15 +876,33 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
       .replace(/\r?\n/g, '\\n');
   }
 
+  const icsEncoder = new TextEncoder();
+
+  /**
+   * Content lines are capped at 75 *octets*, and continuations start with a
+   * space. Counting characters overflowed the limit on accented French text
+   * and could cut an emoji in half. Mirrors fold() in src/lib/ics.ts.
+   */
   function foldIcsLine(line) {
-    if (line.length <= 75) return line;
-    const parts = [line.slice(0, 75)];
-    let i = 75;
-    while (i < line.length) {
-      parts.push(' ' + line.slice(i, i + 74));
-      i += 74;
+    if (icsEncoder.encode(line).length <= 75) return line;
+
+    const folded = [];
+    let current = '';
+    let bytes = 0;
+
+    for (const char of line) {
+      const size = icsEncoder.encode(char).length;
+      if (bytes + size > 75) {
+        folded.push(current);
+        current = ' ';
+        bytes = 1;
+      }
+      current += char;
+      bytes += size;
     }
-    return parts.join('\r\n');
+    folded.push(current);
+
+    return folded.join('\r\n');
   }
 
   function buildIcs(favTalks) {
