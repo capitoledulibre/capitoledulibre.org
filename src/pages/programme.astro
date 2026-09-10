@@ -9,7 +9,7 @@ import { breadcrumb, eventNode, sessionEvents } from '../lib/jsonld';
 import { getTalks, type FormattedTalk } from '../lib/pretalx';
 import { parseRoom } from '../lib/rooms';
 import { renderMarkdown } from '../lib/markdown';
-import { talkPath } from '../lib/talks';
+import { formatDayLabel, formatTalkTime, talkPath } from '../lib/talks';
 
 let talks: FormattedTalk[] = [];
 let fetchError = false;
@@ -36,20 +36,18 @@ const days = [...new Set(talks.map((t) => t.start?.slice(0, 10)).filter(Boolean)
 const tracks = [...new Set(talks.map((t) => t.track).filter(Boolean))].sort() as string[];
 const types = [...new Set(talks.map((t) => t.type).filter(Boolean))].sort() as string[];
 
-function formatTime(iso: string | null): string {
-  if (!iso) return '';
-  return new Date(iso).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-}
+/*
+ * Every displayed time is pinned to Europe/Paris by the helpers in lib/talks.
+ * These three used to format in the build machine's timezone, which silently
+ * worked only because the deploy runs from Toulouse: built with TZ=UTC, this
+ * page showed 10:00 for the talk its own session page showed as 11:00.
+ */
+const formatTime = formatTalkTime;
 
-function formatDay(dateStr: string): string {
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-}
+const formatDay = (dateStr: string) =>
+  formatDayLabel(dateStr, { weekday: 'long', day: 'numeric', month: 'long' });
 
-function formatDayShort(dateStr: string): string {
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('fr-FR', { weekday: 'long' });
-}
+const formatDayShort = (dateStr: string) => formatDayLabel(dateStr, { weekday: 'long' });
 
 // Group talks by day then by time slot
 type TimeSlot = { time: string; timeEnd: string; talks: FormattedTalk[] };

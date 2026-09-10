@@ -45,7 +45,7 @@ export function formatTalkTime(iso: string | null): string {
   return new Date(iso).toLocaleTimeString('fr-FR', TIME_FORMAT);
 }
 
-/** "samedi 14 novembre" */
+/** "samedi 14 novembre" from an instant. */
 export function formatTalkDay(iso: string | null): string {
   if (!iso) return '';
   return new Date(iso).toLocaleDateString('fr-FR', {
@@ -53,6 +53,25 @@ export function formatTalkDay(iso: string | null): string {
     day: 'numeric',
     month: 'long',
     timeZone: 'Europe/Paris',
+  });
+}
+
+/**
+ * Same, from a plain `YYYY-MM-DD` — the shape /programme derives its day tabs
+ * from, by slicing the Pretalx timestamp, so the string is already a
+ * Europe/Paris date.
+ *
+ * Anchored at noon UTC and formatted in UTC: a date-only string names no
+ * instant, and pinning it to the build machine's local midnight would shift
+ * the weekday on any machine far enough east or west.
+ */
+export function formatDayLabel(
+  dateStr: string,
+  options: Intl.DateTimeFormatOptions,
+): string {
+  return new Date(`${dateStr}T12:00:00Z`).toLocaleDateString('fr-FR', {
+    ...options,
+    timeZone: 'UTC',
   });
 }
 
