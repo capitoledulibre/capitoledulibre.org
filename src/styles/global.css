@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+/*
+ * Markdown rendered at runtime — talk abstracts, blog posts, the FAQ, the code
+ * of conduct — is styled with `prose`. Those classes were already in the markup
+ * but the plugin was never registered, so Tailwind's preflight reset (no list
+ * markers, no paragraph margins) was the only thing applying: every abstract
+ * rendered as one unbroken block.
+ */
+@plugin '@tailwindcss/typography';
+
 @import '@fontsource/ubuntu/400.css';
 @import '@fontsource/ubuntu/500.css';
 @import '@fontsource/ubuntu/700.css';
@@ -41,6 +50,31 @@
   --color-cdl-gray: #c8d2dc;
   --color-cdl-gray-light: #2d3748;
   --color-cdl-bg: #111827;
+}
+
+/* ── Rendered markdown (`prose`) ── */
+/*
+ * The plugin ships a grey scale of its own, which ignores the dark-mode
+ * overrides above. Re-pointing its variables at the CDL tokens is enough for
+ * `prose` to follow the theme without a `prose-invert` on every call site.
+ */
+.prose {
+  --tw-prose-body: var(--color-cdl-gray);
+  --tw-prose-headings: var(--color-cdl-blue);
+  --tw-prose-lead: var(--color-cdl-gray);
+  --tw-prose-links: var(--color-cdl-orange);
+  --tw-prose-bold: var(--color-cdl-blue);
+  --tw-prose-counters: var(--color-cdl-gray);
+  --tw-prose-bullets: var(--color-cdl-orange);
+  --tw-prose-hr: var(--color-cdl-gray-light);
+  --tw-prose-quotes: var(--color-cdl-blue);
+  --tw-prose-quote-borders: var(--color-cdl-orange);
+  --tw-prose-captions: var(--color-cdl-gray);
+  --tw-prose-code: var(--color-cdl-orange-dark);
+  --tw-prose-pre-code: var(--color-cdl-gray-light);
+  --tw-prose-pre-bg: var(--color-cdl-blue-dark-fixed);
+  --tw-prose-th-borders: var(--color-cdl-gray-light);
+  --tw-prose-td-borders: var(--color-cdl-gray-light);
 }
 
 /* ── Diagonal section transitions ── */

@@ -796,7 +796,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
               ? `<img src="${speaker.avatar}" alt="" class="h-10 w-10 rounded-full object-cover flex-shrink-0" width="40" height="40" loading="lazy" />`
               : `<span class="h-10 w-10 rounded-full bg-cdl-orange/10 flex items-center justify-center text-sm font-bold text-cdl-orange flex-shrink-0">${speaker.name.charAt(0)}</span>`;
             const bioHtml = speaker.biographyHtml
-              ? `<div class="text-xs text-cdl-gray mt-1 leading-relaxed prose prose-xs max-w-none">${speaker.biographyHtml}</div>`
+              ? `<div class="text-xs text-cdl-gray mt-1 leading-relaxed prose max-w-none">${speaker.biographyHtml}</div>`
               : '';
             return `
               <div class="flex gap-3 p-3 bg-cdl-bg rounded-xl">

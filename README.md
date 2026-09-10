@@ -112,6 +112,11 @@ year's schedule would be false structured data.
 `pnpm og` (needs the Ubuntu font installed system-wide). Re-run it after
 changing the edition dates or venue in `src/config.ts`.
 
+**Rendered markdown.** Talk abstracts, blog posts, the FAQ and the code of
+conduct are styled with `prose` (`@tailwindcss/typography`, registered in
+`src/styles/global.css`, with its colour variables pointed at the CDL tokens so
+it follows dark mode). Don't hand-roll paragraph spacing on markdown output.
+
 **Image dimensions.** `Picture.astro` and the raw `<img>` tags take their
 `width`/`height` from `src/content/image-dimensions.json`. Run
 `pnpm images:manifest` after adding or replacing an image, otherwise the new file

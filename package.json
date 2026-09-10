@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@tailwindcss/typography": "^0.5.20",
     "eslint": "^10.10.0",
     "eslint-plugin-astro": "^2.1.1",
     "prettier": "^3.9.6",
