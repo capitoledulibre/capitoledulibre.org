@@ -117,6 +117,17 @@ conduct are styled with `prose` (`@tailwindcss/typography`, registered in
 `src/styles/global.css`, with its colour variables pointed at the CDL tokens so
 it follows dark mode). Don't hand-roll paragraph spacing on markdown output.
 
+**Markdown from Pretalx is untrusted.** Abstracts and speaker biographies are
+written in a CfP field and rendered through `src/lib/markdown.ts`, which parses
+with `marked` and then runs an allowlist pass with `sanitize-html`. Never call
+`marked.parse()` directly on that content: markdown passes raw HTML through and
+`marked` has had no `sanitize` option since v5, so the result — injected with
+`set:html` on the session pages and `innerHTML` in the /programme modal — would
+execute whatever a speaker typed. Both dependencies are build-time only; nothing
+reaches the browser. Two notes if you edit the allowlist: an attribute added by
+`transformTags` must also appear in `allowedAttributes`, or it is filtered back
+out; and `<sup>` is in the list because a talk in the current programme uses it.
+
 **Image dimensions.** `Picture.astro` and the raw `<img>` tags take their
 `width`/`height` from `src/content/image-dimensions.json`. Run
 `pnpm images:manifest` after adding or replacing an image, otherwise the new file

@@ -8,15 +8,7 @@ import { config } from '../config';
 import { breadcrumb, eventNode, sessionEvents } from '../lib/jsonld';
 import { getTalks, type FormattedTalk } from '../lib/pretalx';
 import { parseRoom } from '../lib/rooms';
-import { marked } from 'marked';
-
-// Configure marked for safe output (no raw HTML passthrough)
-marked.setOptions({ breaks: true, gfm: true });
-
-function renderMd(text: string | null): string {
-  if (!text) return '';
-  return marked.parse(text) as string;
-}
+import { renderMarkdown } from '../lib/markdown';
 
 let talks: FormattedTalk[] = [];
 let fetchError = false;
@@ -125,12 +117,12 @@ const talksPayload = talks.map((t) => ({
   startFormatted: formatTime(t.start),
   endFormatted: formatTime(t.end),
   roomInfo: t.room ? parseRoom(t.room) : null,
-  descriptionHtml: renderMd(t.description),
+  descriptionHtml: renderMarkdown(t.description),
   audience: t.audience,
   speakers: t.speakers.map((s) => ({
     name: s.name,
     avatar: s.avatar,
-    biographyHtml: renderMd(s.biography),
+    biographyHtml: renderMarkdown(s.biography),
   })),
   resources: t.resources,
 }));
