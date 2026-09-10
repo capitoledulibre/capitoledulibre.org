@@ -159,7 +159,13 @@ const PIN_PATH = 'M0 0C-10-20-18-28-18-42A18 18 0 1 1 18-42C18-28 10-20 0 0Z';
       const cy = b.labelY ?? b.y! + b.h! / 2;
       return (
         <g
-          class:list={['cp-bld', `cp-bld--${b.letter.toLowerCase()}`]}
+          class:list={[
+            'cp-bld',
+            `cp-bld--${b.letter.toLowerCase()}`,
+            // Applied here rather than only in the client script, so a static
+            // plan (the session pages) highlights its building without JS.
+            highlight && (b.letter === highlight ? 'is-active' : 'is-dimmed'),
+          ]}
           data-building={b.letter}
           role={interactive ? 'button' : undefined}
           tabindex={interactive ? 0 : undefined}

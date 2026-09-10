@@ -17,6 +17,11 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  /**
+   * Dimensions of `ogImage`, for cards generated at build time (the per-talk
+   * ones) that are not in src/content/image-dimensions.json.
+   */
+  ogImageSize?: { width: number; height: number };
   ogImageAlt?: string;
   ogType?: string;
   noindex?: boolean;
@@ -36,6 +41,7 @@ const {
   title,
   description = defaultDescription,
   ogImage = OG_CARD,
+  ogImageSize: ogImageSizeProp,
   ogImageAlt = defaultOgImageAlt,
   ogType = 'website',
   noindex = false,
@@ -44,7 +50,7 @@ const {
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage, Astro.site);
-const ogImageSize = getImageDimensions(ogImage);
+const ogImageSize = ogImageSizeProp ?? getImageDimensions(ogImage);
 // The edition year belongs in the title: people search "capitole du libre 2026",
 // and page titles were short enough to have room for it.
 const fullTitle = fullTitleProp ?? `${title} — Capitole du Libre ${config.edition.year}`;

@@ -112,6 +112,24 @@ year's schedule would be false structured data.
 `pnpm og` (needs the Ubuntu font installed system-wide). Re-run it after
 changing the edition dates or venue in `src/config.ts`.
 
+**Session pages and their cards.** Every talk gets its own page at
+`/programme/talk/<code>/`, plus `og.jpg` (a 1200x630 card naming the talk, its
+speakers and its slot) and `event.ics` next to it. That page — not the Pretalx
+permalink — is the canonical URL for a session: it is what the modal's
+"Partager" button hands out and what the modal pushes into the address bar, so
+a shared link unfurls as that talk instead of the generic event card. Opening
+it cold renders the full page, which also means a session is readable with
+JavaScript off. The cards on /programme are real `<a>` links to those pages —
+only a plain left click is intercepted to open the modal — so middle-click,
+ctrl-click and "copy link address" behave, and crawlers reach the session pages
+without going through the sitemap. The cards are drawn at build time by `src/lib/ogTalkCard.ts`,
+which needs the same system-wide Ubuntu font as `pnpm og`; without it, or
+without `sharp`, talks fall back to the generic card and the build carries on.
+Rendered cards are cached in `.cache/og-talks/` keyed by their content, so only
+edited talks are redrawn. The key covers the talk and the layout version, not
+the background photo or the logo — after swapping either, `rm -rf .cache/og-talks`
+to force a redraw.
+
 **Rendered markdown.** Talk abstracts, blog posts, the FAQ and the code of
 conduct are styled with `prose` (`@tailwindcss/typography`, registered in
 `src/styles/global.css`, with its colour variables pointed at the CDL tokens so

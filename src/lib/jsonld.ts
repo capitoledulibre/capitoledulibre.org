@@ -1,4 +1,5 @@
 import { config } from '../config';
+import { plainAbstract, truncate } from './talks';
 
 /**
  * schema.org helpers.
@@ -344,14 +345,13 @@ export interface SessionInput {
   speakers: { name: string }[];
 }
 
-/** Strips markdown/HTML so descriptions stay plain text in structured data. */
+/**
+ * Strips markdown/HTML so descriptions stay plain text in structured data.
+ * Shares `plainAbstract` with the session pages and social cards: two
+ * implementations had already drifted apart on how they treat markdown links.
+ */
 function plainText(input: string, maxLength = 500): string {
-  const text = input
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/[*_`>#[\]()]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return text.length > maxLength ? `${text.slice(0, maxLength - 1).trimEnd()}…` : text;
+  return truncate(plainAbstract(input), maxLength);
 }
 
 /**
