@@ -365,7 +365,14 @@ const icsUrl = talk.start && talk.end ? `${talkPath(talk.code)}event.ics` : null
                 {room.directions && <p class="text-xs text-cdl-gray mt-0.5">{room.directions}</p>}
               </div>
             </div>
-            <a href="/lieu/" class="block p-3 pt-0 hover:opacity-90 transition-opacity" title="Voir le plan complet">
+            {/* Without a name of its own, this link takes the plan's long
+                `aria-label` as its accessible name — a paragraph describing
+                the whole campus, read out as the link text. */}
+            <a
+              href="/lieu/"
+              aria-label="Voir le plan complet du campus"
+              class="block p-3 pt-0 hover:opacity-90 transition-opacity"
+            >
               <CampusPlan highlight={room.buildingLetter} interactive={false} showLegend={false} />
             </a>
           </div>

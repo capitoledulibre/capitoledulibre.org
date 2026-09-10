@@ -394,6 +394,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
   {/* Modal */}
   <dialog
     id="talk-modal"
+    aria-labelledby="modal-title"
     class="fixed inset-0 m-auto w-full max-w-2xl max-h-[85vh] rounded-2xl border-none shadow-2xl p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm dark:bg-gray-800"
   >
     <div class="relative overflow-y-auto max-h-[85vh]">
@@ -981,10 +982,15 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     const message = copied ? 'Lien copié !' : 'Copie impossible';
     if (modalShareStatus) modalShareStatus.textContent = message;
     if (modalShareLabel) modalShareLabel.textContent = message;
+    // The aria-label is the button's accessible name and overrides the visible
+    // text, so it has to follow it — otherwise a voice-control user reading
+    // "Lien copié !" on screen has no way to address the control.
+    modalShare.setAttribute('aria-label', message);
     clearTimeout(shareLabelTimer);
     shareLabelTimer = setTimeout(() => {
       if (modalShareStatus) modalShareStatus.textContent = '';
       if (modalShareLabel) modalShareLabel.textContent = 'Partager';
+      modalShare.setAttribute('aria-label', 'Partager cette session');
     }, 2500);
   });
 
