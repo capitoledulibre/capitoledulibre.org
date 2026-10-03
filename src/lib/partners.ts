@@ -47,8 +47,16 @@ export async function getMediaPartners(): Promise<Partner[]> {
     .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
 }
 
+/** Public bodies (local and regional authorities) backing the event. */
+export async function getInstitutionalPartners(): Promise<Partner[]> {
+  const all = (await getCollection('partners')).map((entry) => entry.data);
+  return all
+    .filter((partner) => partner.level === 'institutionnel')
+    .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+}
+
 /** Partners who provide services, hardware or expertise rather than money. */
 export async function getTechnicalPartners(): Promise<Partner[]> {
   const all = (await getCollection('partners')).map((entry) => entry.data);
-  return all.filter((partner) => partner.level === 'technique' || partner.level === 'institutionnel');
+  return all.filter((partner) => partner.level === 'technique');
 }

@@ -2,11 +2,12 @@
 import { config } from '../../config';
 import ObfuscatedEmail from '../ui/ObfuscatedEmail.astro';
 import PartnerLogo from '../ui/PartnerLogo.astro';
-import { getMediaPartners, getSponsorGroups } from '../../lib/partners';
+import { getInstitutionalPartners, getMediaPartners, getSponsorGroups } from '../../lib/partners';
 
-// Sponsors and media partners: the technical partners need the explanatory copy
-// /partenaires gives them, which does not fit a logo strip.
+// Sponsors, institutional and media partners: the technical partners need the
+// explanatory copy /partenaires gives them, which does not fit a logo strip.
 const sponsorGroups = await getSponsorGroups();
+const institutionalPartners = await getInstitutionalPartners();
 const mediaPartners = await getMediaPartners();
 
 // Same centred rows and tapering as /partenaires, one notch smaller — this is a
@@ -50,6 +51,22 @@ const tierLayout: Record<string, { logoSize: string; width: string }> = {
             </div>
           </div>
         ))}
+      </div>
+    )}
+
+    {institutionalPartners.length > 0 && (
+      <div class="mt-8">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-cdl-gray mb-3 text-center">Partenaires institutionnels</h3>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+          {institutionalPartners.map((partner) => (
+            <PartnerLogo
+              partner={partner}
+              logoSize="max-h-20"
+              padding="p-4 sm:p-5"
+              class="w-[calc(50%-0.5rem)] sm:w-40"
+            />
+          ))}
+        </div>
       </div>
     )}
 

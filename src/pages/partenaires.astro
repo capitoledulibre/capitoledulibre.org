@@ -7,7 +7,7 @@ import Picture from '../components/ui/Picture.astro';
 import { getPhotosByTag } from '../lib/photos';
 import { getCollection } from 'astro:content';
 import PartnerLogo from '../components/ui/PartnerLogo.astro';
-import { getMediaPartners, getSponsorGroups, getTechnicalPartners } from '../lib/partners';
+import { getInstitutionalPartners, getMediaPartners, getSponsorGroups, getTechnicalPartners } from '../lib/partners';
 import { config } from '../config';
 import ObfuscatedEmail from '../components/ui/ObfuscatedEmail.astro';
 import { breadcrumb, partnerList } from '../lib/jsonld';
@@ -31,10 +31,12 @@ const tierLayout: Record<string, { logoSize: string; width: string }> = {
 };
 
 const sponsors = await getSponsorGroups();
+const institutionalPartners = await getInstitutionalPartners();
 const mediaPartners = await getMediaPartners();
 const techPartners = await getTechnicalPartners();
 
-const hasAnyPartner = sponsors.length > 0 || mediaPartners.length > 0 || techPartners.length > 0;
+const hasAnyPartner =
+  sponsors.length > 0 || institutionalPartners.length > 0 || mediaPartners.length > 0 || techPartners.length > 0;
 
 const partnersJsonLd = partnerList(
   allPartners.map((partner) => partner.data),
@@ -75,6 +77,29 @@ const partnersJsonLd = partnerList(
                       ))}
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Partenaires institutionnels ── */}
+          {institutionalPartners.length > 0 && (
+            <div class="mb-20">
+              <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-3">Partenaires institutionnels</h2>
+                <p class="text-cdl-gray max-w-2xl mx-auto">
+                  Les collectivités qui soutiennent le Capitole du Libre et la diffusion du logiciel libre sur le territoire.
+                </p>
+              </div>
+              {/* Plates rather than the technical partners' cards: these
+                  emblems carry their own wordmark, unreadable at 48px. */}
+              <div class="flex flex-wrap justify-center gap-6">
+                {institutionalPartners.map((partner) => (
+                  <PartnerLogo
+                    partner={partner}
+                    logoSize="max-h-24"
+                    class="w-[calc(50%-0.75rem)] sm:w-48"
+                  />
                 ))}
               </div>
             </div>

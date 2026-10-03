@@ -783,6 +783,10 @@
     "width": 2392,
     "height": 886
   },
+  "/static/img/partners/logo-bareos.png": {
+    "width": 743,
+    "height": 233
+  },
   "/static/img/partners/logo-bleemeo.svg": {
     "width": 829,
     "height": 273
@@ -819,9 +823,21 @@
     "width": 300,
     "height": 63
   },
+  "/static/img/partners/logo-evolix.png": {
+    "width": 800,
+    "height": 242
+  },
+  "/static/img/partners/logo-haute-garonne.svg": {
+    "width": 320,
+    "height": 429
+  },
   "/static/img/partners/logo-inp-net.png": {
     "width": 200,
     "height": 200
+  },
+  "/static/img/partners/logo-loxodata.png": {
+    "width": 300,
+    "height": 120
   },
   "/static/img/partners/logo-makina-corpus.png": {
     "width": 500,
@@ -842,6 +858,10 @@
   "/static/img/partners/logo-photo7.png": {
     "width": 153,
     "height": 44
+  },
+  "/static/img/partners/logo-region-occitanie.png": {
+    "width": 400,
+    "height": 400
   },
   "/static/img/partners/logo-scaleway.svg": {
     "width": 410,
@@ -878,6 +898,10 @@
   "/static/img/partners/logo-tvn7.png": {
     "width": 299,
     "height": 258
+  },
+  "/static/img/partners/logo-viveris.svg": {
+    "width": 200,
+    "height": 80
   },
   "/static/img/partners/logo-worteks.png": {
     "width": 387,
