@@ -137,10 +137,11 @@ which are blocked on facts or on infrastructure access.
   is gated and stays off until the Pretalx slug matches the edition year.
 
 ### Known residual weight
-- **`/programme` is 591 KB of HTML** (down from 887 KB; 100 KB gzipped, down
-  from 164 KB). What remains is the talk descriptions the modal needs, shipped
-  once in a JSON island. If it needs to shrink further, fetch descriptions on
-  demand from Pretalx instead of inlining them.
+- **`/programme` is 559 KB of HTML, 57 KB gzipped** (2026-10-05, 123 sessions;
+  it had grown back to 848 KB / 154 KB as the programme filled up). Abstracts
+  and bios now come from `/programme/details.json` (69 KB gzipped), fetched on
+  first modal open, search or .ics export, and the `subEvent` nodes no longer
+  repeat descriptions. What remains is mostly card markup, which gzips well.
 - **`public/static/img/img01.jpg` is 3.8 MB** (3889x2593). No longer used as
   `og:image`, but it is still the `<picture>` fallback for browsers without AVIF
   or WebP, and the lightbox's full-size target. Generating downscaled JPEG
@@ -188,10 +189,8 @@ address bar. Ideas that came up while building it, none of them started:
   the session page (Pretalx `resources` already carries slides links, and the
   page renders them). That turns 120 session pages into 120 durable, indexable
   landing pages instead of a schedule that expires the Monday after.
-- **`prefers-reduced-data` / weight.** `/programme` still ships every abstract
-  in a JSON island (see "Known residual weight"). Now that each talk has its own
-  page, the modal could fetch the abstract from that page on demand instead of
-  inlining all 120 — the biggest single saving left on the heaviest page.
+- ✅ **Weight** *(done 2026-10-05)* — abstracts fetched on demand, see "Known
+  residual weight".
 
 ## Explicitly ruled out (do not re-suggest)
 

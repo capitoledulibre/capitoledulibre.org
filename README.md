@@ -44,6 +44,9 @@ pnpm images:manifest
 # Régénérer la carte de partage social + les images Event schema.org
 pnpm og
 
+# Régénérer les icônes PWA (manifest, iOS) depuis le favicon
+pnpm icons
+
 # Images, vidéos et manifeste d'un coup
 pnpm optimize
 ```
@@ -178,6 +181,24 @@ location / {
     add_header Cache-Control "public, max-age=0, must-revalidate";
 }
 ```
+
+**Offline (PWA).** There is no attendee Wi-Fi at the venue, so the programme,
+campus plan and practical pages work offline. `src/pwa/sw.js` is a template;
+the integration in `src/pwa/integration.mjs` writes `dist/sw.js` after each
+build with the precache list (pages, `/programme/details.json`, CSS/JS, Latin
+fonts) and a version hashed from their content, so a deploy that changes the
+programme rolls out fresh caches and an unchanged rebuild does not. Pages are
+network-first with a 4 s fallback to the cache. Offline, a session URL that was
+never visited is answered with `/programme/`, which opens that session's modal
+from the path; any other unknown page gets `/hors-ligne/`. The worker is only
+registered in production builds. `sw.js` must stay under the must-revalidate
+rule above, never under a long-lived cache. Icons: `pnpm icons`.
+
+**Programme weight.** Abstracts and speaker bios are not inlined in
+`/programme`: they live in `/programme/details.json`, fetched on the first
+modal open, search focus or `.ics` export. The "En ce moment" panel at the top
+of `/programme` only shows on event days, from an hour before the first
+session; append `?now=2026-11-14T15:10:00%2B01:00` to preview it.
 
 **Pending infrastructure item.** `www.capitoledulibre.org` does not resolve
 (NXDOMAIN), so anyone typing `www` gets a browser error and any inbound link

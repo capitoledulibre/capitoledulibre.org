@@ -22,8 +22,9 @@ export default [
     },
   },
   {
-    // Node-side files: build config and the image/OG generation scripts.
-    files: ['scripts/**/*.mjs', 'scripts/**/*.js', '*.config.mjs'],
+    // Node-side files: build config, the image/OG generation scripts and the
+    // integration that writes the service worker.
+    files: ['scripts/**/*.mjs', 'scripts/**/*.js', '*.config.mjs', 'src/pwa/integration.mjs'],
     languageOptions: {
       globals: {
         process: 'readonly',

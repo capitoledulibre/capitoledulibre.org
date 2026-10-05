@@ -8,7 +8,6 @@ import { config } from '../config';
 import { breadcrumb, eventNode, sessionEvents } from '../lib/jsonld';
 import { getTalks, type FormattedTalk } from '../lib/pretalx';
 import { parseRoom } from '../lib/rooms';
-import { renderMarkdown } from '../lib/markdown';
 import { formatDayLabel, formatTalkTime, talkPath } from '../lib/talks';
 
 let talks: FormattedTalk[] = [];
@@ -94,7 +93,7 @@ const isCurrentEdition = eventSlug === `cdl-${config.edition.year}`;
 const scheduleJsonLd =
   isCurrentEdition && talks.length > 0
     ? eventNode({
-        subEvents: sessionEvents(talks, talkUrl),
+        subEvents: sessionEvents(talks, talkUrl, { withDescription: false }),
         performers: [...new Map(
           talks.flatMap((t) => t.speakers).map((s) => [s.name, { name: s.name }]),
         ).values()],
@@ -102,10 +101,15 @@ const scheduleJsonLd =
     : null;
 
 /**
- * Client payload for the modal, search and .ics export. Only what the client
- * actually reads: shipping `...t` also sent the raw markdown alongside the
- * rendered HTML, doubling the weight of the single heaviest page on the site.
+ * Client payload for the modal, search, .ics export and the "En ce moment"
+ * panel. Only what the client reads up front: abstracts and speaker bios live
+ * in /programme/details.json, fetched on first need — they were two thirds of
+ * this payload. Room details are keyed by room rather than repeated per talk.
  */
+const roomsPayload = Object.fromEntries(
+  [...new Set(talks.map((t) => t.room).filter(Boolean))].map((room) => [room, parseRoom(room!)]),
+);
+
 const talksPayload = talks.map((t) => ({
   code: t.code,
   title: t.title,
@@ -117,19 +121,19 @@ const talksPayload = talks.map((t) => ({
   end: t.end,
   startFormatted: formatTime(t.start),
   endFormatted: formatTime(t.end),
-  roomInfo: t.room ? parseRoom(t.room) : null,
-  descriptionHtml: renderMarkdown(t.description),
   audience: t.audience,
   speakers: t.speakers.map((s) => ({
     name: s.name,
     avatar: s.avatar,
-    biographyHtml: renderMarkdown(s.biography),
   })),
   resources: t.resources,
 }));
 
 // Escaping `<` keeps a description containing "</script>" from closing the tag.
-const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
+const talksJson = JSON.stringify({ talks: talksPayload, rooms: roomsPayload }).replace(
+  /</g,
+  '\\u003c',
+);
 ---
 
 <BaseLayout title="Programme" description="Découvrez le programme complet du Capitole du Libre : conférences, ateliers, keynotes.">
@@ -163,7 +167,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
       ) : (
         <>
           {/* Barre de filtres sticky */}
-          <div class="sticky top-16 z-30 bg-cdl-bg/95 dark:bg-gray-900/95 backdrop-blur-sm -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 border-b border-cdl-gray-light mb-8">
+          <div id="filter-bar" class="sticky top-16 z-30 bg-cdl-bg/95 dark:bg-gray-900/95 backdrop-blur-sm -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-4 border-b border-cdl-gray-light mb-8">
             <div class="flex flex-wrap items-center gap-3">
               {/* Onglets jour */}
               <div class="flex gap-1 p-1 bg-cdl-gray-light rounded-lg" role="tablist" aria-label="Jour">
@@ -251,6 +255,30 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
             aria-live="polite"
             class="text-sm text-cdl-gray mb-6"
           ></p>
+
+          {/* Offline availability — filled by the script, see updateOfflineStatus() */}
+          <p id="offline-status" role="status" class="hidden -mt-3 mb-6 text-xs text-cdl-gray"></p>
+
+          {/* En ce moment — filled and revealed by the script during the event only */}
+          <section id="maintenant" class="hidden mb-10" aria-labelledby="now-title">
+            <div class="rounded-2xl border border-red-600/30 bg-white dark:bg-gray-800 p-4 sm:p-6 shadow-sm">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-4">
+                <h2 id="now-title" class="inline-flex items-center gap-2 text-xl font-bold text-cdl-blue">
+                  <span class="h-2.5 w-2.5 rounded-full bg-red-600 animate-pulse motion-reduce:animate-none" aria-hidden="true"></span>
+                  En ce moment
+                </h2>
+                <p id="now-clock" class="text-xs text-cdl-gray"></p>
+              </div>
+              <ul id="now-current" class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3"></ul>
+              <p id="now-current-empty" class="hidden text-sm text-cdl-gray">
+                Aucune session en cours : c'est le moment de faire un tour au <a href="/village-associatif/" class="text-cdl-orange hover:underline">village associatif</a> !
+              </p>
+              <div id="now-next-block" class="hidden">
+                <h3 class="mt-6 mb-3 text-sm font-semibold text-cdl-blue uppercase tracking-wider">À suivre</h3>
+                <ul id="now-next" class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3"></ul>
+              </div>
+            </div>
+          </section>
 
           {/* Timeline par jour */}
           {schedule.map((daySchedule, dayIdx) => (
@@ -504,12 +532,16 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
   data-event-slug={eventSlug}
   data-site-url={Astro.site}
   data-venue={config.venue.name}
+  data-built-at={new Date().toISOString()}
   set:html={talksJson}
 />
 
 <script>
   const dataEl = document.getElementById('talks-data');
-  const talks = dataEl ? JSON.parse(dataEl.textContent || '[]') : [];
+  const payload = dataEl ? JSON.parse(dataEl.textContent || '{}') : {};
+  const talks = payload.talks || [];
+  /** Room name → parsed room details (building, floor, directions). */
+  const rooms = payload.rooms || {};
   const eventSlug = dataEl?.dataset.eventSlug || '';
   // Canonical origin, so a shared link points at the published site even when
   // the page is being read from a preview host.
@@ -544,17 +576,54 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     return (el.textContent || '').replace(/\s+/g, ' ').trim();
   }
 
-  // Search index, built once from the payload. Previously each card carried a
-  // `data-search` attribute holding its full description — the single biggest
-  // chunk of duplicated markup on the page.
-  const searchIndex = new Map(
-    talks.map((t) => [
-      t.code,
-      [t.title, t.speakers.map((s) => s.name).join(' '), t.track, t.audience, toPlainText(t.descriptionHtml)]
-        .join(' ')
-        .toLowerCase(),
-    ]),
-  );
+  // ── Long-form text (abstracts, bios), fetched on first need ──
+  // Kept out of the page so /programme paints and becomes interactive on a
+  // weak connection; see src/pages/programme/details.json.ts.
+  let details = null;
+  let detailsPromise = null;
+
+  function loadDetails() {
+    if (!detailsPromise) {
+      detailsPromise = fetch('/programme/details.json')
+        .then((res) => {
+          if (!res.ok) throw new Error(`details.json: HTTP ${res.status}`);
+          return res.json();
+        })
+        .then((data) => {
+          details = data;
+          rebuildSearchIndex();
+          return data;
+        })
+        .catch((err) => {
+          // Let the next attempt retry, e.g. once the connection is back.
+          detailsPromise = null;
+          throw err;
+        });
+    }
+    return detailsPromise;
+  }
+
+  // Search index. Titles, speakers, track and audience are searchable at once;
+  // abstracts join in as soon as details.json has arrived.
+  const searchIndex = new Map();
+
+  function rebuildSearchIndex() {
+    for (const t of talks) {
+      searchIndex.set(
+        t.code,
+        [
+          t.title,
+          t.speakers.map((s) => s.name).join(' '),
+          t.track,
+          t.audience,
+          toPlainText(details?.[t.code]?.descriptionHtml),
+        ]
+          .join(' ')
+          .toLowerCase(),
+      );
+    }
+  }
+  rebuildSearchIndex();
 
   // ── Favorites (localStorage, scoped by event slug) ──
   const STORAGE_KEY = `cdl-favorites-${eventSlug}`;
@@ -612,6 +681,8 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     }
     // Re-apply filters if fav filter is active
     if (favFilterActive) applyFilters();
+    // The "En ce moment" panel highlights and sorts by favourites too.
+    updateNowPanel(getNow());
   }
 
   // Card fav buttons
@@ -673,6 +744,12 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
   searchInput?.addEventListener('input', () => {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(applyFilters, 150);
+  });
+  // Start fetching abstracts as soon as someone means to search, and re-run the
+  // query once they are in so matches inside descriptions show up too.
+  searchInput?.addEventListener('focus', () => {
+    if (details) return;
+    loadDetails().then(applyFilters, () => {});
   });
   trackSelect?.addEventListener('change', applyFilters);
   typeSelect?.addEventListener('change', applyFilters);
@@ -793,8 +870,8 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     const modalRoomText = document.getElementById('modal-room-text');
     const modalRoomPlan = document.getElementById('modal-room-plan');
     if (modalRoomInfo && modalRoomText) {
-      if (talk.roomInfo) {
-        const ri = talk.roomInfo;
+      const ri = talk.room ? rooms[talk.room] : null;
+      if (ri) {
         modalRoomText.innerHTML = `
           <div class="flex items-start gap-3 p-4 rounded-xl border" style="border-color: ${ri.color}20; background-color: ${ri.color}05">
             <div class="flex-shrink-0 h-10 w-10 rounded-lg flex items-center justify-center font-bold text-white text-lg" style="background-color: ${ri.color}">
@@ -830,34 +907,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
       }
     }
 
-    // Speakers with avatar and bio
-    if (talk.speakers.length > 0) {
-      const speakerLabel = talk.speakers.length > 1 ? 'Intervenant·es' : 'Intervenant·e';
-      modalSpeakers.innerHTML = `
-        <h3 class="text-sm font-semibold text-cdl-blue uppercase tracking-wider mb-3">${speakerLabel}</h3>
-        <div class="space-y-3">
-          ${talk.speakers.map((speaker) => {
-            const avatarHtml = speaker.avatar
-              ? `<img src="${speaker.avatar}" alt="" class="h-10 w-10 rounded-full object-cover flex-shrink-0" width="40" height="40" loading="lazy" />`
-              : `<span class="h-10 w-10 rounded-full bg-cdl-orange/10 flex items-center justify-center text-sm font-bold text-cdl-orange flex-shrink-0">${speaker.name.charAt(0)}</span>`;
-            const bioHtml = speaker.biographyHtml
-              ? `<div class="text-xs text-cdl-gray mt-1 leading-relaxed prose max-w-none">${speaker.biographyHtml}</div>`
-              : '';
-            return `
-              <div class="flex gap-3 p-3 bg-cdl-bg rounded-xl">
-                ${avatarHtml}
-                <div class="min-w-0">
-                  <p class="font-medium text-cdl-blue text-sm">${speaker.name}</p>
-                  ${bioHtml}
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-    } else {
-      modalSpeakers.innerHTML = '';
-    }
+    renderSpeakers(talk);
 
     // Resources (slides, videos, links)
     const modalResources = document.getElementById('modal-resources');
@@ -886,14 +936,71 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
       }
     }
 
-    // Description (pre-rendered markdown)
-    modalDescription.innerHTML = talk.descriptionHtml || '<p>Pas de description disponible.</p>';
+    renderDescription(talk);
+    if (!details) {
+      // Fill bios and abstract in place once they arrive, unless the visitor
+      // has moved on to another session in the meantime.
+      loadDetails().then(
+        () => {
+          if (modal.dataset.code !== code) return;
+          renderSpeakers(talk);
+          renderDescription(talk);
+        },
+        () => {
+          if (modal.dataset.code !== code) return;
+          modalDescription.innerHTML =
+            `<p>Description indisponible pour le moment. <a href="${talkPath(code)}">Voir la page de la session</a>.</p>`;
+        },
+      );
+    }
 
     syncFavUI();
     if (push && history.state?.cdlTalk !== code) {
       history.pushState({ cdlTalk: code, pushed: true }, '', historyHref(talkPath(code)));
     }
     modal.showModal();
+  }
+
+  /** Speakers with avatar, plus their bio once details.json is loaded. */
+  function renderSpeakers(talk) {
+    if (talk.speakers.length === 0) {
+      modalSpeakers.innerHTML = '';
+      return;
+    }
+    const bios = details?.[talk.code]?.bios || [];
+    const speakerLabel = talk.speakers.length > 1 ? 'Intervenant·es' : 'Intervenant·e';
+    modalSpeakers.innerHTML = `
+      <h3 class="text-sm font-semibold text-cdl-blue uppercase tracking-wider mb-3">${speakerLabel}</h3>
+      <div class="space-y-3">
+        ${talk.speakers.map((speaker, i) => {
+          const avatarHtml = speaker.avatar
+            ? `<img src="${speaker.avatar}" alt="" class="h-10 w-10 rounded-full object-cover flex-shrink-0" width="40" height="40" loading="lazy" />`
+            : `<span class="h-10 w-10 rounded-full bg-cdl-orange/10 flex items-center justify-center text-sm font-bold text-cdl-orange flex-shrink-0">${speaker.name.charAt(0)}</span>`;
+          const bioHtml = bios[i]
+            ? `<div class="text-xs text-cdl-gray mt-1 leading-relaxed prose max-w-none">${bios[i]}</div>`
+            : '';
+          return `
+            <div class="flex gap-3 p-3 bg-cdl-bg rounded-xl">
+              ${avatarHtml}
+              <div class="min-w-0">
+                <p class="font-medium text-cdl-blue text-sm">${speaker.name}</p>
+                ${bioHtml}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  /** Abstract (pre-rendered markdown), or a placeholder while it loads. */
+  function renderDescription(talk) {
+    if (!details) {
+      modalDescription.innerHTML = '<p class="text-cdl-gray/80">Chargement de la description…</p>';
+      return;
+    }
+    modalDescription.innerHTML =
+      details[talk.code]?.descriptionHtml || '<p>Pas de description disponible.</p>';
   }
 
   document.querySelectorAll('.talk-card').forEach((card) => {
@@ -1002,6 +1109,16 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
    */
   function openFromUrl() {
     const url = new URL(location.href);
+
+    // Offline, the service worker answers a session URL it has not cached with
+    // this page (see src/pwa/sw.js): open that session's modal on top of it.
+    const pathCode = url.pathname.match(/^\/programme\/talk\/([^/]+)\/$/)?.[1];
+    if (pathCode && talksMap.has(pathCode)) {
+      history.replaceState({ cdlTalk: pathCode, pushed: false }, '', location.href);
+      openModal(pathCode, { push: false });
+      return;
+    }
+
     const code = url.searchParams.get('talk');
     if (!code || !talksMap.has(code)) return;
     url.searchParams.delete('talk');
@@ -1080,7 +1197,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
       if (t.track) descParts.push(`Track : ${t.track}`);
       if (t.type) descParts.push(`Format : ${t.type}`);
       if (t.audience) descParts.push(`Public visé : ${t.audience}`);
-      const summaryText = toPlainText(t.descriptionHtml);
+      const summaryText = toPlainText(details?.[t.code]?.descriptionHtml);
       if (summaryText) { descParts.push(''); descParts.push(summaryText); }
       lines.push(
         'BEGIN:VEVENT',
@@ -1101,10 +1218,13 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     return lines.map(foldIcsLine).join('\r\n');
   }
 
-  function downloadFavoritesIcs() {
+  async function downloadFavoritesIcs() {
     const favs = getFavorites();
     const favTalks = talks.filter((t) => favs.has(t.code));
     if (favTalks.length === 0) return;
+    // Abstracts make the calendar entries useful, but an export offline (or
+    // with Pretalx data unreachable) still beats no export at all.
+    try { await loadDetails(); } catch { /* export without descriptions */ }
     const ics = buildIcs(favTalks);
     const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -1161,6 +1281,7 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
   function updateNowIndicator() {
     clearNowMarkers();
     const now = getNow();
+    updateNowPanel(now);
     const nowMs = now.getTime();
     const todayPanel = document.querySelector(`[data-day-panel="${localDateStr(now)}"]`);
     if (!todayPanel) return;
@@ -1192,6 +1313,130 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
     }
   }
 
+  // ── "En ce moment" panel ──
+  // The slot badges above mark a single slot, but sessions do not share slots:
+  // a 2-hour workshop started at 14:00 is still on at 15:10 while a talk
+  // started at 15:00 is too. This panel lists every session actually on, room
+  // by room, and what starts soon — the view people want while in the hallway.
+
+  const NOW_PANEL_LEAD_MS = 60 * 60_000; // show the panel 1h before the first session of the day
+  const UPCOMING_WINDOW_MS = 45 * 60_000; // "À suivre" covers the next 45 minutes
+
+  const nowPanel = document.getElementById('maintenant');
+  const nowCurrentList = document.getElementById('now-current');
+  const nowCurrentEmpty = document.getElementById('now-current-empty');
+  const nowNextBlock = document.getElementById('now-next-block');
+  const nowNextList = document.getElementById('now-next');
+  const nowClock = document.getElementById('now-clock');
+
+  const timedTalks = talks.filter((t) => t.start && t.end);
+  const startMs = (t) => new Date(t.start).getTime();
+  const endMs = (t) => new Date(t.end).getTime();
+  const byRoom = (a, b) => (a.room || '').localeCompare(b.room || '');
+
+  const clockFormat = new Intl.DateTimeFormat('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Paris',
+  });
+
+  /** One compact card for the panel; a real link, opened in the modal on plain click. */
+  function nowItem(talk, kind, nowMs, favs) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = talkPath(talk.code);
+    a.dataset.code = talk.code;
+    a.className =
+      'now-item block h-full p-3 rounded-xl border border-cdl-gray-light hover:border-cdl-orange/40 hover:shadow-sm transition-all bg-cdl-bg dark:bg-gray-900 group';
+    if (favs.has(talk.code)) a.classList.add('border-cdl-orange/40', 'ring-1', 'ring-cdl-orange/20');
+
+    const meta = document.createElement('span');
+    meta.className = 'flex items-center gap-1.5 flex-wrap text-[11px] mb-1';
+    const room = document.createElement('span');
+    room.className = 'font-medium text-cdl-blue-light bg-cdl-blue/5 px-2 py-0.5 rounded';
+    room.textContent = talk.room ? `Salle ${talk.room}` : talk.type || '';
+    if (talk.room && rooms[talk.room]) room.title = rooms[talk.room].label;
+    const when = document.createElement('span');
+    when.className = 'text-cdl-gray';
+    if (kind === 'current') {
+      const left = Math.max(1, Math.round((endMs(talk) - nowMs) / 60_000));
+      when.textContent = `jusqu'à ${talk.endFormatted} · encore ${left} min`;
+    } else {
+      const inMin = Math.max(0, Math.round((startMs(talk) - nowMs) / 60_000));
+      when.textContent = `à ${talk.startFormatted}` + (inMin > 0 ? ` · dans ${inMin} min` : '');
+    }
+    meta.append(room, when);
+    if (favs.has(talk.code)) {
+      const fav = document.createElement('span');
+      fav.className = 'text-cdl-orange font-medium';
+      fav.textContent = '♥ favori';
+      meta.append(fav);
+    }
+
+    const title = document.createElement('span');
+    title.className =
+      'block font-medium text-sm text-cdl-blue group-hover:text-cdl-orange transition-colors leading-snug';
+    title.textContent = talk.title;
+    a.append(meta, title);
+
+    if (talk.speakers.length > 0) {
+      const speakers = document.createElement('span');
+      speakers.className = 'block text-xs text-cdl-gray mt-1';
+      speakers.textContent = talk.speakers.map((sp) => sp.name).join(', ');
+      a.append(speakers);
+    }
+
+    li.append(a);
+    return li;
+  }
+
+  /** Favourites first, then room order, so "my" session is the first thing seen. */
+  function sortForPanel(list, favs) {
+    return list.sort((a, b) => Number(favs.has(b.code)) - Number(favs.has(a.code)) || byRoom(a, b));
+  }
+
+  function updateNowPanel(now) {
+    if (!nowPanel || !nowCurrentList || !nowNextList) return;
+    const nowMs = now.getTime();
+    const today = timedTalks.filter((t) => localDateStr(new Date(t.start)) === localDateStr(now));
+
+    const dayStart = Math.min(...today.map(startMs)) - NOW_PANEL_LEAD_MS;
+    const dayEnd = Math.max(...today.map(endMs));
+    if (today.length === 0 || nowMs < dayStart || nowMs >= dayEnd) {
+      nowPanel.classList.add('hidden');
+      return;
+    }
+
+    const favs = getFavorites();
+    const current = sortForPanel(
+      today.filter((t) => startMs(t) <= nowMs && nowMs < endMs(t)),
+      favs,
+    );
+    const upcomingAll = today.filter((t) => startMs(t) > nowMs);
+    const firstUpcoming = Math.min(...upcomingAll.map(startMs));
+    // Everything in the next 45 minutes; failing that, the next slot however far.
+    const upcoming = upcomingAll
+      .filter((t) => startMs(t) <= Math.max(nowMs + UPCOMING_WINDOW_MS, firstUpcoming))
+      .sort((a, b) => startMs(a) - startMs(b) || Number(favs.has(b.code)) - Number(favs.has(a.code)) || byRoom(a, b));
+
+    nowCurrentList.replaceChildren(...current.map((t) => nowItem(t, 'current', nowMs, favs)));
+    nowCurrentList.classList.toggle('hidden', current.length === 0);
+    nowCurrentEmpty?.classList.toggle('hidden', current.length > 0);
+    nowNextList.replaceChildren(...upcoming.map((t) => nowItem(t, 'next', nowMs, favs)));
+    nowNextBlock?.classList.toggle('hidden', upcoming.length === 0);
+    if (nowClock) nowClock.textContent = `Mis à jour à ${clockFormat.format(now)}`;
+
+    nowPanel.classList.remove('hidden');
+  }
+
+  nowPanel?.addEventListener('click', (e) => {
+    const link = e.target.closest('.now-item');
+    if (!link) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    openModal(link.dataset.code);
+  });
+
   function selectTodayTabIfPresent() {
     const todayTab = document.querySelector(`.day-tab[data-tab-day="${localDateStr(getNow())}"]`);
     if (todayTab && todayTab.getAttribute('aria-selected') !== 'true') {
@@ -1201,14 +1446,57 @@ const talksJson = JSON.stringify(talksPayload).replace(/</g, '\\u003c');
 
   function scrollToCurrentOnce() {
     if (window.scrollY > 100) return;
-    const target = document.querySelector('.time-slot.is-current') || document.querySelector('.time-slot.is-next');
+    // During the event the panel is the view people came for; otherwise the
+    // slot on now or next. On a phone the filter bar alone fills the first
+    // screen, so without this the panel would sit below the fold.
+    const panelShown = nowPanel && !nowPanel.classList.contains('hidden');
+    const target = panelShown
+      ? nowPanel
+      : document.querySelector('.time-slot.is-current') || document.querySelector('.time-slot.is-next');
     if (!target) return;
+    // Clear the site header (top-16) and the sticky filter bar, whose height
+    // depends on how its controls wrap.
+    const filterBar = document.getElementById('filter-bar');
+    const clearance = 64 + (filterBar?.offsetHeight ?? 116) + 16;
     const rect = target.getBoundingClientRect();
-    const offset = window.scrollY + rect.top - 180;
+    const offset = window.scrollY + rect.top - clearance;
     window.scrollTo({ top: Math.max(0, offset), behavior: 'smooth' });
   }
 
+  // ── Offline status ──
+  // The service worker (src/pwa/sw.js) precaches this page. Say so, since
+  // nobody would think to try the site with no network otherwise — and once
+  // offline, say how old the copy on screen is.
+  const offlineStatus = document.getElementById('offline-status');
+  const builtAt = dataEl?.dataset.builtAt ? new Date(dataEl.dataset.builtAt) : null;
+  const builtAtFormat = new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Paris',
+  });
+
+  function updateOfflineStatus() {
+    if (!offlineStatus) return;
+    let text = '';
+    if (!navigator.onLine) {
+      text = builtAt
+        ? `Hors connexion : programme tel que publié le ${builtAtFormat.format(builtAt)}.`
+        : 'Hors connexion : programme enregistré sur cet appareil.';
+    } else if (navigator.serviceWorker?.controller) {
+      text = '✓ Ce programme reste consultable hors connexion sur cet appareil.';
+    }
+    offlineStatus.textContent = text;
+    offlineStatus.classList.toggle('hidden', !text);
+  }
+
+  window.addEventListener('online', updateOfflineStatus);
+  window.addEventListener('offline', updateOfflineStatus);
+  navigator.serviceWorker?.addEventListener('controllerchange', updateOfflineStatus);
+
   // ── Init ──
+  updateOfflineStatus();
   syncFavUI();
   selectTodayTabIfPresent();
   applyFilters();

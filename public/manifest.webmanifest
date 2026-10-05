@@ -1,0 +1,21 @@
+{
+  "name": "Capitole du Libre",
+  "short_name": "CdL",
+  "description": "Programme, plan et infos pratiques du Capitole du Libre, disponibles même sans connexion.",
+  "lang": "fr",
+  "id": "/",
+  "start_url": "/programme/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#d03d00",
+  "icons": [
+    { "src": "/static/pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/static/pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/static/pwa/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Programme", "url": "/programme/", "icons": [{ "src": "/static/pwa/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Plan du campus", "url": "/lieu/", "icons": [{ "src": "/static/pwa/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

@@ -80,6 +80,9 @@ const robots = noindex
 
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/static/pwa/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="CdL" />
     <link rel="alternate" type="application/rss+xml" title="Blog du Capitole du Libre" href={new URL('/rss.xml', Astro.site)} />
     <link rel="preload" href={ubuntuRegular} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={ubuntuBold} as="font" type="font/woff2" crossorigin="anonymous" />
@@ -128,5 +131,17 @@ const robots = noindex
 
     <Footer />
     <Lightbox />
+
+    {/* Offline support (src/pwa/sw.js). Production only: in dev a worker
+        would serve stale pages over the hot-reloading server. */}
+    {import.meta.env.PROD && (
+      <script is:inline>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js');
+          });
+        }
+      </script>
+    )}
   </body>
 </html>

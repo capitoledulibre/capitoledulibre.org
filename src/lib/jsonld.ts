@@ -357,10 +357,16 @@ function plainText(input: string, maxLength = 500): string {
 /**
  * One `Event` per talk, to be attached as `subEvent` of the edition. `talkUrl`
  * builds the Pretalx permalink, which is the canonical page for a session.
+ *
+ * `withDescription: false` drops the abstracts. /programme uses it: the node
+ * shares its `@id` with the one each session page emits in full, so the
+ * description is still in the graph, and repeating 120 of them inline made up
+ * most of the structured data on the heaviest page of the site.
  */
 export function sessionEvents(
   sessions: SessionInput[],
   talkUrl: (code: string) => string,
+  { withDescription = true }: { withDescription?: boolean } = {},
 ): Node[] {
   return sessions
     .filter((s) => s.start && s.end)
@@ -369,7 +375,8 @@ export function sessionEvents(
         '@type': 'Event',
         '@id': `${SITE_URL}/programme/#${session.code}`,
         name: session.title,
-        description: session.description ? plainText(session.description) : undefined,
+        description:
+          withDescription && session.description ? plainText(session.description) : undefined,
         url: talkUrl(session.code),
         startDate: session.start,
         endDate: session.end,

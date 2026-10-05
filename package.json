@@ -18,6 +18,7 @@
     "images:force": "node scripts/optimize-images.mjs --force",
     "images:manifest": "node scripts/generate-image-manifest.mjs",
     "og": "node scripts/generate-og-images.mjs",
+    "icons": "node scripts/generate-pwa-icons.mjs",
     "videos": "bash scripts/optimize-videos.sh",
     "videos:force": "bash scripts/optimize-videos.sh --force",
     "optimize": "pnpm images && pnpm videos && pnpm images:manifest"
