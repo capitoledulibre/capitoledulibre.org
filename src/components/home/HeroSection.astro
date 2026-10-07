@@ -1,11 +1,14 @@
 ---
 import OccitanCross from '../ui/OccitanCross.astro';
 import { config } from '../../config';
+import { getEditionStats } from '../../lib/editionStats';
+
+const editionStats = await getEditionStats();
 
 const stats = [
-  { value: config.stats.visitors.toLocaleString('fr-FR'), label: 'visiteurs' },
-  { value: config.stats.conferences + '+', label: 'conférences' },
-  { value: config.stats.stands + '+', label: 'stands' },
+  { value: editionStats.visitors, label: 'visiteurs' },
+  { value: editionStats.sessions, label: 'conférences & ateliers' },
+  { value: editionStats.stands, label: 'stands' },
 ];
 ---
 

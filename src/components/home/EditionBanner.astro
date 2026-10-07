@@ -1,0 +1,209 @@
+---
+import { config } from '../../config';
+import { getEditionStats } from '../../lib/editionStats';
+
+/**
+ * The strip under the hero, following the edition through its phases:
+ *
+ *   cfp        call for proposals open, with a countdown
+ *   programme  CFP closed, programme published: point at it and at offline use
+ *   live       on the event days: what is on now, and the campus plan
+ *   after      thanks, and where the recordings will be
+ *
+ * Every phase is rendered and the script shows the right one, because the page
+ * is built once and read for weeks: a phase picked at build time would go stale
+ * (the CFP banner did, staying up until the next deploy). The build-time phase
+ * is the visible one without JavaScript. `?now=<ISO date>` previews a phase,
+ * as on /programme.
+ */
+
+type Phase = 'cfp' | 'programme' | 'live' | 'after';
+
+const day = (d: Date) => d.toISOString().slice(0, 10);
+// Mid-November is CET, UTC+1. The bounds cover the event days in Toulouse
+// time, whatever the timezone of the build machine or the reader.
+const eventStart = new Date(`${day(config.edition.dates.start)}T00:00:00+01:00`);
+const eventEnd = new Date(`${day(config.edition.dates.end)}T23:59:59+01:00`);
+
+function phaseAt(now: Date): Phase {
+  if (now < config.cfp.deadline) return 'cfp';
+  if (now < eventStart) return 'programme';
+  if (now <= eventEnd) return 'live';
+  return 'after';
+}
+
+const now = new Date();
+const buildPhase = phaseAt(now);
+
+const daysUntil = (target: Date) => Math.ceil((target.getTime() - now.getTime()) / 86_400_000);
+const cfpDays = daysUntil(config.cfp.deadline);
+const eventDays = daysUntil(eventStart);
+const plural = (n: number, word: string) => `${n} ${word}${n > 1 ? 's' : ''}`;
+
+const cfpDeadline = config.cfp.deadline.toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'Europe/Paris',
+});
+
+const { sessions, programmePublished } = await getEditionStats();
+
+const phases: {
+  id: Phase;
+  icon: string;
+  title: string;
+  /** HTML: carries the live countdown spans. */
+  text: string;
+  cta: { label: string; href: string; external?: boolean };
+  secondary?: { label: string; href: string };
+}[] = [
+  {
+    id: 'cfp',
+    icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z',
+    title: 'Appel à propositions ouvert !',
+    text: `Jusqu'au ${cfpDeadline} — Plus que <strong class="text-white" data-countdown="cfp">${plural(cfpDays, 'jour')}</strong>`,
+    cta: { label: 'Proposer un sujet', href: config.cfp.url, external: true },
+  },
+  {
+    id: 'programme',
+    icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+    // Between the CFP deadline and the programme going live, say what is true.
+    title: programmePublished
+      ? `Le programme est en ligne : ${sessions} conférences & ateliers`
+      : 'Le programme arrive bientôt',
+    text: programmePublished
+      ? `Rendez-vous dans <strong class="text-white" data-countdown="event">${plural(eventDays, 'jour')}</strong>. Repérez vos favoris : le programme reste consultable sans connexion sur place.`
+      : `Rendez-vous dans <strong class="text-white" data-countdown="event">${plural(eventDays, 'jour')}</strong>. L'inscription est gratuite et déjà ouverte.`,
+    cta: programmePublished
+      ? { label: 'Voir le programme', href: '/programme/' }
+      : { label: "S'inscrire", href: config.tickets.url },
+    secondary: programmePublished ? { label: "S'inscrire", href: config.tickets.url } : undefined,
+  },
+  {
+    id: 'live',
+    icon: 'M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z',
+    title: "C'est maintenant, à l'" + config.venue.name + ' !',
+    text: 'Ce qui se passe en ce moment, salle par salle, et le plan pour vous y rendre.',
+    cta: { label: 'En ce moment', href: '/programme/' },
+    secondary: { label: 'Plan du campus', href: '/lieu/' },
+  },
+  {
+    id: 'after',
+    icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664zM21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    title: `Merci pour ce Capitole du Libre ${config.edition.year} !`,
+    text: 'Les captations des conférences sont publiées au fil des semaines.',
+    cta: { label: 'Voir les vidéos', href: config.links.videos, external: true },
+    secondary: { label: 'Les photos', href: config.links.photos },
+  },
+];
+---
+
+<section
+  id="edition-banner"
+  data-cfp-deadline={config.cfp.deadline.toISOString()}
+  data-event-start={eventStart.toISOString()}
+  data-event-end={eventEnd.toISOString()}
+  class="relative bg-gradient-to-r from-cdl-orange-dark via-cdl-orange to-cdl-orange-light overflow-hidden"
+>
+  <!-- Motif de fond -->
+  <div class="absolute inset-0 opacity-10" aria-hidden="true">
+    <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, white 20px, white 21px);"></div>
+  </div>
+
+  {phases.map((phase) => (
+    <div
+      data-phase={phase.id}
+      class:list={[
+        'relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-5 sm:py-6',
+        phase.id !== buildPhase && 'hidden',
+      ]}
+    >
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 text-white">
+          <span class="flex-shrink-0 inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/20 backdrop-blur-sm">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={phase.icon} />
+            </svg>
+          </span>
+          <div>
+            <p class="font-bold text-base sm:text-lg">{phase.title}</p>
+            <p class="text-sm text-white/80" set:html={phase.text} />
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-2 flex-shrink-0">
+          <a
+            href={phase.cta.href}
+            class="inline-flex items-center gap-2 px-6 py-2.5 font-bold text-cdl-orange bg-white hover:bg-white/90 rounded-lg transition-colors shadow-lg text-sm sm:text-base"
+          >
+            {phase.cta.label}
+            {phase.cta.external && (
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            )}
+          </a>
+          {phase.secondary && (
+            <a
+              href={phase.secondary.href}
+              class="inline-flex items-center px-5 py-2.5 font-medium text-white border border-white/40 hover:border-white/80 hover:bg-white/10 rounded-lg transition-colors text-sm sm:text-base"
+            >
+              {phase.secondary.label}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  ))}
+</section>
+
+<script>
+  // Re-decide the phase and the countdowns in the browser: the page was built
+  // at some point in the past, possibly weeks ago.
+  function getNow() {
+    const debug = new URL(window.location.href).searchParams.get('now');
+    const d = debug ? new Date(debug) : null;
+    return d && !isNaN(d.getTime()) ? d : new Date();
+  }
+
+  function plural(n: number, word: string) {
+    return `${n} ${word}${n > 1 ? 's' : ''}`;
+  }
+
+  function updateEditionBanner() {
+    const banner = document.getElementById('edition-banner');
+    if (!banner) return;
+
+    const now = getNow().getTime();
+    const cfpDeadline = new Date(banner.dataset.cfpDeadline ?? '').getTime();
+    const eventStart = new Date(banner.dataset.eventStart ?? '').getTime();
+    const eventEnd = new Date(banner.dataset.eventEnd ?? '').getTime();
+
+    const phase =
+      now < cfpDeadline ? 'cfp' : now < eventStart ? 'programme' : now <= eventEnd ? 'live' : 'after';
+
+    banner.querySelectorAll<HTMLElement>('[data-phase]').forEach((el) => {
+      el.classList.toggle('hidden', el.dataset.phase !== phase);
+    });
+
+    const cfpCountdown = banner.querySelector('[data-countdown="cfp"]');
+    if (cfpCountdown && phase === 'cfp') {
+      const ms = cfpDeadline - now;
+      const days = Math.ceil(ms / 86_400_000);
+      // Last day: count down in hours to keep a sense of urgency.
+      const hours = Math.ceil(ms / 3_600_000);
+      cfpCountdown.textContent =
+        days > 1 ? plural(days, 'jour') : hours > 1 ? `${hours} heures` : 'quelques minutes';
+    }
+
+    const eventCountdown = banner.querySelector('[data-countdown="event"]');
+    if (eventCountdown && phase === 'programme') {
+      eventCountdown.textContent = plural(Math.ceil((eventStart - now) / 86_400_000), 'jour');
+    }
+  }
+
+  updateEditionBanner();
+  // A tab left open across a phase boundary eventually catches up.
+  setInterval(updateEditionBanner, 60 * 1000);
+</script>

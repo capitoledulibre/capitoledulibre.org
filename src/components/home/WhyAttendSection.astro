@@ -2,6 +2,11 @@
 import OccitanCross from '../ui/OccitanCross.astro';
 import Picture from '../ui/Picture.astro';
 import { getPhotosByTag } from '../../lib/photos';
+import { getEditionStats } from '../../lib/editionStats';
+
+const { sessions, stands } = await getEditionStats();
+// "120+" reads as "plus de 120" in running text.
+const count = (stat: string) => stat.replace(/\+$/, '');
 
 const conferencePhoto = getPhotosByTag('table-ronde')[0] || getPhotosByTag('conference')[2];
 const villagePhoto = getPhotosByTag('village-associatif')[0];
@@ -10,12 +15,12 @@ const staffPhoto = getPhotosByTag('staff')[1] || getPhotosByTag('staff')[0];
 const reasons = [
   {
     title: 'Un week-end pour apprendre, partager et s\'inspirer',
-    text: 'Plus de 100 conférences et ateliers sur deux jours : développement, sécurité, design, IA, vie privée, culture libre... Il y a forcément un sujet qui vous passionne. Et si vous ne savez pas par où commencer, laissez-vous surprendre — les meilleures découvertes sont celles qu\'on n\'attendait pas.',
+    text: `Plus de ${count(sessions)} conférences et ateliers sur deux jours : développement, sécurité, design, IA, vie privée, culture libre... Il y a forcément un sujet qui vous passionne. Et si vous ne savez pas par où commencer, laissez-vous surprendre — les meilleures découvertes sont celles qu'on n'attendait pas.`,
     photo: conferencePhoto,
   },
   {
     title: 'Rencontrez ceux qui font le libre',
-    text: 'Le Capitole du Libre, c\'est avant tout des rencontres. Développeurs de distributions Linux, créateurs de logiciels que vous utilisez chaque jour, associations qui défendent vos libertés numériques — ils sont tous là, accessibles, prêts à échanger. Le village associatif réunit plus de 30 stands pour discuter, tester et repartir avec des idées plein la tête.',
+    text: `Le Capitole du Libre, c'est avant tout des rencontres. Développeurs de distributions Linux, créateurs de logiciels que vous utilisez chaque jour, associations qui défendent vos libertés numériques — ils sont tous là, accessibles, prêts à échanger. Le village associatif réunit plus de ${count(stands)} stands pour discuter, tester et repartir avec des idées plein la tête.`,
     photo: villagePhoto,
   },
   {
