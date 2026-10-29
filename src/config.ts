@@ -34,6 +34,9 @@ export const config = {
     // Sponsorship kit: tiers, prices and audience figures. Lives in
     // public/static/pdf/ and is linked from /partenaires and the home preview.
     partnersBrochure: '/static/pdf/Capitole-du-Libre-2026-Plaquette-Partenaires.pdf',
+    // Source of the poster and speaker kit served on /kit-communication;
+    // its LICENSE (CC BY 4.0) and TRADEMARK.md apply to those files.
+    brandRepo: 'https://github.com/capitoledulibre/capitoledulibre-brand',
   },
   social: {
     mastodon: 'https://framapiaf.org/@capitoledulibre',

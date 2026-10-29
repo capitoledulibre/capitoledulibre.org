@@ -1,0 +1,64 @@
+---
+import { fileSize } from '../../lib/fileSize';
+import { imgSize } from '../../lib/imageDimensions';
+
+/**
+ * Download card for /kit-communication: preview, usage notes and one button
+ * per file, labelled with its format and size (read from public/ at build).
+ */
+export interface KitFile {
+  href: string;
+  label: string;
+  hint: string;
+}
+
+interface Props {
+  name: string;
+  usage: string;
+  size: string;
+  preview: string;
+  alt: string;
+  files: KitFile[];
+  /** Transparent artwork (logos): no frame or shadow around the preview. */
+  bare?: boolean;
+}
+
+const { name, usage, size, preview, alt, files, bare = false } = Astro.props;
+---
+
+<article class="flex flex-col rounded-xl border border-cdl-gray-light bg-white dark:bg-gray-800 overflow-hidden">
+  <div class="flex items-center justify-center h-56 p-4 bg-cdl-gray-light/40">
+    <img
+      src={preview}
+      alt={alt}
+      class:list={['max-h-full w-auto max-w-full', !bare && 'rounded shadow-sm']}
+      loading="lazy"
+      decoding="async"
+      {...imgSize(preview)}
+    />
+  </div>
+  <div class="flex flex-col flex-1 p-5">
+    <h3 class="font-bold text-cdl-blue">{name}</h3>
+    <p class="text-sm text-cdl-gray mb-1">{usage}</p>
+    <p class="text-xs text-cdl-gray font-mono mb-4">{size}</p>
+    <ul class="mt-auto flex flex-wrap gap-2" role="list">
+      {files.map((file) => (
+        <li>
+          <a
+            href={file.href}
+            download
+            title={`${file.label} — ${file.hint}`}
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-cdl-blue border border-cdl-gray-light hover:border-cdl-orange/30 hover:text-cdl-orange rounded-lg transition-colors"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            {file.label}
+            <span class="text-xs font-normal text-cdl-gray">{fileSize(file.href)}</span>
+            <span class="sr-only">— {name} ({file.hint})</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</article>

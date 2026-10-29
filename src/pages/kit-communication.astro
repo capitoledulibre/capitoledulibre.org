@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import JsonLd from '../components/ui/JsonLd.astro';
+import KitCard, { type KitFile } from '../components/ui/KitCard.astro';
+import { config } from '../config';
+import { fileSize } from '../lib/fileSize';
+import { imgSize } from '../lib/imageDimensions';
+import { breadcrumb } from '../lib/jsonld';
+
+// Copied from capitoledulibre-brand: editions/<year>/ (poster/ and
+// social/speaker-*) into KIT_DIR, brand/logo/ and brand/icon/ into LOGO_DIR.
+// Edition files follow the brand repo naming, `<base>-cdl-<year>.<ext>`, so
+// bumping config.edition.year only requires dropping the new files in place.
+// The poster is renamed from `affiche-cdl-<year>-v2` on copy, to keep the
+// version suffix out of public URLs. Edition previews are 800px WebP renders
+// of the PNGs; logos preview as SVG.
+const { year } = config.edition;
+const KIT_DIR = `/static/kit/${year}`;
+const LOGO_DIR = '/static/kit/logo';
+
+const EDITION_FORMATS = [
+  { ext: 'png', label: 'PNG', hint: 'prêt à publier' },
+  { ext: 'pdf', label: 'PDF', hint: 'impression, texte vectorisé' },
+  { ext: 'svg', label: 'SVG', hint: 'modifiable, police Ubuntu requise' },
+] as const;
+
+function editionItem(name: string, base: string, size: string, usage: string) {
+  const file = `${base}-cdl-${year}`;
+  return {
+    name,
+    usage,
+    size: `${size} px`,
+    preview: `${KIT_DIR}/previews/${file}.webp`,
+    alt: `Aperçu : ${name} « J'interviens au Capitole du Libre »`,
+    files: EDITION_FORMATS.map((f): KitFile => ({ href: `${KIT_DIR}/${file}.${f.ext}`, label: f.label, hint: f.hint })),
+  };
+}
+
+const speakerKit = [
+  editionItem('Bannière de profil', 'speaker-banner-twitter', '1500 × 500', 'En-tête Mastodon, Bluesky, X'),
+  editionItem('Bannière LinkedIn', 'speaker-banner-linkedin', '1584 × 396', 'Image de couverture du profil LinkedIn'),
+  editionItem('Post paysage', 'speaker-post-paysage', '1200 × 630', 'Publication, aperçu de lien, blog'),
+  editionItem('Post carré', 'speaker-post-carre', '1080 × 1080', 'Publication Instagram, Mastodon, LinkedIn'),
+  editionItem('Story', 'speaker-story', '1080 × 1920', 'Story Instagram, Facebook, WhatsApp'),
+  editionItem('Signature e-mail', 'speaker-signature', '1200 × 300', 'À afficher en 600 × 150 dans votre signature'),
+];
+
+const poster = editionItem(`Affiche ${year}`, 'affiche', '1329 × 1742', 'Impression, affichage, partage');
+
+const VECTOR_HINT = 'vectoriel, toutes tailles';
+const logos = [
+  {
+    name: 'Logo',
+    usage: 'Version sur deux lignes, la plus lisible en petit',
+    size: 'PNG 3500 × 1544 px',
+    preview: `${LOGO_DIR}/logo-capitoledulibre.svg`,
+    alt: 'Logo Capitole du Libre sur deux lignes, en orange',
+    files: [
+      { href: `${LOGO_DIR}/logo-capitoledulibre.svg`, label: 'SVG', hint: VECTOR_HINT },
+      { href: `${LOGO_DIR}/logo-capitoledulibre.pdf`, label: 'PDF', hint: 'impression' },
+      { href: `${LOGO_DIR}/logo-capitoledulibre.png`, label: 'PNG', hint: 'fond transparent' },
+    ],
+  },
+  {
+    name: 'Logo horizontal',
+    usage: 'Version sur une ligne, pour les bandeaux et en-têtes',
+    size: 'PNG 1280 × 157 px',
+    preview: `${LOGO_DIR}/logo-capitoledulibre-horizontal.svg`,
+    alt: 'Logo Capitole du Libre sur une ligne, en orange',
+    files: [
+      { href: `${LOGO_DIR}/logo-capitoledulibre-horizontal.svg`, label: 'SVG', hint: VECTOR_HINT },
+      { href: `${LOGO_DIR}/logo-capitoledulibre-horizontal.pdf`, label: 'PDF', hint: 'impression' },
+      { href: `${LOGO_DIR}/logo-capitoledulibre-horizontal.eps`, label: 'EPS', hint: 'impression professionnelle' },
+      { href: `${LOGO_DIR}/logo-capitoledulibre-horizontal.png`, label: 'PNG', hint: 'fond transparent' },
+    ],
+  },
+  {
+    name: 'Icône',
+    usage: 'La croix occitane seule, pour avatars et favicons',
+    size: 'PNG 512 et 256 px',
+    preview: `${LOGO_DIR}/icon-capitoledulibre.svg`,
+    alt: 'Icône Capitole du Libre : croix occitane blanche dans un cercle orange',
+    files: [
+      { href: `${LOGO_DIR}/icon-capitoledulibre.svg`, label: 'SVG', hint: VECTOR_HINT },
+      { href: `${LOGO_DIR}/icon-capitoledulibre-512px.png`, label: 'PNG 512', hint: '512 × 512 px' },
+      { href: `${LOGO_DIR}/icon-capitoledulibre-256px.png`, label: 'PNG 256', hint: '256 × 256 px' },
+    ],
+  },
+];
+
+const attribution = 'Capitole du Libre — CC BY 4.0 — https://capitoledulibre.org';
+---
+
+<BaseLayout title="Kit de communication" description={`Visuels speakers, affiche et logos du Capitole du Libre ${year} à télécharger, sous licence CC BY 4.0.`}>
+  <JsonLd slot="head" data={breadcrumb([{ name: 'Kit de communication', path: '/kit-communication/' }])} />
+  <PageHeader title="Kit de communication" description="Visuels speakers, affiche et logos à télécharger pour parler du Capitole du Libre autour de vous." />
+
+  <section class="py-12 sm:py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+      {/* Kit speakers */}
+      <div class="mb-16">
+        <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4 text-center">
+          Vous intervenez au Capitole du Libre ?
+        </h2>
+        <p class="text-cdl-gray text-center mb-10 max-w-2xl mx-auto leading-relaxed">
+          Annoncez-le ! Voici des visuels « J'interviens au Capitole du Libre » aux bons formats
+          pour vos réseaux sociaux et votre signature e-mail. Pensez à ajouter le hashtag{' '}
+          <span class="font-medium text-cdl-orange">{config.social.hashtag}</span> et le lien
+          vers votre session sur le <a href="/programme/" class="text-cdl-orange hover:text-cdl-orange-light underline">programme</a>.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {speakerKit.map((item) => <KitCard {...item} />)}
+        </div>
+
+        <p class="text-sm text-cdl-gray text-center mt-6 max-w-2xl mx-auto">
+          Le PNG s'utilise tel quel. Le PDF a son texte vectorisé et s'imprime sans police
+          particulière. Le SVG garde le texte modifiable et nécessite la police{' '}
+          <a href="https://design.ubuntu.com/font" class="underline hover:text-cdl-orange" target="_blank" rel="noopener noreferrer">Ubuntu</a>.
+        </p>
+      </div>
+
+      {/* Affiche */}
+      <div class="flex flex-col lg:flex-row gap-10 items-center mb-16">
+        <div class="lg:w-1/2 flex justify-center">
+          <img
+            src={poster.preview}
+            alt={`Affiche du Capitole du Libre ${config.edition.year} : ${config.edition.displayDates}, ${config.venue.name}, Toulouse, avec les logos des partenaires`}
+            class="w-full max-w-sm h-auto rounded-xl shadow-lg"
+            loading="lazy"
+            decoding="async"
+            {...imgSize(poster.preview)}
+          />
+        </div>
+        <div class="lg:w-1/2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4">
+            L'affiche {config.edition.year}
+          </h2>
+          <p class="text-cdl-gray leading-relaxed mb-4">
+            Imprimez-la pour votre école, votre entreprise, votre association ou le panneau
+            d'affichage de votre fablab, ou partagez-la sur vos réseaux : chaque affiche
+            aide à faire connaître l'événement.
+          </p>
+          <p class="text-cdl-gray leading-relaxed mb-6">
+            {config.edition.displayDates} · {config.venue.name}, Toulouse · Entrée gratuite sur inscription.
+          </p>
+          <ul class="flex flex-wrap gap-3" role="list">
+            {poster.files.map((dl, i) => (
+              <li>
+                <a
+                  href={dl.href}
+                  download
+                  class:list={[
+                    'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg transition-colors font-medium text-sm',
+                    i === 1
+                      ? 'text-white bg-cdl-orange hover:bg-cdl-orange-light'
+                      : 'text-cdl-blue border border-cdl-gray-light hover:border-cdl-orange/30',
+                  ]}
+                >
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  {dl.label}
+                  <span class="font-normal opacity-80">({fileSize(dl.href)})</span>
+                  <span class="sr-only">— affiche, {dl.hint}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Logos */}
+      <div class="mb-16">
+        <h2 class="text-2xl sm:text-3xl font-bold text-cdl-blue mb-4 text-center">Logos</h2>
+        <p class="text-cdl-gray text-center mb-10 max-w-2xl mx-auto leading-relaxed">
+          Pour un article, des slides ou une page web qui parle de l'événement.
+          Utilisez-les tels quels : redimensionner est permis, modifier les couleurs,
+          les proportions ou la typographie ne l'est pas sans notre accord.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {logos.map((item) => <KitCard {...item} bare />)}
+        </div>
+      </div>
+
+      {/* Licence */}
+      <div class="max-w-3xl mx-auto rounded-2xl border border-cdl-gray-light bg-white dark:bg-gray-900 p-8 sm:p-10">
+        <h2 class="text-2xl font-bold text-cdl-blue mb-4">Licence et conditions d'utilisation</h2>
+        <p class="text-cdl-gray leading-relaxed mb-4">
+          Tous les fichiers de cette page (visuels speakers, affiche et logos) sont publiés
+          sous licence{' '}
+          <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" class="text-cdl-orange hover:text-cdl-orange-light underline" target="_blank" rel="noopener noreferrer license">Creative Commons Attribution 4.0 International (CC BY 4.0)</a> :
+          vous pouvez les partager et les adapter, y compris à des fins commerciales,
+          à condition de créditer la source. Attribution suggérée :
+        </p>
+        <p class="font-mono text-sm text-cdl-blue bg-cdl-gray-light/40 rounded-lg px-4 py-3 mb-6 break-words">
+          {attribution}
+        </p>
+        <ul class="space-y-3 text-sm text-cdl-gray mb-6 list-disc pl-5">
+          <li>
+            Le <strong>nom et les logos</strong> « Capitole du Libre », y compris l'icône et
+            leur présence sur les visuels, relèvent en plus de nos{' '}
+            <a href={`${config.links.brandRepo}/blob/main/TRADEMARK.md`} class="text-cdl-orange hover:text-cdl-orange-light underline" target="_blank" rel="noopener noreferrer">règles d'usage de la marque</a> :
+            les utiliser pour parler de l'événement ou annoncer votre intervention est
+            explicitement autorisé ; un usage laissant croire à un partenariat officiel,
+            ou un logo modifié, demande notre accord.
+          </li>
+          <li>
+            Les <strong>logos des partenaires</strong> présents sur l'affiche restent la propriété
+            de leurs détenteurs respectifs et ne sont pas couverts par la licence CC BY 4.0.
+          </li>
+          <li>
+            Cette licence s'applique aux fichiers à télécharger ci-dessus. Le reste du contenu
+            du site est publié sous{' '}
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" class="text-cdl-orange hover:text-cdl-orange-light underline" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>,
+            comme indiqué en pied de page.
+          </li>
+        </ul>
+        <p class="text-sm text-cdl-gray">
+          Ces fichiers, les sources et les visuels des éditions précédentes sont disponibles sur le dépôt{' '}
+          <a href={config.links.brandRepo} class="text-cdl-orange hover:text-cdl-orange-light underline" target="_blank" rel="noopener noreferrer">capitoledulibre-brand</a>.
+          Une question ? <a href="/contact/" class="text-cdl-orange hover:text-cdl-orange-light underline">Contactez-nous</a>.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

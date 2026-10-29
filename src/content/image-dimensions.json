@@ -783,6 +783,10 @@
     "width": 2392,
     "height": 886
   },
+  "/static/img/partners/logo-attitudesi.png": {
+    "width": 232,
+    "height": 68
+  },
   "/static/img/partners/logo-bareos.png": {
     "width": 743,
     "height": 233
@@ -799,6 +803,10 @@
     "width": 240,
     "height": 70
   },
+  "/static/img/partners/logo-brax-technologies.svg": {
+    "width": 243,
+    "height": 78
+  },
   "/static/img/partners/logo-can7-w.png": {
     "width": 95,
     "height": 57
@@ -806,6 +814,10 @@
   "/static/img/partners/logo-can7.png": {
     "width": 99,
     "height": 57
+  },
+  "/static/img/partners/logo-collabora.svg": {
+    "width": 425,
+    "height": 85
   },
   "/static/img/partners/logo-cs-group.svg": {
     "width": 108,
@@ -835,9 +847,17 @@
     "width": 200,
     "height": 200
   },
+  "/static/img/partners/logo-linagora.svg": {
+    "width": 552,
+    "height": 111
+  },
   "/static/img/partners/logo-loxodata.png": {
     "width": 300,
     "height": 120
+  },
+  "/static/img/partners/logo-mairie-toulouse.svg": {
+    "width": 142,
+    "height": 110
   },
   "/static/img/partners/logo-makina-corpus.png": {
     "width": 500,
@@ -911,6 +931,118 @@
     "width": 699,
     "height": 193
   },
+  "/static/kit/2026/affiche-cdl-2026.png": {
+    "width": 1329,
+    "height": 1742
+  },
+  "/static/kit/2026/affiche-cdl-2026.svg": {
+    "width": 638,
+    "height": 836
+  },
+  "/static/kit/2026/previews/affiche-cdl-2026.webp": {
+    "width": 610,
+    "height": 800
+  },
+  "/static/kit/2026/previews/speaker-banner-linkedin-cdl-2026.webp": {
+    "width": 800,
+    "height": 200
+  },
+  "/static/kit/2026/previews/speaker-banner-twitter-cdl-2026.webp": {
+    "width": 800,
+    "height": 267
+  },
+  "/static/kit/2026/previews/speaker-post-carre-cdl-2026.webp": {
+    "width": 800,
+    "height": 800
+  },
+  "/static/kit/2026/previews/speaker-post-paysage-cdl-2026.webp": {
+    "width": 800,
+    "height": 420
+  },
+  "/static/kit/2026/previews/speaker-signature-cdl-2026.webp": {
+    "width": 800,
+    "height": 200
+  },
+  "/static/kit/2026/previews/speaker-story-cdl-2026.webp": {
+    "width": 450,
+    "height": 800
+  },
+  "/static/kit/2026/speaker-banner-linkedin-cdl-2026.png": {
+    "width": 1584,
+    "height": 396
+  },
+  "/static/kit/2026/speaker-banner-linkedin-cdl-2026.svg": {
+    "width": 1584,
+    "height": 396
+  },
+  "/static/kit/2026/speaker-banner-twitter-cdl-2026.png": {
+    "width": 1500,
+    "height": 500
+  },
+  "/static/kit/2026/speaker-banner-twitter-cdl-2026.svg": {
+    "width": 1500,
+    "height": 500
+  },
+  "/static/kit/2026/speaker-post-carre-cdl-2026.png": {
+    "width": 1080,
+    "height": 1080
+  },
+  "/static/kit/2026/speaker-post-carre-cdl-2026.svg": {
+    "width": 1080,
+    "height": 1080
+  },
+  "/static/kit/2026/speaker-post-paysage-cdl-2026.png": {
+    "width": 1200,
+    "height": 630
+  },
+  "/static/kit/2026/speaker-post-paysage-cdl-2026.svg": {
+    "width": 1200,
+    "height": 630
+  },
+  "/static/kit/2026/speaker-signature-cdl-2026.png": {
+    "width": 1200,
+    "height": 300
+  },
+  "/static/kit/2026/speaker-signature-cdl-2026.svg": {
+    "width": 600,
+    "height": 150
+  },
+  "/static/kit/2026/speaker-story-cdl-2026.png": {
+    "width": 1080,
+    "height": 1920
+  },
+  "/static/kit/2026/speaker-story-cdl-2026.svg": {
+    "width": 1080,
+    "height": 1920
+  },
+  "/static/kit/logo/icon-capitoledulibre-256px.png": {
+    "width": 256,
+    "height": 256
+  },
+  "/static/kit/logo/icon-capitoledulibre-512px.png": {
+    "width": 512,
+    "height": 512
+  },
+  "/static/kit/logo/icon-capitoledulibre.svg": {
+    "width": 1000,
+    "height": 1000
+  },
+  "/static/kit/logo/logo-capitoledulibre-horizontal.png": {
+    "width": 1280,
+    "height": 157
+  },
+  "/static/kit/logo/logo-capitoledulibre-horizontal.svg": {
+    "width": 1727,
+    "height": 211
+  },
+  "/static/kit/logo/logo-capitoledulibre.png": {
+    "width": 3500,
+    "height": 1544
+  },
+  "/static/kit/logo/logo-capitoledulibre.svg": {
+    "width": 840,
+    "height": 370
+  },
   "/static/og/card.jpg": {
     "width": 1200,
     "height": 630
@@ -926,6 +1058,22 @@
   "/static/og/event-4x3.jpg": {
     "width": 1200,
     "height": 900
+  },
+  "/static/pwa/apple-touch-icon.png": {
+    "width": 180,
+    "height": 180
+  },
+  "/static/pwa/icon-192.png": {
+    "width": 192,
+    "height": 192
+  },
+  "/static/pwa/icon-512.png": {
+    "width": 512,
+    "height": 512
+  },
+  "/static/pwa/icon-maskable-512.png": {
+    "width": 512,
+    "height": 512
   },
   "/static/videos/itw-isabella-2024-poster.jpg": {
     "width": 1280,
