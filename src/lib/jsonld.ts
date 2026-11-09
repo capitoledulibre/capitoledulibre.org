@@ -302,13 +302,19 @@ export interface ActivityOptions {
 export function activityEvent(options: ActivityOptions): Node {
   const { name, description, path, hours, typicalAgeRange, audienceType, contributor } = options;
   const daysOf = (slot: ActivitySlot): EventDay[] => slot.days ?? ['saturday', 'sunday'];
+  // The activity spans from its first day to its last day: a Saturday-only
+  // activity must not advertise an end date on Sunday (and vice versa).
+  const activeDays = new Set(hours.flatMap(daysOf));
+  const firstDay: EventDay = activeDays.has('saturday') ? 'saturday' : 'sunday';
+  const lastDay: EventDay = activeDays.has('sunday') ? 'sunday' : 'saturday';
+  const dateOf = (day: EventDay) => (day === 'saturday' ? config.edition.dates.start : config.edition.dates.end);
   // "HH:MM" strings sort chronologically.
   const opening = hours
-    .filter((slot) => daysOf(slot).includes('saturday'))
+    .filter((slot) => daysOf(slot).includes(firstDay))
     .map((slot) => slot.startTime)
     .sort()[0];
   const closing = hours
-    .filter((slot) => daysOf(slot).includes('sunday'))
+    .filter((slot) => daysOf(slot).includes(lastDay))
     .map((slot) => slot.endTime)
     .sort()
     .at(-1);
@@ -323,8 +329,8 @@ export function activityEvent(options: ActivityOptions): Node {
     superEvent: ref(ID.event),
     location: ref(ID.venue),
     organizer: ref(ID.organizer),
-    startDate: isoDateTime(config.edition.dates.start, opening ?? DAY_START),
-    endDate: isoDateTime(config.edition.dates.end, closing ?? DAY_END),
+    startDate: isoDateTime(dateOf(firstDay), opening ?? DAY_START),
+    endDate: isoDateTime(dateOf(lastDay), closing ?? DAY_END),
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
     isAccessibleForFree: true,

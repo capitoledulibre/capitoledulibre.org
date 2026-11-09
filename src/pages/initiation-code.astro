@@ -15,15 +15,15 @@ const audiences = [
   { title: 'Familles', description: 'Venez en famille ! Les ateliers sont pensés pour être partagés entre parents et enfants.', icon: '👨‍👩‍👧‍👦' },
 ];
 
-// Two sessions per day, as advertised in the "Horaires" block below.
+// Saturday only: two sessions, as advertised in the "Horaires" block below.
 const initiationCodeEvent = activityEvent({
   name: 'Initiation au code',
   description:
     "Ateliers d'initiation à la programmation pour grands débutants : Scratch pour les enfants dès 8 ans, premiers pas en Python et développement web pour ados et adultes.",
   path: '/initiation-code/',
   hours: [
-    { startTime: '10:00', endTime: '12:00' },
-    { startTime: '14:00', endTime: '17:00' },
+    { startTime: '10:00', endTime: '12:00', days: ['saturday'] },
+    { startTime: '14:00', endTime: '17:00', days: ['saturday'] },
   ],
   typicalAgeRange: '8-',
   audienceType: 'Enfants dès 8 ans, ados, adultes et familles — aucun prérequis',
@@ -104,7 +104,7 @@ const learnings = [
           <strong class="text-cdl-blue">Prérequis :</strong> Aucun ! Venez comme vous êtes.
         </p>
         <p class="text-cdl-gray">
-          <strong class="text-cdl-blue">Horaires :</strong> Samedi et dimanche, sessions de 10h à 12h et de 14h à 17h.
+          <strong class="text-cdl-blue">Horaires :</strong> Samedi uniquement, sessions de 10h à 12h et de 14h à 17h.
         </p>
       </div>
 
