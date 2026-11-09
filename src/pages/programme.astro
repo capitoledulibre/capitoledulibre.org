@@ -306,7 +306,7 @@ const talksJson = JSON.stringify({ talks: talksPayload, rooms: roomsPayload }).r
                         {/* Talks du créneau */}
                         <div class="flex-1 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 pb-2">
                           {slot.talks.map((talk) => (
-                            <div class="relative">
+                            <div class="talk-item relative">
                             <a
                               href={talkPath(talk.code)}
                               class="talk-card block text-left p-4 pr-10 w-full rounded-xl border border-cdl-gray-light hover:border-cdl-orange/40 hover:shadow-md transition-all bg-white dark:bg-gray-800 group"
@@ -653,7 +653,7 @@ const talksJson = JSON.stringify({ talks: talksPayload, rooms: roomsPayload }).r
       btn.querySelector('.fav-on')?.classList.toggle('hidden', !active);
       btn.setAttribute('aria-label', active ? 'Retirer des favoris' : 'Ajouter aux favoris');
       // Highlight card border
-      const card = btn.closest('.relative')?.querySelector('.talk-card');
+      const card = btn.closest('.talk-item')?.querySelector('.talk-card');
       if (card) {
         card.classList.toggle('border-cdl-orange/40', active);
         card.classList.toggle('ring-1', active);
@@ -783,15 +783,15 @@ const talksJson = JSON.stringify({ talks: talksPayload, rooms: roomsPayload }).r
       const matchType = type === 'all' || card.getAttribute('data-type') === type;
       const matchFav = !favs || favs.has(code);
       const show = matchSearch && matchTrack && matchType && matchFav;
-      // Hide the wrapper div (.relative parent)
-      const wrapper = card.closest('.relative');
+      // Hide the wrapper (.talk-item) so the favorite button goes with the card
+      const wrapper = card.closest('.talk-item');
       if (wrapper) wrapper.style.display = show ? '' : 'none';
       if (show) visible++;
     });
 
     // Hide empty time slots
     activePanel.querySelectorAll('.time-slot').forEach((slot) => {
-      const hasVisible = slot.querySelector('.relative:not([style*="display: none"])');
+      const hasVisible = slot.querySelector('.talk-item:not([style*="display: none"])');
       slot.style.display = hasVisible ? '' : 'none';
     });
 
