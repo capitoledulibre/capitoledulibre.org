@@ -17,13 +17,17 @@ const villageEvent = activityEvent({
   description:
     `${stands.length} stands d'associations, communautés et projets du logiciel libre : démos en direct, échanges avec les contributeurs, documentation et goodies.`,
   path: '/village-associatif/',
-  hours: [{ startTime: '09:30', endTime: '18:00' }],
+  hours: [
+    { startTime: '09:30', endTime: '18:00', days: ['saturday'] },
+    { startTime: '09:30', endTime: '17:00', days: ['sunday'] },
+  ],
   audienceType: 'Curieux, contributeurs, associations',
 });
 
 // Every fact here is already established elsewhere in the repo: the village
 // shares the Bâtiment C hall with the welcome desk and the bar
-// (src/lib/rooms.ts), and the edition runs 9h30-18h on both days.
+// (src/lib/rooms.ts), and the edition runs 9h30-18h on Saturday and 9h30-17h
+// on Sunday.
 const practicalInfo = [
   {
     label: 'Où',
@@ -31,7 +35,7 @@ const practicalInfo = [
   },
   {
     label: 'Quand',
-    value: 'Samedi et dimanche, en continu de 9h30 à 18h. Aucun créneau à réserver.',
+    value: 'En continu, samedi de 9h30 à 18h et dimanche de 9h30 à 17h. Aucun créneau à réserver.',
   },
   {
     label: 'Combien',

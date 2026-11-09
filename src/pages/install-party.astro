@@ -21,7 +21,10 @@ const installPartyEvent = activityEvent({
   description:
     "Atelier permanent d'installation et de dépannage Linux. Apportez votre ordinateur, des bénévoles vous accompagnent de A à Z, sans prérequis technique.",
   path: '/install-party/',
-  hours: [{ startTime: '09:00', endTime: '18:00' }],
+  hours: [
+    { startTime: '09:00', endTime: '18:00', days: ['saturday'] },
+    { startTime: '09:00', endTime: '17:00', days: ['sunday'] },
+  ],
   audienceType: 'Débutants et utilisateurs Linux, tous niveaux',
   contributor: { name: 'Net7', url: 'https://net7.dev' },
 });
@@ -105,7 +108,7 @@ const tips = [
       {/* Horaires */}
       <div class="max-w-3xl mx-auto text-center mt-12">
         <p class="text-cdl-gray">
-          <strong class="text-cdl-blue">Horaires :</strong> Samedi et dimanche, en continu de 9h à 18h.
+          <strong class="text-cdl-blue">Horaires :</strong> En continu, samedi de 9h à 18h et dimanche de 9h à 17h.
         </p>
       </div>
 

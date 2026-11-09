@@ -14,7 +14,10 @@ const lanPartyEvent = activityEvent({
   description:
     'Parties multijoueurs sur des jeux entièrement libres (SuperTuxKart, 0 A.D., Xonotic, Minetest, OpenArena). Apportez votre PC et rejoignez la partie.',
   path: '/lan-party/',
-  hours: [{ startTime: '10:00', endTime: '18:00' }],
+  hours: [
+    { startTime: '10:00', endTime: '18:00', days: ['saturday'] },
+    { startTime: '10:00', endTime: '17:00', days: ['sunday'] },
+  ],
   audienceType: 'Joueurs de tous niveaux',
 });
 
@@ -96,7 +99,7 @@ const games = [
 
       <div class="max-w-3xl mx-auto text-center mt-12">
         <p class="text-cdl-gray">
-          <strong class="text-cdl-blue">Horaires :</strong> Samedi et dimanche, de 10h à 18h.
+          <strong class="text-cdl-blue">Horaires :</strong> Samedi de 10h à 18h, dimanche de 10h à 17h.
         </p>
       </div>
 

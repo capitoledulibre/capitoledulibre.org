@@ -53,9 +53,9 @@ const LOGO = '/static/img/logo-capitoledulibre-horizontal.svg';
 const TZ_OFFSET = '+01:00';
 export const TIMEZONE = 'Europe/Paris';
 
-/** Event day boundaries, as printed on the site. */
+/** Doors open on the first day and close on the last, as printed on the site. */
 const DAY_START = '09:30';
-const DAY_END = '18:00';
+const DAY_END = '17:00';
 
 /** `YYYY-MM-DD` for a configured edition date, without timezone drift. */
 export function isoDate(date: Date): string {
@@ -268,12 +268,26 @@ export function eventNode(options: EventNodeOptions = {}): Node {
 
 // ── Permanent activities (install party, LAN party, …) ───────────────────────
 
+type EventDay = 'saturday' | 'sunday';
+
+export interface ActivitySlot {
+  startTime: string;
+  endTime: string;
+  /** Days this slot applies to; both days when omitted. */
+  days?: EventDay[];
+}
+
+const SCHEMA_DAY: Record<EventDay, string> = {
+  saturday: 'https://schema.org/Saturday',
+  sunday: 'https://schema.org/Sunday',
+};
+
 export interface ActivityOptions {
   name: string;
   description: string;
   path: string;
   /** Daily opening hours, as advertised on the page. */
-  hours: { startTime: string; endTime: string }[];
+  hours: ActivitySlot[];
   typicalAgeRange?: string;
   audienceType?: string;
   /** Extra collaborating organisation, e.g. Net7 for the install party. */
@@ -287,8 +301,17 @@ export interface ActivityOptions {
  */
 export function activityEvent(options: ActivityOptions): Node {
   const { name, description, path, hours, typicalAgeRange, audienceType, contributor } = options;
-  const first = hours[0];
-  const last = hours[hours.length - 1];
+  const daysOf = (slot: ActivitySlot): EventDay[] => slot.days ?? ['saturday', 'sunday'];
+  // "HH:MM" strings sort chronologically.
+  const opening = hours
+    .filter((slot) => daysOf(slot).includes('saturday'))
+    .map((slot) => slot.startTime)
+    .sort()[0];
+  const closing = hours
+    .filter((slot) => daysOf(slot).includes('sunday'))
+    .map((slot) => slot.endTime)
+    .sort()
+    .at(-1);
 
   return compact({
     '@context': 'https://schema.org',
@@ -300,8 +323,8 @@ export function activityEvent(options: ActivityOptions): Node {
     superEvent: ref(ID.event),
     location: ref(ID.venue),
     organizer: ref(ID.organizer),
-    startDate: isoDateTime(config.edition.dates.start, first.startTime),
-    endDate: isoDateTime(config.edition.dates.end, last.endTime),
+    startDate: isoDateTime(config.edition.dates.start, opening ?? DAY_START),
+    endDate: isoDateTime(config.edition.dates.end, closing ?? DAY_END),
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
     isAccessibleForFree: true,
@@ -311,15 +334,18 @@ export function activityEvent(options: ActivityOptions): Node {
     contributor: contributor
       ? compact({ '@type': 'Organization', name: contributor.name, url: contributor.url })
       : undefined,
-    eventSchedule: hours.map((slot) => ({
-      '@type': 'Schedule',
-      startDate: isoDate(config.edition.dates.start),
-      endDate: isoDate(config.edition.dates.end),
-      startTime: slot.startTime,
-      endTime: slot.endTime,
-      byDay: ['https://schema.org/Saturday', 'https://schema.org/Sunday'],
-      scheduleTimezone: TIMEZONE,
-    })),
+    eventSchedule: hours.map((slot) => {
+      const days = daysOf(slot);
+      return {
+        '@type': 'Schedule',
+        startDate: isoDate(days.includes('saturday') ? config.edition.dates.start : config.edition.dates.end),
+        endDate: isoDate(days.includes('sunday') ? config.edition.dates.end : config.edition.dates.start),
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+        byDay: days.map((day) => SCHEMA_DAY[day]),
+        scheduleTimezone: TIMEZONE,
+      };
+    }),
     offers: {
       '@type': 'Offer',
       price: 0,
