@@ -17,7 +17,7 @@ const transports = [
   {
     icon: 'M12 22c-4.97 0-9-2.239-9-5v-4c0-2.761 4.03-5 9-5s9 2.239 9 5v4c0 2.761-4.03 5-9 5zM12 8V2M5 12l-2-2M19 12l2-2',
     title: 'Vélo',
-    description: 'Station VélôToulouse à proximité. Des attaches vélo sont disponibles dans les rues alentours.',
+    description: 'Station VélôToulouse à proximité. Pas de garage à vélos sur le site : vélos, trottinettes, scooters et autres deux-roues sont à stationner à l\'extérieur, sur les attaches des rues alentour.',
   },
   {
     icon: 'M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2.7-5.4A1 1 0 0014.4 4H9.6a1 1 0 00-.9.6L6 10l-2.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2M7 17a2 2 0 104 0 2 2 0 00-4 0zM13 17a2 2 0 104 0 2 2 0 00-4 0z',
@@ -32,6 +32,7 @@ const transports = [
 ];
 
 const infos = [
+  { icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', title: 'Horaires', text: 'Samedi 9h30–19h25 puis cocktail, dimanche 9h30–17h. Plus de validation de billet après 19h30 le samedi ; plus aucune entrée après 16h30 le dimanche.' },
   { icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', title: 'Accessibilité PMR', text: 'Lieu accessible aux personnes à mobilité réduite. Ascenseurs disponibles.' },
   { icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', title: 'Entrée gratuite', text: 'Inscription gratuite et obligatoire sur notre billetterie en ligne.' },
   { icon: 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z', title: 'Restauration sur place', text: 'Deux food trucks proposent des déjeuners variés (10-15 €). Cocktail offert le samedi soir.' },
@@ -163,9 +164,13 @@ const { lat, lng } = config.venue.coordinates;
           Cocktail du samedi soir
         </h2>
         <p class="text-cdl-gray leading-relaxed">
-          Le samedi soir, l'événement se prolonge avec un cocktail ouvert à toutes et tous dans le hall principal.
+          Le samedi soir, à partir de 19h30, l'événement se prolonge avec un cocktail ouvert à toutes et tous dans le hall principal.
           Aucune inscription supplémentaire n'est nécessaire. Des canapés, petits fours et boissons non alcoolisées
           sont servis à l'ensemble des participants. C'est le moment idéal pour échanger avec les speakers et les autres visiteurs.
+        </p>
+        <p class="mt-3 text-sm text-cdl-gray leading-relaxed">
+          <strong class="text-cdl-blue">À noter :</strong> à partir du début du cocktail, les billets ne sont plus validés à l'entrée.
+          Seules les personnes déjà entrées dans la journée peuvent accéder au site.
         </p>
       </div>
 
