@@ -11,7 +11,7 @@
 
 ## L'événement
 
-Le Capitole du Libre rassemble environ 1 400 visiteurs sur un week-end pour des conférences, ateliers, un village associatif, une install party Linux, une LAN party avec jeux libres et des ateliers d'initiation au code pour enfants et adultes.
+Le Capitole du Libre rassemble environ 1 400 visiteurs sur un week-end pour des conférences, ateliers, un village associatif, une install party Linux et une LAN party avec jeux libres.
 
 C'est la 14e édition. L'événement existe depuis 2011.
 
@@ -26,7 +26,6 @@ Le programme complet est disponible sur https://capitoledulibre.org/programme et
 - Village associatif : 30+ stands d'associations et projets du logiciel libre
 - Install Party : atelier permanent d'installation Linux (en collaboration avec Net7)
 - LAN Party : gaming sur jeux libres (SuperTuxKart, 0 A.D., Xonotic, Minetest...)
-- Initiation au code : ateliers Scratch et Python pour enfants dès 8 ans (en collaboration avec Epitech Toulouse)
 - Cocktail du samedi soir : ouvert à tous, canapés et boissons offerts
 
 ## Restauration

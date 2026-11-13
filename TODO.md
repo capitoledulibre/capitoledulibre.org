@@ -34,7 +34,7 @@ Backlog of ideas to make the site more attractive and substantive. Group by them
   - **Before the event**: register (free but mandatory), build a Pretalx shortlist (favorites + iCal export already exists), plan 2-3 fallback talks per slot in case a room fills up, plan transport (park-and-ride, metro, bike).
   - **What to bring**: backed-up laptop if attending install party / LAN party, water bottle, power bank, layered clothing, business cards / stickers to swap.
   - **On site — the classic mistake to avoid**: don't saturate your schedule — leave ~30% of slots free for the village associatif and serendipitous encounters. Arrive early Saturday for badge pickup + complimentary coffee. Go see the village exhibitors — that's where you discover living projects. Friendly atmosphere: ask "naïve" questions, it's encouraged.
-  - **During breaks** (block missing today): permanent activities running in parallel — village associatif, install party, initiation au code, LAN party, sponsor booths, food trucks. Include a site-map reference (link to `/lieu`).
+  - **During breaks** (block missing today): permanent activities running in parallel — village associatif, install party, LAN party, sponsor booths, food trucks. Include a site-map reference (link to `/lieu`).
   - **Saturday vs. Sunday**: distinguish the two days' rhythms (cocktail/networking Saturday evening, Sunday wraps earlier). Current `TimelineSection` doesn't differentiate them.
 
 ## History page / timeline
@@ -93,7 +93,7 @@ High-impact attendee-facing info that's missing or thin. Not all of these need p
 
 ### Lower priority
 - **Beginner vs. expert filter on `/programme`** — help newcomers identify accessible talks.
-- **Family activities beyond `/initiation-code`** — list other kid/family-friendly content if any.
+- **Family activities** — list kid/family-friendly content if any.
 - **Venue room capacity** — useful for crowd-size expectations.
 
 ## SEO follow-ups (audit of 2026-08-20)

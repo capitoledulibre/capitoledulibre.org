@@ -19,7 +19,7 @@ Photography: Photo7, Guillaume Poullain
 Video: TVn7 (https://tvn7.fr)
 Sound: CAn7 (https://can7.fr)
 Install Party: Net7 (https://net7.dev)
-Code workshops: Epitech Toulouse
+Volunteers: Epitech Toulouse
 
 /* LICENSE */
 

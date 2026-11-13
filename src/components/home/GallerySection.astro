@@ -4,7 +4,7 @@ import Picture from '../ui/Picture.astro';
 import { getPhotosByTag } from '../../lib/photos';
 
 // Pick one photo per tag first for maximum variety, then fill up to 8
-const tags = ['hero', 'conference', 'village-associatif', 'cocktail', 'atelier', 'food-trucks', 'initiation-code', 'ambiance'];
+const tags = ['hero', 'conference', 'village-associatif', 'cocktail', 'atelier', 'food-trucks', 'lan-party', 'ambiance'];
 const seen = new Set<string>();
 const photos: { src: string; alt: string; credit: string; tags: string[] }[] = [];
 

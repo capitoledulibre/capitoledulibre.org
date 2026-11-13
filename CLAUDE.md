@@ -41,7 +41,6 @@ Site web officiel du **Capitole du Libre**, événement annuel dédié au logici
 │   │   ├── village-associatif.astro
 │   │   ├── install-party.astro
 │   │   ├── lan-party.astro
-│   │   ├── initiation-code.astro
 │   │   ├── partenaires.astro
 │   │   ├── equipe.astro
 │   │   ├── faq.astro
@@ -196,12 +195,6 @@ export default {
 - Présentation de l'événement gaming libre
 - Liste des jeux proposés (jeux libres)
 - Comment participer (apporter son PC, inscription...)
-- Horaires et emplacement
-
-### Initiation au code (`/initiation-code`)
-- Présentation de l'atelier pour débutants
-- Public cible (enfants, adultes, aucun prérequis)
-- Ce qu'on y apprend
 - Horaires et emplacement
 
 ### Partenaires (`/partenaires`)

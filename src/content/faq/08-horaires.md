@@ -18,5 +18,4 @@ L'événement se déroule sur deux jours :
 
 - **Village associatif** et **install party** : en continu, de l'ouverture jusqu'à 18h le samedi et 17h le dimanche
 - **LAN party** : samedi de 10h à 18h, dimanche de 10h à 17h
-- **Initiation au code** : samedi uniquement, de 10h à 12h et de 14h à 17h
 - **Food trucks** : le midi ; la buvette du hall est ouverte toute la journée
