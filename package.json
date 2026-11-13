@@ -30,7 +30,7 @@
     "@fontsource/ubuntu": "^5.3.0",
     "@fontsource/ubuntu-mono": "^5.3.0",
     "@tailwindcss/vite": "^4.3.5",
-    "astro": "^7.4.10",
+    "astro": "^7.4.11",
     "marked": "^18.2.0",
     "tailwindcss": "^4.3.5",
     "yaml": "^2.9.1"
@@ -41,9 +41,9 @@
     "@types/sanitize-html": "^2.16.2",
     "eslint": "^10.14.0",
     "eslint-plugin-astro": "^2.1.1",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "prettier-plugin-astro": "^0.14.1",
-    "sanitize-html": "^2.18.1",
+    "sanitize-html": "^2.18.2",
     "sharp": "^0.35.5",
     "typescript-eslint": "^8.72.2"
   }
