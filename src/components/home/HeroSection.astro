@@ -5,6 +5,8 @@ import { getEditionStats } from '../../lib/editionStats';
 
 const editionStats = await getEditionStats();
 
+const over = config.edition.over;
+
 const stats = [
   { value: editionStats.visitors, label: 'visiteurs' },
   { value: editionStats.sessions, label: 'conférences & ateliers' },
@@ -54,7 +56,9 @@ const stats = [
         <!-- Badge -->
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium mb-8">
           <OccitanCross size={14} class="text-cdl-gold" />
-          Édition {config.edition.year} — Gratuit, inscription obligatoire
+          {over
+            ? `Édition ${config.edition.year} — C'est terminé, merci !`
+            : `Édition ${config.edition.year} — Gratuit, inscription obligatoire`}
         </div>
 
         <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight mb-6 drop-shadow-lg leading-[0.95]">
@@ -80,7 +84,32 @@ const stats = [
           {config.venue.name}, Toulouse
         </p>
 
+        {over && (
+          <p class="text-lg sm:text-xl text-white/90 max-w-2xl -mt-4 mb-10">
+            Merci à toutes et à tous d'être venus partager ce week-end autour du
+            logiciel libre ! Les photos et les vidéos des conférences arrivent
+            bientôt.
+          </p>
+        )}
+
         <div class="flex flex-col sm:flex-row items-start gap-4 mb-14">
+          {over ? (
+            <a
+              href="/programme/"
+              class="group inline-flex items-center px-8 py-4 text-lg font-bold text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-xl transition-all duration-300 shadow-xl shadow-cdl-orange/30 hover:shadow-2xl hover:shadow-cdl-orange/40 hover:scale-105 focus:outline-2 focus:outline-offset-2 focus:outline-cdl-orange"
+            >
+              Revoir le programme
+              <svg class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <a
+              href={config.links.videos}
+              class="inline-flex items-center px-8 py-4 text-lg font-medium text-white border-2 border-white/30 hover:border-white/60 hover:bg-white/10 rounded-xl transition-all duration-300 backdrop-blur-sm"
+            >
+              Vidéos des éditions passées
+            </a>
+          ) : (<>
           <a
             href={config.tickets.url}
             class="group inline-flex items-center px-8 py-4 text-lg font-bold text-white bg-cdl-orange hover:bg-cdl-orange-light rounded-xl transition-all duration-300 shadow-xl shadow-cdl-orange/30 hover:shadow-2xl hover:shadow-cdl-orange/40 hover:scale-105 focus:outline-2 focus:outline-offset-2 focus:outline-cdl-orange"
@@ -96,6 +125,7 @@ const stats = [
           >
             Voir le programme
           </a>
+          </>)}
         </div>
       </div>
 

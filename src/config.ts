@@ -6,6 +6,10 @@ export const config = {
       end: new Date('2026-11-15'),
     },
     displayDates: '14 & 15 novembre 2026',
+    // Set once the edition is over: the home page swaps registration calls to
+    // action for a thank-you and the upcoming photos and videos. Reset to
+    // false when the next edition's site goes live.
+    over: true as boolean,
   },
   venue: {
     name: 'ENSEEIHT',

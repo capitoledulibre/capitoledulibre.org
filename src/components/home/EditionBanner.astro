@@ -26,6 +26,7 @@ const eventStart = new Date(`${day(config.edition.dates.start)}T00:00:00+01:00`)
 const eventEnd = new Date(`${day(config.edition.dates.end)}T23:59:59+01:00`);
 
 function phaseAt(now: Date): Phase {
+  if (config.edition.over) return 'after';
   if (now < config.cfp.deadline) return 'cfp';
   if (now < eventStart) return 'programme';
   if (now <= eventEnd) return 'live';
@@ -92,15 +93,16 @@ const phases: {
     id: 'after',
     icon: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664zM21 12a9 9 0 11-18 0 9 9 0 0118 0z',
     title: `Merci pour ce Capitole du Libre ${config.edition.year} !`,
-    text: 'Les captations des conférences sont publiées au fil des semaines.',
-    cta: { label: 'Voir les vidéos', href: config.links.videos, external: true },
-    secondary: { label: 'Les photos', href: config.links.photos },
+    text: "Les photos et les vidéos de cette édition arrivent bientôt. En attendant, retrouvez celles des éditions précédentes.",
+    cta: { label: 'Vidéos', href: config.links.videos, external: true },
+    secondary: { label: 'Photos', href: config.links.photos },
   },
 ];
 ---
 
 <section
   id="edition-banner"
+  data-over={config.edition.over ? 'true' : undefined}
   data-cfp-deadline={config.cfp.deadline.toISOString()}
   data-event-start={eventStart.toISOString()}
   data-event-end={eventEnd.toISOString()}
@@ -180,8 +182,9 @@ const phases: {
     const eventStart = new Date(banner.dataset.eventStart ?? '').getTime();
     const eventEnd = new Date(banner.dataset.eventEnd ?? '').getTime();
 
-    const phase =
-      now < cfpDeadline ? 'cfp' : now < eventStart ? 'programme' : now <= eventEnd ? 'live' : 'after';
+    const phase = banner.dataset.over
+      ? 'after'
+      : now < cfpDeadline ? 'cfp' : now < eventStart ? 'programme' : now <= eventEnd ? 'live' : 'after';
 
     banner.querySelectorAll<HTMLElement>('[data-phase]').forEach((el) => {
       el.classList.toggle('hidden', el.dataset.phase !== phase);
